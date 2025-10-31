@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import ContactForm from "./ContactForm";
+import Uncover from "./Uncover";
 
 function App() {
   const [activePage, setActivePage] = useState("Home");
@@ -29,16 +30,17 @@ function App() {
         );
       case "Uncover":
         return (
-          <section className="content">
-            <h2>Uncover</h2>
-            <h3>Try to guess the player! </h3>
-            <p>
-              Click on a tile to turn it over for player information. Once
-              you've figured out who the player is, guess in the text box above.
-              Try to use as few tiles as possible and compare your results with
-              your friends!
-            </p>
-          </section>
+          <Uncover />
+          // <section className="content">
+          //   <h2>Uncover</h2>
+          //   <h3>Try to guess the player! </h3>
+          //   <p>
+          //     Click on a tile to turn it over for player information. Once
+          //     you've figured out who the player is, guess in the text box above.
+          //     Try to use as few tiles as possible and compare your results with
+          //     your friends!
+          //   </p>
+          // </section>
         );
       case "Projects":
         return (
