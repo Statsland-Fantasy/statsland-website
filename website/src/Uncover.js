@@ -90,6 +90,10 @@ const Uncover = () => {
             playerData,
           },
         }));
+      })
+      .catch((error) => {
+        console.error("Error loading player data:", error);
+        // Keep showing loading state if fetch fails
       });
   }, [activeSport, gameState]);
 
@@ -301,3 +305,4 @@ const Uncover = () => {
 };
 
 export default Uncover;
+export { lev };

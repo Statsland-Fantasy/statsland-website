@@ -18,12 +18,15 @@ const localStorageMock = (() => {
       store[key] = value.toString();
     }),
     clear: jest.fn(() => {
-      store = {};
+      Object.keys(store).forEach((key) => delete store[key]);
     }),
   };
 })();
 
-global.localStorage = localStorageMock;
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+});
 
 // Sample test data
 const mockBaseballData = [
@@ -55,10 +58,16 @@ const mockBaseballData = [
 
 describe("Uncover Component", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    // Clear call history but preserve mock implementations
+    localStorageMock.getItem.mockClear();
+    localStorageMock.setItem.mockClear();
+    localStorageMock.clear.mockClear();
+
+    // Reset localStorage store
     localStorageMock.clear();
 
     // Setup default fetch mock
+    global.fetch.mockClear();
     global.fetch.mockResolvedValue({
       json: async () => mockBaseballData,
     });
@@ -138,13 +147,14 @@ describe("Uncover Component", () => {
     test("uses localStorage to track player index", async () => {
       render(<Uncover />);
 
+      // Wait for component to load and make localStorage calls
       await waitFor(() => {
         expect(localStorageMock.getItem).toHaveBeenCalledWith(
           "playerIndex_baseball"
         );
         expect(localStorageMock.setItem).toHaveBeenCalledWith(
           "playerIndex_baseball",
-          "1"
+          1
         );
       });
     });
@@ -177,14 +187,16 @@ describe("Uncover Component", () => {
     });
 
     test("cycles through player index correctly", async () => {
-      localStorageMock.setItem("playerIndex_baseball", "1");
+      // Set index to last player (1)
+      localStorageMock.getItem.mockReturnValueOnce("1");
 
       render(<Uncover />);
 
       await waitFor(() => {
+        // Should wrap around to 0
         expect(localStorageMock.setItem).toHaveBeenCalledWith(
           "playerIndex_baseball",
-          "0"
+          0
         );
       });
     });
@@ -721,8 +733,24 @@ describe("Uncover Component", () => {
     test("lev function calculates correct distance", () => {
       const { lev } = require("./Uncover");
 
-      // Note: Since lev is not exported, we'll test it indirectly through guesses
-      // This is a conceptual test - you'd need to export the function to test directly
+      // Test exact match
+      expect(lev("test", "test")).toBe(0);
+
+      // Test single character difference
+      expect(lev("test", "best")).toBe(1);
+
+      // Test insertion
+      expect(lev("test", "tests")).toBe(1);
+
+      // Test deletion
+      expect(lev("test", "tes")).toBe(1);
+
+      // Test multiple differences
+      expect(lev("kitten", "sitting")).toBe(3);
+
+      // Test empty strings
+      expect(lev("", "test")).toBe(4);
+      expect(lev("test", "")).toBe(4);
     });
   });
 
@@ -745,7 +773,9 @@ describe("Uncover Component", () => {
     });
 
     test("handles fetch errors gracefully", async () => {
-      global.fetch.mockRejectedValueOnce(new Error("Network error"));
+      // Override the default mock to simulate a network error
+      global.fetch.mockClear();
+      global.fetch.mockRejectedValue(new Error("Network error"));
 
       render(<Uncover />);
 
@@ -761,23 +791,24 @@ describe("Uncover Component", () => {
       await waitFor(() => {
         expect(localStorageMock.setItem).toHaveBeenCalledWith(
           "playerIndex_baseball",
-          "1"
+          1
         );
       });
     });
 
     test("handles cycling to next player correctly", async () => {
-      localStorageMock.setItem(
-        "playerIndex_baseball",
+      // Set to last index
+      localStorageMock.getItem.mockReturnValueOnce(
         (mockBaseballData.length - 1).toString()
       );
 
       render(<Uncover />);
 
       await waitFor(() => {
+        // Should cycle back to 0
         expect(localStorageMock.setItem).toHaveBeenCalledWith(
           "playerIndex_baseball",
-          "0"
+          0
         );
       });
     });
