@@ -352,6 +352,106 @@ describe("Uncover Component", () => {
         expect(scoreBox).toHaveTextContent("98");
       });
     });
+
+    test("cannot submit the same incorrect guess consecutively", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("100");
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // First submission
+      fireEvent.change(input, { target: { value: "Wrong Name" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("98");
+      });
+
+      // Try to submit the same guess again - should not change score
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("98");
+      });
+    });
+
+    test("can submit different guess after incorrect guess", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("100");
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // First wrong guess
+      fireEvent.change(input, { target: { value: "Wrong Name 1" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("98");
+      });
+
+      // Different wrong guess - should work
+      fireEvent.change(input, { target: { value: "Wrong Name 2" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("96");
+      });
+    });
+
+    test("consecutive guess check is case-insensitive and space-insensitive", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("100");
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // First submission
+      fireEvent.change(input, { target: { value: "wrong name" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("98");
+      });
+
+      // Try to submit with different case and spacing
+      fireEvent.change(input, { target: { value: "WRONG NAME" } });
+      fireEvent.click(submitButton);
+
+      // Should be blocked, score should remain 98
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("98");
+      });
+
+      // Try with different spacing
+      fireEvent.change(input, { target: { value: "wrongname" } });
+      fireEvent.click(submitButton);
+
+      // Should still be blocked, score should remain 98
+      await waitFor(() => {
+        const scoreBox = document.querySelector(".score-box");
+        expect(scoreBox).toHaveTextContent("98");
+      });
+    });
   });
 
   describe("Tile Flipping", () => {

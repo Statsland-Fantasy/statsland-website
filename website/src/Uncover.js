@@ -56,6 +56,7 @@ const initialState = {
   incorrectGuesses: 0,
   showResultsModal: false,
   copiedText: "",
+  lastSubmittedGuess: "",
 };
 
 const Uncover = () => {
@@ -132,6 +133,12 @@ const Uncover = () => {
       return;
     }
 
+    // Prevent submitting the same incorrect guess consecutively
+    // Only block if there was a previous guess (lastSubmittedGuess is not empty)
+    if (a !== b && s.lastSubmittedGuess && a === s.lastSubmittedGuess) {
+      return;
+    }
+
     if (a === b) {
       const rank = evaluateRank(s.score);
       updateState({
@@ -141,6 +148,7 @@ const Uncover = () => {
         finalRank: rank,
         hint: "",
         showResultsModal: true,
+        lastSubmittedGuess: a,
       });
       return;
     }
@@ -162,6 +170,7 @@ const Uncover = () => {
           previousCloseGuess: "",
           score: newScore,
           hint: newHint,
+          lastSubmittedGuess: a,
         });
       } else {
         updateState({
@@ -170,6 +179,7 @@ const Uncover = () => {
           previousCloseGuess: a,
           score: newScore,
           hint: newHint,
+          lastSubmittedGuess: a,
         });
       }
       return;
@@ -182,6 +192,7 @@ const Uncover = () => {
         previousCloseGuess: "",
         score: newScore,
         hint: newHint,
+        lastSubmittedGuess: a,
       });
       return;
     }
@@ -192,6 +203,7 @@ const Uncover = () => {
       score: newScore,
       hint: newHint,
       incorrectGuesses: s.incorrectGuesses + 1,
+      lastSubmittedGuess: a,
     });
   };
 
