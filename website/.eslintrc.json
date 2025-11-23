@@ -25,7 +25,9 @@
     "arrow-spacing": "warn",
     "keyword-spacing": "warn",
     "space-before-blocks": "warn",
-    "space-infix-ops": "warn"
+    "space-infix-ops": "warn",
+    "testing-library/no-wait-for-multiple-assertions": "off",
+    "testing-library/no-node-access": "off"
   },
   "env": {
     "browser": true,

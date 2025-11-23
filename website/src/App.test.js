@@ -3,7 +3,10 @@ import App from "./App";
 
 test("renders site title", () => {
   render(<App />);
-  const titleElement = screen.getByRole("heading", { name: /Bizarro Fantasy Sports/i, level: 1 });
+  const titleElement = screen.getByRole("heading", {
+    name: /Bizarro Fantasy Sports/i,
+    level: 1,
+  });
   expect(titleElement).toBeInTheDocument();
 });
 
@@ -19,7 +22,9 @@ test("renders navigation links", () => {
 
 test("home page is active by default", () => {
   render(<App />);
-  expect(screen.getByText(/Welcome to the Bizarro Fantasy Sports Home Page/i)).toBeInTheDocument();
+  expect(
+    screen.getByText(/Welcome to the Bizarro Fantasy Sports Home Page/i)
+  ).toBeInTheDocument();
 });
 
 test("can navigate to Daily Fact page", () => {
@@ -27,5 +32,7 @@ test("can navigate to Daily Fact page", () => {
   const nav = screen.getByRole("navigation");
   const dailyFactLink = within(nav).getByText("Daily Fact");
   fireEvent.click(dailyFactLink);
-  expect(screen.getByText(/Bizarro has one "Z" and two "R"s/i)).toBeInTheDocument();
+  expect(
+    screen.getByText(/Bizarro has one "Z" and two "R"s/i)
+  ).toBeInTheDocument();
 });
