@@ -769,6 +769,651 @@ describe("Uncover Component", () => {
     });
   });
 
+  describe("Results Modal", () => {
+    test("results modal appears on correct answer", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+    });
+
+    test("results modal displays correct score", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Make 2 wrong guesses (score = 96)
+      fireEvent.change(input, { target: { value: "Wrong 1" } });
+      fireEvent.click(submitButton);
+      fireEvent.change(input, { target: { value: "Wrong 2" } });
+      fireEvent.click(submitButton);
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is 96!/i)).toBeInTheDocument();
+      });
+    });
+
+    test("results modal displays average score", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/the average score today is 85/i)).toBeInTheDocument();
+      });
+    });
+
+    test("results modal displays 3x3 grid of tiles", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const resultsTiles = document.querySelectorAll(".results-tile");
+        expect(resultsTiles.length).toBe(9);
+      });
+    });
+
+    test("results modal shows flip symbol (↻) on flipped tiles", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("Bio")).toBeInTheDocument();
+      });
+
+      // Flip a tile
+      const bioTile = screen.getByText("Bio").closest(".tile");
+      fireEvent.click(bioTile);
+
+      await waitFor(() => {
+        expect(screen.getByText(/tiles flipped: 1/i)).toBeInTheDocument();
+      });
+
+      // Submit correct answer
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const resultsTiles = document.querySelectorAll(".results-tile.flipped");
+        expect(resultsTiles.length).toBeGreaterThan(0);
+        expect(resultsTiles[0]).toHaveTextContent("↻");
+      });
+    });
+
+    test("results modal can be closed and reopened", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
+      });
+
+      // Reopen modal by submitting correct answer again
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+    });
+
+    test("results modal has share button", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Share Functionality", () => {
+    beforeEach(() => {
+      // Mock clipboard API
+      Object.assign(navigator, {
+        clipboard: {
+          writeText: jest.fn(() => Promise.resolve()),
+        },
+      });
+    });
+
+    test("share button copies grid to clipboard", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+
+      const shareButton = screen.getByRole("button", { name: /share/i });
+      fireEvent.click(shareButton);
+
+      await waitFor(() => {
+        expect(navigator.clipboard.writeText).toHaveBeenCalled();
+      });
+    });
+
+    test("share copies correct format with header, grid, and score", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+
+      const shareButton = screen.getByRole("button", { name: /share/i });
+      fireEvent.click(shareButton);
+
+      await waitFor(() => {
+        const copiedText = navigator.clipboard.writeText.mock.calls[0][0];
+        expect(copiedText).toContain("Daily Uncover #");
+        expect(copiedText).toContain("Score: 100");
+        // Should contain emoji squares
+        expect(copiedText).toMatch(/[🟨🟦]/);
+      });
+    });
+
+    test("share uses blue squares for unflipped, yellow for flipped", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("Bio")).toBeInTheDocument();
+      });
+
+      // Flip one tile
+      const bioTile = screen.getByText("Bio").closest(".tile");
+      fireEvent.click(bioTile);
+
+      await waitFor(() => {
+        expect(screen.getByText(/tiles flipped: 1/i)).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+
+      const shareButton = screen.getByRole("button", { name: /share/i });
+      fireEvent.click(shareButton);
+
+      await waitFor(() => {
+        const copiedText = navigator.clipboard.writeText.mock.calls[0][0];
+        // Should have both yellow (flipped) and blue (unflipped)
+        expect(copiedText).toContain("🟨");
+        expect(copiedText).toContain("🟦");
+      });
+    });
+
+    test("share shows copied confirmation message", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+
+      const shareButton = screen.getByRole("button", { name: /share/i });
+      fireEvent.click(shareButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/has been copied/i)).toBeInTheDocument();
+      });
+    });
+
+    test("copied confirmation shows the actual copied text", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+
+      const shareButton = screen.getByRole("button", { name: /share/i });
+      fireEvent.click(shareButton);
+
+      await waitFor(() => {
+        const copiedMessage = document.querySelector(".copied-message");
+        expect(copiedMessage).toBeInTheDocument();
+        expect(copiedMessage.textContent).toContain("Daily Uncover #");
+        expect(copiedMessage.textContent).toContain("Score:");
+      });
+    });
+
+    test("copied confirmation disappears after 3 seconds", async () => {
+      jest.useFakeTimers();
+
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /share/i })).toBeInTheDocument();
+      });
+
+      const shareButton = screen.getByRole("button", { name: /share/i });
+      fireEvent.click(shareButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/has been copied/i)).toBeInTheDocument();
+      });
+
+      // Fast-forward time by 3 seconds
+      jest.advanceTimersByTime(3000);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/has been copied/i)).not.toBeInTheDocument();
+      });
+
+      jest.useRealTimers();
+    });
+  });
+
+  describe("Post-Win Game State", () => {
+    test("tiles can still be flipped after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
+      });
+
+      // Try to flip a tile
+      const bioTile = screen.getByText("Bio").closest(".tile");
+      fireEvent.click(bioTile);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Greatest baseball player")
+        ).toBeInTheDocument();
+      });
+    });
+
+    test("score does not change after winning when flipping tiles", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Verify score is 100
+      const scoreBox = document.querySelector(".score-box");
+      expect(scoreBox).toHaveTextContent("100");
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      // Flip a tile after winning
+      const bioTile = screen.getByText("Bio").closest(".tile");
+      fireEvent.click(bioTile);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Greatest baseball player")
+        ).toBeInTheDocument();
+      });
+
+      // Score should still be 100
+      expect(scoreBox).toHaveTextContent("100");
+    });
+
+    test("tiles flipped counter does not change after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Verify counter is 0
+      expect(screen.getByText(/tiles flipped: 0/i)).toBeInTheDocument();
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      // Flip a tile after winning
+      const bioTile = screen.getByText("Bio").closest(".tile");
+      fireEvent.click(bioTile);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("Greatest baseball player")
+        ).toBeInTheDocument();
+      });
+
+      // Counter should still be 0
+      expect(screen.getByText(/tiles flipped: 0/i)).toBeInTheDocument();
+    });
+
+    test("input and submit button remain enabled after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      // Input and button should not be disabled
+      expect(input).not.toBeDisabled();
+      expect(submitButton).not.toBeDisabled();
+    });
+
+    test("only correct answer reopens modal after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
+      });
+
+      // Try wrong answer
+      fireEvent.change(input, { target: { value: "Wrong Name" } });
+      fireEvent.click(submitButton);
+
+      // Modal should not reopen
+      await waitFor(() => {
+        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
+      }, { timeout: 1000 });
+
+      // Try correct answer
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      // Modal should reopen
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+    });
+
+    test("wrong answers do not show messages after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      // Try wrong answer
+      fireEvent.change(input, { target: { value: "Wrong Name" } });
+      fireEvent.click(submitButton);
+
+      // Should not show error message
+      await waitFor(() => {
+        expect(screen.queryByText(/wrong guess/i)).not.toBeInTheDocument();
+      }, { timeout: 1000 });
+    });
+
+    test("photo tile can still be toggled after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Win the game
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = screen.getByRole("button", { name: /✕/i });
+      fireEvent.click(closeButton);
+
+      // Click photo tile
+      const photoTile = screen.getByText("Photo").closest(".tile");
+      fireEvent.click(photoTile);
+
+      await waitFor(() => {
+        const photoRevealTiles = document.querySelectorAll(".photo-reveal");
+        expect(photoRevealTiles.length).toBeGreaterThan(0);
+      });
+
+      // Score should still be 100 (not decreased by 6)
+      const scoreBox = document.querySelector(".score-box");
+      expect(scoreBox).toHaveTextContent("100");
+    });
+  });
+
   describe("Edge Cases", () => {
     test("handles empty player name submission", async () => {
       render(<Uncover />);

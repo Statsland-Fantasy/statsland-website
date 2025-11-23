@@ -378,7 +378,7 @@
   padding: 40px 30px;
   border-radius: 16px;
   position: relative;
-  max-width: 500px;
+  max-width: 400px;
   width: 90%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
@@ -408,7 +408,7 @@
 }
 
 .average-score {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: #444;
   margin: 0 0 25px 0;
   text-align: center;
@@ -434,13 +434,13 @@
 }
 
 .results-tile.flipped {
-  background-color: #0077b6;
-  color: white;
+  background-color: #ffd60a;
+  color: #333;
 }
 
 .results-tile.unflipped {
-  background-color: #e9ecef;
-  border: 2px solid #dee2e6;
+  background-color: #0077b6;
+  color: white;
 }
 
 .share-button {
@@ -459,4 +459,30 @@
 
 .share-button:hover {
   background-color: #0096c7;
+}
+
+.copied-message {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.copied-message pre {
+  margin: 0 0 10px 0;
+  padding: 10px;
+  background-color: white;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  color: #333;
+}
+
+.copied-message p {
+  margin: 0;
+  font-weight: bold;
+  color: #155724;
 }
