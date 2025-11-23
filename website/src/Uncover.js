@@ -96,7 +96,8 @@ const Uncover = () => {
         console.error("Error loading player data:", error);
         // Keep showing loading state if fetch fails
       });
-  }, [activeSport, gameState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSport]); // gameState intentionally excluded to prevent infinite re-renders
 
   const s = gameState[activeSport];
   if (!s.playerData) return <p>Loading player data...</p>;
