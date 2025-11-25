@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Uncover.css";
-import UserStats from "./UserStats";
+import UserStatsModal from "./UserStatsModal";
 
 const topics = [
   "Bio",
@@ -103,9 +103,7 @@ const initialState: GameState = {
 
 const Uncover: React.FC = () => {
   const [activeSport, setActiveSport] = useState<SportType>("baseball");
-  const [showUserStats, setShowUserStats] = useState(false);
-  // Mock login state - set to true to simulate a logged-in user
-  const [isLoggedIn] = useState(true);
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
 
   const [gameState, setGameState] = useState<Record<SportType, GameState>>({
     baseball: { ...initialState },
@@ -406,7 +404,7 @@ const Uncover: React.FC = () => {
 
   return (
     <div className="uncover-game">
-      <div className="top-bar">
+      <div className="sports-section">
         <div className="sports-navbar">
           {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
             <div
@@ -418,14 +416,12 @@ const Uncover: React.FC = () => {
             </div>
           ))}
         </div>
-        {isLoggedIn && (
-          <button
-            className="user-stats-button"
-            onClick={() => setShowUserStats(true)}
-          >
-            User Stats
-          </button>
-        )}
+        <button
+          className="stats-button"
+          onClick={() => setIsStatsModalOpen(true)}
+        >
+          Stats
+        </button>
       </div>
 
       {s.message && (
@@ -554,25 +550,10 @@ const Uncover: React.FC = () => {
         </div>
       )}
 
-      {showUserStats && (
-        <div
-          className="user-stats-modal"
-          onClick={() => setShowUserStats(false)}
-        >
-          <div
-            className="user-stats-modal-content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="close-user-stats"
-              onClick={() => setShowUserStats(false)}
-            >
-              ✕
-            </button>
-            <UserStats />
-          </div>
-        </div>
-      )}
+      <UserStatsModal
+        isOpen={isStatsModalOpen}
+        onClose={() => setIsStatsModalOpen(false)}
+      />
     </div>
   );
 };

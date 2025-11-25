@@ -3,6 +3,34 @@
   font-family: Arial, sans-serif;
 }
 
+.sports-section {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.stats-button {
+  position: absolute;
+  top: 50px;
+  right: 2rem;
+  background-color: #00b4d8;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.stats-button:hover {
+  background-color: #0096c7;
+  transform: scale(1.05);
+}
+
 .score-section {
   display: flex;
   flex-direction: column;
@@ -517,84 +545,16 @@
   color: #155724;
 }
 
-/* User Stats Modal */
-.user-stats-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  overflow-y: auto;
-}
-
-.user-stats-modal-content {
-  background: linear-gradient(135deg, #00b4d8, #0077b6);
-  padding: 20px;
-  border-radius: 16px;
-  position: relative;
-  max-width: 1200px;
-  width: 95%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  margin: 20px;
-}
-
-.close-user-stats {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  cursor: pointer;
-  font-size: 1.8rem;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  font-weight: bold;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.close-user-stats:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: rotate(90deg);
-}
-
-/* Responsive Design for Mobile */
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
-  .user-stats-button {
+  .stats-button {
     position: static;
-    margin: 10px auto;
     display: block;
+    margin: 10px auto 0 auto;
+    width: auto;
   }
 
-  .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .sports-navbar {
-    justify-content: center;
-  }
-
-  .user-stats-modal-content {
-    width: 98%;
-    padding: 15px;
-    margin: 10px;
-  }
-
-  .close-user-stats {
-    top: 10px;
-    right: 10px;
+  .sports-section {
+    margin-bottom: 10px;
   }
 }
