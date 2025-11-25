@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Uncover.css";
+import UserStatsModal from "./UserStatsModal";
+import TodayStatsModal from "./TodayStatsModal";
 
 const topics = [
   "Bio",
@@ -43,6 +45,151 @@ const sportFiles: Record<SportType, string> = {
   baseball: "/UncoverBaseballData.json",
   basketball: "/UncoverBasketballData.json",
   football: "/UncoverFootballData.json",
+};
+
+// Mock Round Stats data (will be fetched from backend later)
+const mockRoundStats: Record<SportType, any> = {
+  baseball: {
+    playDate: "2025-11-19",
+    sport: "baseball",
+    name: "David Eckstein",
+    totalPlays: 100,
+    percentageCorrect: 81,
+    averageScore: 55,
+    averageCorrectScore: 88,
+    highestScore: 97,
+    mostCommonFirstTileFlipped: "playerInformation",
+    mostCommonLastTileFlipped: "photo",
+    mostCommonTileFlipped: "teamsPlayedOn",
+    leastCommonTileFlipped: "bio",
+    mostFlippedTracker: {
+      bio: 11,
+      careerStats: 11,
+      draftInformation: 11,
+      jerseyNumbers: 11,
+      personalAchievements: 11,
+      photo: 11,
+      playerInformation: 11,
+      teamsPlayedOn: 11,
+      yearsActive: 11,
+    },
+    firstFlippedTracker: {
+      bio: 12,
+      careerStats: 12,
+      draftInformation: 12,
+      jerseyNumbers: 12,
+      personalAchievements: 12,
+      photo: 12,
+      playerInformation: 12,
+      teamsPlayedOn: 12,
+      yearsActive: 12,
+    },
+    lastFlippedTracker: {
+      bio: 13,
+      careerStats: 13,
+      draftInformation: 13,
+      jerseyNumbers: 13,
+      personalAchievements: 13,
+      photo: 13,
+      playerInformation: 13,
+      teamsPlayedOn: 13,
+      yearsActive: 13,
+    },
+  },
+  basketball: {
+    playDate: "2025-11-19",
+    sport: "basketball",
+    name: "Rashard Lewis",
+    totalPlays: 100,
+    percentageCorrect: 88,
+    averageScore: 66,
+    averageCorrectScore: 90,
+    highestScore: 97,
+    mostCommonFirstTileFlipped: "playerInformation",
+    mostCommonLastTileFlipped: "photo",
+    mostCommonTileFlipped: "teamsPlayedOn",
+    leastCommonTileFlipped: "bio",
+    mostFlippedTracker: {
+      bio: 21,
+      careerStats: 21,
+      draftInformation: 21,
+      jerseyNumbers: 21,
+      personalAchievements: 21,
+      photo: 21,
+      playerInformation: 21,
+      teamsPlayedOn: 21,
+      yearsActive: 21,
+    },
+    firstFlippedTracker: {
+      bio: 22,
+      careerStats: 22,
+      draftInformation: 22,
+      jerseyNumbers: 22,
+      personalAchievements: 22,
+      photo: 22,
+      playerInformation: 22,
+      teamsPlayedOn: 22,
+      yearsActive: 22,
+    },
+    lastFlippedTracker: {
+      bio: 23,
+      careerStats: 23,
+      draftInformation: 23,
+      jerseyNumbers: 23,
+      personalAchievements: 23,
+      photo: 23,
+      playerInformation: 23,
+      teamsPlayedOn: 23,
+      yearsActive: 23,
+    },
+  },
+  football: {
+    playDate: "2025-11-19",
+    sport: "football",
+    name: "Steve McNair",
+    totalPlays: 100,
+    percentageCorrect: 90,
+    averageScore: 77,
+    averageCorrectScore: 90,
+    highestScore: 98,
+    mostCommonFirstTileFlipped: "playerInformation",
+    mostCommonLastTileFlipped: "photo",
+    mostCommonTileFlipped: "teamsPlayedOn",
+    leastCommonTileFlipped: "bio",
+    mostFlippedTracker: {
+      bio: 31,
+      careerStats: 31,
+      draftInformation: 31,
+      jerseyNumbers: 31,
+      personalAchievements: 31,
+      photo: 31,
+      playerInformation: 31,
+      teamsPlayedOn: 31,
+      yearsActive: 31,
+    },
+    firstFlippedTracker: {
+      bio: 32,
+      careerStats: 32,
+      draftInformation: 32,
+      jerseyNumbers: 32,
+      personalAchievements: 32,
+      photo: 32,
+      playerInformation: 32,
+      teamsPlayedOn: 32,
+      yearsActive: 32,
+    },
+    lastFlippedTracker: {
+      bio: 33,
+      careerStats: 33,
+      draftInformation: 33,
+      jerseyNumbers: 33,
+      personalAchievements: 33,
+      photo: 33,
+      playerInformation: 33,
+      teamsPlayedOn: 33,
+      yearsActive: 33,
+    },
+  },
 };
 
 interface PlayerData {
@@ -102,6 +249,8 @@ const initialState: GameState = {
 
 const Uncover: React.FC = () => {
   const [activeSport, setActiveSport] = useState<SportType>("baseball");
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
+  const [isTodayStatsModalOpen, setIsTodayStatsModalOpen] = useState(false);
 
   const [gameState, setGameState] = useState<Record<SportType, GameState>>({
     baseball: { ...initialState },
@@ -402,16 +551,24 @@ const Uncover: React.FC = () => {
 
   return (
     <div className="uncover-game">
-      <div className="sports-navbar">
-        {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
-          <div
-            key={sport}
-            className={`nav-tab ${activeSport === sport ? "active" : ""}`}
-            onClick={() => setActiveSport(sport)}
-          >
-            {sport.toUpperCase()}
-          </div>
-        ))}
+      <div className="sports-section">
+        <div className="sports-navbar">
+          {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
+            <div
+              key={sport}
+              className={`nav-tab ${activeSport === sport ? "active" : ""}`}
+              onClick={() => setActiveSport(sport)}
+            >
+              {sport.toUpperCase()}
+            </div>
+          ))}
+        </div>
+        <button
+          className="stats-button"
+          onClick={() => setIsStatsModalOpen(true)}
+        >
+          Stats
+        </button>
       </div>
 
       {s.message && (
@@ -424,6 +581,21 @@ const Uncover: React.FC = () => {
         )}
 
         {s.finalRank && <p className="final-rank">Your Rank: {s.finalRank}</p>}
+      </div>
+
+      <div className="puzzle-info">
+        <span className="puzzle-number">Puzzle #__</span>
+        <span className="separator">/</span>
+        <button
+          className="today-stats-link"
+          onClick={() => setIsTodayStatsModalOpen(true)}
+        >
+          Today's Stats
+        </button>
+        <span className="separator">/</span>
+        <button className="rules-link" disabled>
+          Rules
+        </button>
       </div>
 
       <div className="score-section">
@@ -536,9 +708,38 @@ const Uncover: React.FC = () => {
                 <p>has been copied</p>
               </div>
             )}
+
+            <div className="round-stats-section">
+              <h3>Today's Round Stats</h3>
+              <div className="round-stats-grid">
+                <div className="round-stat-item">
+                  <div className="round-stat-label">Games Played</div>
+                  <div className="round-stat-value">{mockRoundStats[activeSport].totalPlays}</div>
+                </div>
+                <div className="round-stat-item">
+                  <div className="round-stat-label">Average Score</div>
+                  <div className="round-stat-value">{mockRoundStats[activeSport].averageScore}</div>
+                </div>
+                <div className="round-stat-item">
+                  <div className="round-stat-label">Win Rate</div>
+                  <div className="round-stat-value">{mockRoundStats[activeSport].percentageCorrect}%</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
+
+      <UserStatsModal
+        isOpen={isStatsModalOpen}
+        onClose={() => setIsStatsModalOpen(false)}
+      />
+
+      <TodayStatsModal
+        isOpen={isTodayStatsModalOpen}
+        onClose={() => setIsTodayStatsModalOpen(false)}
+        roundStats={s.finalRank ? mockRoundStats[activeSport] : null}
+      />
     </div>
   );
 };

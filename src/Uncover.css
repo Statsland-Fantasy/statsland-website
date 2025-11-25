@@ -3,6 +3,76 @@
   font-family: Arial, sans-serif;
 }
 
+.sports-section {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.stats-button {
+  position: absolute;
+  top: 50px;
+  right: 2rem;
+  background-color: #00b4d8;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.stats-button:hover {
+  background-color: #0096c7;
+  transform: scale(1.05);
+}
+
+.puzzle-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 15px 0 10px 0;
+  font-size: 1rem;
+  color: white;
+}
+
+.puzzle-number {
+  font-weight: 600;
+}
+
+.separator {
+  color: #b0b0b0;
+}
+
+.today-stats-link,
+.rules-link {
+  background: none;
+  border: none;
+  color: #00b4d8;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+.today-stats-link:hover {
+  color: #0096c7;
+}
+
+.rules-link:disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .score-section {
   display: flex;
   flex-direction: column;
@@ -380,6 +450,8 @@
   position: relative;
   max-width: 400px;
   width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
@@ -485,4 +557,68 @@
   margin: 0;
   font-weight: bold;
   color: #155724;
+}
+
+/* Round Stats in Results Modal */
+.round-stats-section {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.round-stats-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.3rem;
+  color: #0077b6;
+  text-align: center;
+}
+
+.round-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.round-stat-item {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.round-stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.round-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0077b6;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .stats-button {
+    position: static;
+    display: block;
+    margin: 10px auto 0 auto;
+    width: auto;
+  }
+
+  .sports-section {
+    margin-bottom: 10px;
+  }
+
+  .puzzle-info {
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+
+  .round-stats-grid {
+    grid-template-columns: 1fr;
+  }
 }

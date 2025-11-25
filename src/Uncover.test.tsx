@@ -3,8 +3,10 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Uncover from "./Uncover";
 
-// Mock CSS import
+// Mock CSS imports
 jest.mock("./Uncover.css", () => ({}));
+jest.mock("./UserStatsModal.css", () => ({}));
+jest.mock("./TodayStatsModal.css", () => ({}));
 
 // Mock fetch
 global.fetch = jest.fn() as jest.Mock;
@@ -1689,6 +1691,187 @@ describe("Uncover Component", () => {
           "playerIndex_baseball",
           "0"
         );
+      });
+    });
+  });
+
+  describe("Puzzle Info Section", () => {
+    test("renders puzzle info section with all elements", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("Puzzle #__")).toBeInTheDocument();
+        expect(screen.getByText("Today's Stats")).toBeInTheDocument();
+        expect(screen.getByText("Rules")).toBeInTheDocument();
+      });
+    });
+
+    test("Today's Stats button is clickable", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const todayStatsButton = screen.getByText("Today's Stats");
+        expect(todayStatsButton).toBeInTheDocument();
+        fireEvent.click(todayStatsButton);
+      });
+    });
+
+    test("Rules button is disabled", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const rulesButton = screen.getByText("Rules");
+        expect(rulesButton).toBeDisabled();
+      });
+    });
+  });
+
+  describe("Today's Stats Modal", () => {
+    test("opens Today's Stats modal when button is clicked", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const todayStatsButton = screen.getByText("Today's Stats");
+        fireEvent.click(todayStatsButton);
+      });
+
+      await waitFor(() => {
+        // Should show "Complete today's game" message since game not won yet
+        expect(
+          screen.getByText("Complete today's game to see your results here.")
+        ).toBeInTheDocument();
+      });
+    });
+
+    test("shows round stats after winning", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      // Win the game first
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/you guessed it right/i)).toBeInTheDocument();
+      });
+
+      // Now click Today's Stats
+      const todayStatsButton = screen.getByText("Today's Stats");
+      fireEvent.click(todayStatsButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Today's Baseball Stats")).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("Round Stats in Results Modal", () => {
+    test("results modal includes round stats section", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText("Today's Round Stats")).toBeInTheDocument();
+      });
+    });
+
+    test("round stats display correct values", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByPlaceholderText(/enter player name/i)
+        ).toBeInTheDocument();
+      });
+
+      const input = screen.getByPlaceholderText(/enter player name/i);
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      fireEvent.change(input, { target: { value: "Babe Ruth" } });
+      fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        const resultsModal = screen
+          .getByText(/correct! your score is/i)
+          .closest(".results-modal-content");
+
+        // Check for mock round stats values (baseball)
+        expect(resultsModal).toHaveTextContent("100"); // totalPlays
+        expect(resultsModal).toHaveTextContent("55"); // averageScore
+        expect(resultsModal).toHaveTextContent("81%"); // percentageCorrect
+      });
+    });
+  });
+
+  describe("Stats Button and Modal", () => {
+    test("renders Stats button in the sports section", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /^stats$/i })).toBeInTheDocument();
+      });
+    });
+
+    test("Stats button is positioned in the sports section", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        const statsButton = screen.getByRole("button", { name: /^stats$/i });
+        const sportsSection = statsButton.closest(".sports-section");
+        expect(sportsSection).toBeInTheDocument();
+      });
+    });
+
+    test("clicking Stats button opens the stats modal", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /^stats$/i })).toBeInTheDocument();
+      });
+
+      const statsButton = screen.getByRole("button", { name: /^stats$/i });
+      fireEvent.click(statsButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("User Statistics")).toBeInTheDocument();
+      });
+    });
+
+    test("stats modal displays when opened", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: /^stats$/i })).toBeInTheDocument();
+      });
+
+      const statsButton = screen.getByRole("button", { name: /^stats$/i });
+      fireEvent.click(statsButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("User Statistics")).toBeInTheDocument();
+        expect(screen.getByText(/FirstTestProdUser123/)).toBeInTheDocument();
+        expect(screen.getByText("Basketball")).toBeInTheDocument();
+        expect(screen.getByText("Baseball")).toBeInTheDocument();
+        expect(screen.getByText("Football")).toBeInTheDocument();
       });
     });
   });
