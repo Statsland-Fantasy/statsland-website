@@ -561,14 +561,14 @@ const Uncover: React.FC = () => {
 
       <div className="puzzle-info">
         <span className="puzzle-number">Puzzle #__</span>
-        <span className="separator">/</span>
+        <span className="separator">•</span>
         <button
           className="today-stats-link"
           onClick={() => setIsTodayStatsModalOpen(true)}
         >
           Today's Stats
         </button>
-        <span className="separator">/</span>
+        <span className="separator">•</span>
         <button className="rules-link" disabled>
           Rules
         </button>

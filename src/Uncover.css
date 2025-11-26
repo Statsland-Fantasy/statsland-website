@@ -48,9 +48,10 @@
 
 .score-and-messages {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin: 20px 0 15px 0;
   min-height: 80px;
 }
@@ -64,9 +65,10 @@
 .messages-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5rem;
   min-width: 200px;
+  text-align: center;
 }
 
 .score-label {
