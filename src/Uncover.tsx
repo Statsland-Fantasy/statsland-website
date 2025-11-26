@@ -47,11 +47,11 @@ const sportFiles: Record<SportType, string> = {
 };
 
 // Mock Round Stats data (will be fetched from backend later)
-const mockRoundStats: Record<SportType, any> = {
+// Note: name field will be populated dynamically from player data
+const mockRoundStatsTemplate: Record<SportType, any> = {
   baseball: {
     playDate: "2025-11-19",
     sport: "baseball",
-    name: "David Eckstein",
     totalPlays: 100,
     percentageCorrect: 81,
     averageScore: 55,
@@ -98,7 +98,6 @@ const mockRoundStats: Record<SportType, any> = {
   basketball: {
     playDate: "2025-11-19",
     sport: "basketball",
-    name: "Rashard Lewis",
     totalPlays: 100,
     percentageCorrect: 88,
     averageScore: 66,
@@ -145,7 +144,6 @@ const mockRoundStats: Record<SportType, any> = {
   football: {
     playDate: "2025-11-19",
     sport: "football",
-    name: "Steve McNair",
     totalPlays: 100,
     percentageCorrect: 90,
     averageScore: 77,
@@ -561,18 +559,6 @@ const Uncover: React.FC = () => {
         ))}
       </div>
 
-      {s.message && (
-        <p className={`guess-message ${s.messageType}`}>{s.message}</p>
-      )}
-
-      <div className="guess-and-rank">
-        {s.hint && !s.finalRank && (
-          <p className="guess-message hint">Hint: Player Initials — {s.hint}</p>
-        )}
-
-        {s.finalRank && <p className="final-rank">Your Rank: {s.finalRank}</p>}
-      </div>
-
       <div className="puzzle-info">
         <span className="puzzle-number">Puzzle #__</span>
         <span className="separator">/</span>
@@ -588,9 +574,21 @@ const Uncover: React.FC = () => {
         </button>
       </div>
 
-      <div className="score-section">
-        <p className="score-label">Score</p>
-        <div className="score-box">{s.score}</div>
+      <div className="score-and-messages">
+        <div className="score-section">
+          <p className="score-label">Score</p>
+          <div className="score-box">{s.score}</div>
+        </div>
+
+        <div className="messages-section">
+          {s.message && (
+            <p className={`guess-message ${s.messageType}`}>{s.message}</p>
+          )}
+          {s.hint && !s.finalRank && (
+            <p className="guess-message hint">Hint: Player Initials — {s.hint}</p>
+          )}
+          {s.finalRank && <p className="final-rank">Your Rank: {s.finalRank}</p>}
+        </div>
       </div>
 
       <div className="stats-container">
@@ -704,15 +702,15 @@ const Uncover: React.FC = () => {
               <div className="round-stats-grid">
                 <div className="round-stat-item">
                   <div className="round-stat-label">Games Played</div>
-                  <div className="round-stat-value">{mockRoundStats[activeSport].totalPlays}</div>
+                  <div className="round-stat-value">{mockRoundStatsTemplate[activeSport].totalPlays}</div>
                 </div>
                 <div className="round-stat-item">
                   <div className="round-stat-label">Average Score</div>
-                  <div className="round-stat-value">{mockRoundStats[activeSport].averageScore}</div>
+                  <div className="round-stat-value">{mockRoundStatsTemplate[activeSport].averageScore}</div>
                 </div>
                 <div className="round-stat-item">
                   <div className="round-stat-label">Win Rate</div>
-                  <div className="round-stat-value">{mockRoundStats[activeSport].percentageCorrect}%</div>
+                  <div className="round-stat-value">{mockRoundStatsTemplate[activeSport].percentageCorrect}%</div>
                 </div>
               </div>
             </div>
@@ -723,7 +721,10 @@ const Uncover: React.FC = () => {
       <TodayStatsModal
         isOpen={isTodayStatsModalOpen}
         onClose={() => setIsTodayStatsModalOpen(false)}
-        roundStats={mockRoundStats[activeSport]}
+        roundStats={{
+          ...mockRoundStatsTemplate[activeSport],
+          name: s.playerData?.Name || "Unknown Player",
+        }}
       />
     </div>
   );

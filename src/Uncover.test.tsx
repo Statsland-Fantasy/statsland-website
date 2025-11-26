@@ -1735,9 +1735,9 @@ describe("Uncover Component", () => {
       });
 
       await waitFor(() => {
-        // Should show mock round stats
+        // Should show mock round stats with dynamic player name
         expect(screen.getByText("Today's Baseball Stats")).toBeInTheDocument();
-        expect(screen.getByText("David Eckstein")).toBeInTheDocument();
+        expect(screen.getByText("Babe Ruth")).toBeInTheDocument(); // Dynamic from player data
       });
     });
 

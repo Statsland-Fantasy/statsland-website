@@ -26,7 +26,7 @@
 .rules-link {
   background: none;
   border: none;
-  color: #00b4d8;
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -37,7 +37,7 @@
 }
 
 .today-stats-link:hover {
-  color: #0096c7;
+  color: #00b4d8;
 }
 
 .rules-link:disabled {
@@ -46,11 +46,27 @@
   opacity: 0.6;
 }
 
+.score-and-messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 20px 0 15px 0;
+  min-height: 80px;
+}
+
 .score-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0 15px 0;
+}
+
+.messages-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 200px;
 }
 
 .score-label {
@@ -578,6 +594,16 @@
   .puzzle-info {
     flex-wrap: wrap;
     font-size: 0.9rem;
+  }
+
+  .score-and-messages {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .messages-section {
+    align-items: center;
+    text-align: center;
   }
 
   .round-stats-grid {
