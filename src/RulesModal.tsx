@@ -1,0 +1,339 @@
+import React, { useState } from "react";
+import "./RulesModal.css";
+
+interface RulesModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+// Tile category tooltips
+const tileTooltips: Record<string, string> = {
+  Bio: "Gives the birth date and location of the athlete",
+  "Player Information":
+    "Gives the physical measurements and position of the athlete",
+  "Draft Information":
+    'Gives the draft information of the athlete, if the player was not acquired via a draft of any kind, the value will be "Undrafted"',
+  "Years Active":
+    "Gives the years the athlete was active and participated in a major league game that season",
+  "Teams Played On":
+    "Gives the teams the athlete has played on, in chronological order, but not the duration or years of tenure on each team",
+  "Jersey Numbers":
+    "Gives the jersey numbers the athlete has worn, in chronological order. Duplicate numbers even if worn on different teams will be removed",
+  "Career Stats":
+    "High-level career-long stats for the athlete. Varies by sport",
+};
+
+// Acronym definitions
+const acronymDefinitions: Record<string, { full: string; link?: string }> = {
+  BA: { full: "Batting Average" },
+  HR: { full: "Home Runs" },
+  SB: { full: "Stolen Bases" },
+  WAR: {
+    full: "Wins Above Replacement",
+    link: "https://www.baseball-reference.com/about/war_explained.shtml",
+  },
+  PTS: { full: "Points per Game" },
+  REB: { full: "Rebounds per Game" },
+  AST: { full: "Assists per game" },
+  BPM: {
+    full: "Box Plus Minus",
+    link: "https://www.basketball-reference.com/about/bpm2.html",
+  },
+  "Pass YDS": { full: "Passing Yards" },
+  "Pass TDS": { full: "Passing TDs" },
+  INT: { full: "Interceptions" },
+  AV: {
+    full: "Approximate Value",
+    link: "https://www.pro-football-reference.com/about/approximate_value.htm",
+  },
+  RUSH: { full: "Rushing Attempts" },
+  "Rushing YDS": { full: "Rushing Yards" },
+  TDS: { full: "Rushing TDs" },
+  REC: { full: "Receptions" },
+  "Rec YDS": { full: "Receiving Yards" },
+  "Rec TDs": { full: "Receiving TDs" },
+  GS: { full: "Games Started" },
+  "Solo Tackles": { full: "Solo Tackles" },
+  Sacks: { full: "Sacks" },
+  HOF: { full: "Hall of Fame" },
+  "WS Champ": { full: "World Series Champion" },
+  MVP: { full: "Most Valuable Player" },
+  "Cy Young": { full: "Cy Young Winner" },
+  ROY: { full: "Rookie of the Year" },
+  "All-Star": { full: "All-Star Appearances" },
+  "NBA Champ": { full: "NBA Championship winner" },
+  "6MOY": { full: "Sixth Man of the Year" },
+  MIPOY: { full: "Most Improved Player of the Year" },
+  "All-NBA": { full: "All-NBA team appearance" },
+  "All-Defensive": { full: "All-Defensive team appearance" },
+  "Finals MVP": { full: "NBA Finals MVP" },
+  "Pro-Bowls": { full: "Pro Bowl Appearances" },
+  OPOY: { full: "Offensive player of the Year" },
+  DPOY: { full: "Defensive player of the Year" },
+  "All-Pro": { full: "an All-Pro team appearance" },
+  "SB MVP": { full: "Super Bowl MVP" },
+};
+
+const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
+  const [hoveredTile, setHoveredTile] = useState<string | null>(null);
+  const [hoveredAcronym, setHoveredAcronym] = useState<string | null>(null);
+
+  if (!isOpen) return null;
+
+  const renderTileWithTooltip = (tileName: string) => {
+    return (
+      <span
+        className="tile-name-hover"
+        onMouseEnter={() => setHoveredTile(tileName)}
+        onMouseLeave={() => setHoveredTile(null)}
+      >
+        {tileName}
+        {hoveredTile === tileName && (
+          <span className="tooltip">{tileTooltips[tileName]}</span>
+        )}
+      </span>
+    );
+  };
+
+  const renderAcronym = (acronym: string, additionalText?: string) => {
+    const def = acronymDefinitions[acronym];
+    if (!def) {
+      return (
+        <span>
+          {acronym}
+          {additionalText && ` ${additionalText}`}
+        </span>
+      );
+    }
+
+    return (
+      <span
+        className="acronym-hover"
+        onMouseEnter={() => setHoveredAcronym(acronym)}
+        onMouseLeave={() => setHoveredAcronym(null)}
+      >
+        {acronym}
+        {additionalText && ` ${additionalText}`}
+        {hoveredAcronym === acronym && (
+          <span className="tooltip">
+            {def.full}
+            {def.link && (
+              <>
+                {" "}
+                (
+                <a
+                  href={def.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tooltip-link"
+                >
+                  Explanation Article
+                </a>
+                )
+              </>
+            )}
+          </span>
+        )}
+      </span>
+    );
+  };
+
+  return (
+    <div className="rules-modal-overlay" onClick={onClose}>
+      <div className="rules-modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-rules-button" onClick={onClose}>
+          ×
+        </button>
+
+        <h2 className="rules-title">How to Play — Athlete Unknown</h2>
+
+        <div className="rules-body">
+          <p className="rules-intro">
+            Guess the mystery athlete flipping as few information tiles as
+            possible.
+          </p>
+
+          <div className="rules-section">
+            <h3>Scoring</h3>
+            <ul>
+              <li>
+                <strong>Start:</strong> 100 points
+              </li>
+              <li>
+                <strong>Tile flip:</strong> −3 pts (Photo: −6 pts)
+              </li>
+              <li>
+                <strong>Wrong guess:</strong> −2 pts
+              </li>
+            </ul>
+          </div>
+
+          <div className="rules-section">
+            <h3>Hints & Help</h3>
+            <ul>
+              <li>Close spelling = hint / auto-correct after multiple close attempts</li>
+              <li>Stuck & &lt;80 pts = initials revealed</li>
+              <li>
+                Difficulty increases Mon → Sat; Sundays are themed
+              </li>
+            </ul>
+          </div>
+
+          <div className="rules-section">
+            <h3>Tile Information</h3>
+            <p className="tiles-intro">
+              Each tile reveals info about the athlete:
+            </p>
+            <div className="tiles-list">
+              {renderTileWithTooltip("Bio")} •{" "}
+              {renderTileWithTooltip("Player Information")} •{" "}
+              {renderTileWithTooltip("Draft Information")} •{" "}
+              {renderTileWithTooltip("Years Active")} •{" "}
+              {renderTileWithTooltip("Teams Played On")} •{" "}
+              {renderTileWithTooltip("Jersey Numbers")} •{" "}
+              {renderTileWithTooltip("Career Stats")} • Personal Achievements •
+              Photo
+            </div>
+          </div>
+
+          <div className="rules-section">
+            <h3>Career Stats by Sport</h3>
+
+            <div className="sport-stats">
+              <h4>Baseball</h4>
+              <ul>
+                <li>{renderAcronym("BA")}</li>
+                <li>{renderAcronym("HR")}</li>
+                <li>{renderAcronym("SB")}</li>
+                <li>{renderAcronym("WAR")}</li>
+              </ul>
+            </div>
+
+            <div className="sport-stats">
+              <h4>Basketball</h4>
+              <ul>
+                <li>{renderAcronym("PTS")}</li>
+                <li>{renderAcronym("REB")}</li>
+                <li>{renderAcronym("AST")}</li>
+                <li>{renderAcronym("BPM")}</li>
+              </ul>
+            </div>
+
+            <div className="sport-stats">
+              <h4>Football</h4>
+
+              <div className="position-group">
+                <h5>Quarterback</h5>
+                <ul>
+                  <li>{renderAcronym("Pass YDS")}</li>
+                  <li>{renderAcronym("Pass TDS")}</li>
+                  <li>{renderAcronym("INT")}</li>
+                  <li>{renderAcronym("AV")}</li>
+                </ul>
+              </div>
+
+              <div className="position-group">
+                <h5>Running Back</h5>
+                <ul>
+                  <li>{renderAcronym("RUSH")}</li>
+                  <li>{renderAcronym("Rushing YDS")}</li>
+                  <li>{renderAcronym("TDS")}</li>
+                  <li>{renderAcronym("AV")}</li>
+                </ul>
+              </div>
+
+              <div className="position-group">
+                <h5>Wide Receiver & Tight End</h5>
+                <ul>
+                  <li>{renderAcronym("REC")}</li>
+                  <li>{renderAcronym("Rec YDS")}</li>
+                  <li>{renderAcronym("Rec TDs")}</li>
+                  <li>{renderAcronym("AV")}</li>
+                </ul>
+              </div>
+
+              <div className="position-group">
+                <h5>Offensive Line</h5>
+                <ul>
+                  <li>{renderAcronym("GS")}</li>
+                  <li>{renderAcronym("AV")}</li>
+                </ul>
+              </div>
+
+              <div className="position-group">
+                <h5>Defensive Line</h5>
+                <ul>
+                  <li>{renderAcronym("GS")}</li>
+                  <li>{renderAcronym("Solo Tackles")}</li>
+                  <li>{renderAcronym("Sacks")}</li>
+                  <li>{renderAcronym("AV")}</li>
+                </ul>
+              </div>
+
+              <div className="position-group">
+                <h5>Defensive Back</h5>
+                <ul>
+                  <li>{renderAcronym("GS")}</li>
+                  <li>{renderAcronym("Solo Tackles")}</li>
+                  <li>Interceptions</li>
+                  <li>{renderAcronym("AV")}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="rules-section">
+            <h3>Personal Achievements by Sport</h3>
+
+            <div className="sport-stats">
+              <h4>Baseball</h4>
+              <ul>
+                <li>{renderAcronym("HOF")}</li>
+                <li>{renderAcronym("WS Champ")}</li>
+                <li>{renderAcronym("MVP")}</li>
+                <li>{renderAcronym("Cy Young")}</li>
+                <li>{renderAcronym("ROY")}</li>
+                <li>{renderAcronym("All-Star")}</li>
+              </ul>
+            </div>
+
+            <div className="sport-stats">
+              <h4>Basketball</h4>
+              <ul>
+                <li>{renderAcronym("HOF")}</li>
+                <li>{renderAcronym("NBA Champ")}</li>
+                <li>{renderAcronym("MVP")}</li>
+                <li>{renderAcronym("ROY")}</li>
+                <li>{renderAcronym("6MOY")}</li>
+                <li>{renderAcronym("MIPOY")}</li>
+                <li>{renderAcronym("All-NBA")}</li>
+                <li>{renderAcronym("All-Defensive")}</li>
+                <li>{renderAcronym("Finals MVP")}</li>
+                <li>{renderAcronym("All-Star")}</li>
+              </ul>
+            </div>
+
+            <div className="sport-stats">
+              <h4>Football</h4>
+              <ul>
+                <li>{renderAcronym("HOF")}</li>
+                <li>{renderAcronym("Pro-Bowls")}</li>
+                <li>{renderAcronym("OPOY")}</li>
+                <li>{renderAcronym("DPOY")}</li>
+                <li>{renderAcronym("ROY")}</li>
+                <li>{renderAcronym("All-Pro")}</li>
+                <li>{renderAcronym("SB MVP")}</li>
+              </ul>
+            </div>
+          </div>
+
+          <p className="rules-footer">
+            Share your score and play again tomorrow!
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RulesModal;
