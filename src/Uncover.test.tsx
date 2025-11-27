@@ -1692,4 +1692,276 @@ describe("Uncover Component", () => {
       });
     });
   });
+
+  describe("Puzzle Info Section", () => {
+    test("renders puzzle info section", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      expect(screen.getByText("Puzzle #__")).toBeInTheDocument();
+    });
+
+    test("renders Rules button", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      expect(rulesButton).toBeInTheDocument();
+      expect(rulesButton).toHaveClass("rules-link");
+    });
+
+    test("puzzle number has correct styling", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const puzzleNumber = screen.getByText("Puzzle #__");
+      expect(puzzleNumber).toHaveClass("puzzle-number");
+    });
+
+    test("separators are present", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const separators = document.querySelectorAll(".separator");
+      expect(separators.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe("Rules Modal Integration", () => {
+    test("does not show Rules modal by default", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      expect(screen.queryByText("How to Play — Athlete Unknown")).not.toBeInTheDocument();
+    });
+
+    test("opens Rules modal when Rules button is clicked", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+    });
+
+    test("Rules modal displays game rules", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+        expect(screen.getByText(/Guess the mystery athlete/i)).toBeInTheDocument();
+        expect(screen.getByText(/100 points/i)).toBeInTheDocument();
+        expect(screen.getByText("Scoring")).toBeInTheDocument();
+      });
+    });
+
+    test("closes Rules modal when close button is clicked", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+
+      const closeButton = document.querySelector(".close-rules-button");
+      expect(closeButton).toBeInTheDocument();
+
+      if (closeButton) {
+        fireEvent.click(closeButton);
+      }
+
+      await waitFor(() => {
+        expect(screen.queryByText("How to Play — Athlete Unknown")).not.toBeInTheDocument();
+      });
+    });
+
+    test("closes Rules modal when clicking outside", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+
+      const overlay = document.querySelector(".rules-modal-overlay");
+      expect(overlay).toBeInTheDocument();
+
+      if (overlay) {
+        fireEvent.click(overlay);
+      }
+
+      await waitFor(() => {
+        expect(screen.queryByText("How to Play — Athlete Unknown")).not.toBeInTheDocument();
+      });
+    });
+
+    test("game remains functional after Rules modal", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      // Open Rules modal
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+
+      // Close modal
+      const closeButton = document.querySelector(".close-rules-button");
+      if (closeButton) {
+        fireEvent.click(closeButton);
+      }
+
+      await waitFor(() => {
+        expect(screen.queryByText("How to Play — Athlete Unknown")).not.toBeInTheDocument();
+      });
+
+      // Rules button should still be there
+      expect(screen.getByText("Rules")).toBeInTheDocument();
+
+      // Game should still be functional
+      await waitFor(() => {
+        expect(screen.getByPlaceholderText(/enter player name/i)).toBeInTheDocument();
+      });
+    });
+
+    test("modal content does not close when clicking inside it", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+
+      const modalContent = document.querySelector(".rules-modal-content");
+      expect(modalContent).toBeInTheDocument();
+
+      if (modalContent) {
+        fireEvent.click(modalContent);
+      }
+
+      // Modal should still be open
+      expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+    });
+
+    test("Rules modal displays all sport sections", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      fireEvent.click(rulesButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+
+        // Check for baseball stats
+        expect(screen.getByText("BA")).toBeInTheDocument();
+        expect(screen.getByText("HR")).toBeInTheDocument();
+
+        // Check for basketball stats
+        expect(screen.getByText("PTS")).toBeInTheDocument();
+        expect(screen.getByText("REB")).toBeInTheDocument();
+
+        // Check for football stats
+        expect(screen.getByText("Quarterback")).toBeInTheDocument();
+        expect(screen.getByText("Running Back")).toBeInTheDocument();
+      });
+    });
+
+    test("Rules button is always enabled", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+      expect(rulesButton).not.toBeDisabled();
+    });
+
+    test("can open Rules modal multiple times", async () => {
+      render(<Uncover />);
+
+      await waitFor(() => {
+        expect(screen.getByText("BASEBALL")).toBeInTheDocument();
+      });
+
+      const rulesButton = screen.getByText("Rules");
+
+      // Open first time
+      fireEvent.click(rulesButton);
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+
+      // Close
+      const closeButton1 = document.querySelector(".close-rules-button");
+      if (closeButton1) {
+        fireEvent.click(closeButton1);
+      }
+
+      await waitFor(() => {
+        expect(screen.queryByText("How to Play — Athlete Unknown")).not.toBeInTheDocument();
+      });
+
+      // Open second time
+      fireEvent.click(rulesButton);
+      await waitFor(() => {
+        expect(screen.getByText("How to Play — Athlete Unknown")).toBeInTheDocument();
+      });
+    });
+  });
 });

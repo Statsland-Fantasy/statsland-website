@@ -95,7 +95,7 @@ const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
     );
   };
 
-  const renderAcronym = (acronym: string, additionalText?: string) => {
+  const renderAcronym = (acronym: string, additionalText?: string, uniqueId?: string) => {
     const def = acronymDefinitions[acronym];
     if (!def) {
       return (
@@ -106,15 +106,18 @@ const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
       );
     }
 
+    // Create a unique identifier for this specific acronym instance
+    const hoverKey = uniqueId || acronym;
+
     return (
       <span
         className="acronym-hover"
-        onMouseEnter={() => setHoveredAcronym(acronym)}
+        onMouseEnter={() => setHoveredAcronym(hoverKey)}
         onMouseLeave={() => setHoveredAcronym(null)}
       >
         {acronym}
         {additionalText && ` ${additionalText}`}
-        {hoveredAcronym === acronym && (
+        {hoveredAcronym === hoverKey && (
           <span className="tooltip">
             {def.full}
             {def.link && (
@@ -202,20 +205,20 @@ const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
             <div className="sport-stats">
               <h4>Baseball</h4>
               <ul>
-                <li>{renderAcronym("BA")}</li>
-                <li>{renderAcronym("HR")}</li>
-                <li>{renderAcronym("SB")}</li>
-                <li>{renderAcronym("WAR")}</li>
+                <li>{renderAcronym("BA", undefined, "baseball-ba")}</li>
+                <li>{renderAcronym("HR", undefined, "baseball-hr")}</li>
+                <li>{renderAcronym("SB", undefined, "baseball-sb")}</li>
+                <li>{renderAcronym("WAR", undefined, "baseball-war")}</li>
               </ul>
             </div>
 
             <div className="sport-stats">
               <h4>Basketball</h4>
               <ul>
-                <li>{renderAcronym("PTS")}</li>
-                <li>{renderAcronym("REB")}</li>
-                <li>{renderAcronym("AST")}</li>
-                <li>{renderAcronym("BPM")}</li>
+                <li>{renderAcronym("PTS", undefined, "basketball-pts")}</li>
+                <li>{renderAcronym("REB", undefined, "basketball-reb")}</li>
+                <li>{renderAcronym("AST", undefined, "basketball-ast")}</li>
+                <li>{renderAcronym("BPM", undefined, "basketball-bpm")}</li>
               </ul>
             </div>
 
@@ -225,58 +228,58 @@ const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
               <div className="position-group">
                 <h5>Quarterback</h5>
                 <ul>
-                  <li>{renderAcronym("Pass YDS")}</li>
-                  <li>{renderAcronym("Pass TDS")}</li>
-                  <li>{renderAcronym("INT")}</li>
-                  <li>{renderAcronym("AV")}</li>
+                  <li>{renderAcronym("Pass YDS", undefined, "football-qb-passyds")}</li>
+                  <li>{renderAcronym("Pass TDS", undefined, "football-qb-passtds")}</li>
+                  <li>{renderAcronym("INT", undefined, "football-qb-int")}</li>
+                  <li>{renderAcronym("AV", undefined, "football-qb-av")}</li>
                 </ul>
               </div>
 
               <div className="position-group">
                 <h5>Running Back</h5>
                 <ul>
-                  <li>{renderAcronym("RUSH")}</li>
-                  <li>{renderAcronym("Rushing YDS")}</li>
-                  <li>{renderAcronym("TDS")}</li>
-                  <li>{renderAcronym("AV")}</li>
+                  <li>{renderAcronym("RUSH", undefined, "football-rb-rush")}</li>
+                  <li>{renderAcronym("Rushing YDS", undefined, "football-rb-rushingyds")}</li>
+                  <li>{renderAcronym("TDS", undefined, "football-rb-tds")}</li>
+                  <li>{renderAcronym("AV", undefined, "football-rb-av")}</li>
                 </ul>
               </div>
 
               <div className="position-group">
                 <h5>Wide Receiver & Tight End</h5>
                 <ul>
-                  <li>{renderAcronym("REC")}</li>
-                  <li>{renderAcronym("Rec YDS")}</li>
-                  <li>{renderAcronym("Rec TDs")}</li>
-                  <li>{renderAcronym("AV")}</li>
+                  <li>{renderAcronym("REC", undefined, "football-wr-rec")}</li>
+                  <li>{renderAcronym("Rec YDS", undefined, "football-wr-recyds")}</li>
+                  <li>{renderAcronym("Rec TDs", undefined, "football-wr-rectds")}</li>
+                  <li>{renderAcronym("AV", undefined, "football-wr-av")}</li>
                 </ul>
               </div>
 
               <div className="position-group">
                 <h5>Offensive Line</h5>
                 <ul>
-                  <li>{renderAcronym("GS")}</li>
-                  <li>{renderAcronym("AV")}</li>
+                  <li>{renderAcronym("GS", undefined, "football-ol-gs")}</li>
+                  <li>{renderAcronym("AV", undefined, "football-ol-av")}</li>
                 </ul>
               </div>
 
               <div className="position-group">
                 <h5>Defensive Line</h5>
                 <ul>
-                  <li>{renderAcronym("GS")}</li>
-                  <li>{renderAcronym("Solo Tackles")}</li>
-                  <li>{renderAcronym("Sacks")}</li>
-                  <li>{renderAcronym("AV")}</li>
+                  <li>{renderAcronym("GS", undefined, "football-dl-gs")}</li>
+                  <li>{renderAcronym("Solo Tackles", undefined, "football-dl-tackles")}</li>
+                  <li>{renderAcronym("Sacks", undefined, "football-dl-sacks")}</li>
+                  <li>{renderAcronym("AV", undefined, "football-dl-av")}</li>
                 </ul>
               </div>
 
               <div className="position-group">
                 <h5>Defensive Back</h5>
                 <ul>
-                  <li>{renderAcronym("GS")}</li>
-                  <li>{renderAcronym("Solo Tackles")}</li>
+                  <li>{renderAcronym("GS", undefined, "football-db-gs")}</li>
+                  <li>{renderAcronym("Solo Tackles", undefined, "football-db-tackles")}</li>
                   <li>Interceptions</li>
-                  <li>{renderAcronym("AV")}</li>
+                  <li>{renderAcronym("AV", undefined, "football-db-av")}</li>
                 </ul>
               </div>
             </div>
@@ -288,41 +291,41 @@ const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
             <div className="sport-stats">
               <h4>Baseball</h4>
               <ul>
-                <li>{renderAcronym("HOF")}</li>
-                <li>{renderAcronym("WS Champ")}</li>
-                <li>{renderAcronym("MVP")}</li>
-                <li>{renderAcronym("Cy Young")}</li>
-                <li>{renderAcronym("ROY")}</li>
-                <li>{renderAcronym("All-Star")}</li>
+                <li>{renderAcronym("HOF", undefined, "baseball-hof")}</li>
+                <li>{renderAcronym("WS Champ", undefined, "baseball-wschamp")}</li>
+                <li>{renderAcronym("MVP", undefined, "baseball-mvp")}</li>
+                <li>{renderAcronym("Cy Young", undefined, "baseball-cyyoung")}</li>
+                <li>{renderAcronym("ROY", undefined, "baseball-roy")}</li>
+                <li>{renderAcronym("All-Star", undefined, "baseball-allstar")}</li>
               </ul>
             </div>
 
             <div className="sport-stats">
               <h4>Basketball</h4>
               <ul>
-                <li>{renderAcronym("HOF")}</li>
-                <li>{renderAcronym("NBA Champ")}</li>
-                <li>{renderAcronym("MVP")}</li>
-                <li>{renderAcronym("ROY")}</li>
-                <li>{renderAcronym("6MOY")}</li>
-                <li>{renderAcronym("MIPOY")}</li>
-                <li>{renderAcronym("All-NBA")}</li>
-                <li>{renderAcronym("All-Defensive")}</li>
-                <li>{renderAcronym("Finals MVP")}</li>
-                <li>{renderAcronym("All-Star")}</li>
+                <li>{renderAcronym("HOF", undefined, "basketball-hof")}</li>
+                <li>{renderAcronym("NBA Champ", undefined, "basketball-nbachamp")}</li>
+                <li>{renderAcronym("MVP", undefined, "basketball-mvp")}</li>
+                <li>{renderAcronym("ROY", undefined, "basketball-roy")}</li>
+                <li>{renderAcronym("6MOY", undefined, "basketball-6moy")}</li>
+                <li>{renderAcronym("MIPOY", undefined, "basketball-mipoy")}</li>
+                <li>{renderAcronym("All-NBA", undefined, "basketball-allnba")}</li>
+                <li>{renderAcronym("All-Defensive", undefined, "basketball-alldefensive")}</li>
+                <li>{renderAcronym("Finals MVP", undefined, "basketball-finalsmvp")}</li>
+                <li>{renderAcronym("All-Star", undefined, "basketball-allstar")}</li>
               </ul>
             </div>
 
             <div className="sport-stats">
               <h4>Football</h4>
               <ul>
-                <li>{renderAcronym("HOF")}</li>
-                <li>{renderAcronym("Pro-Bowls")}</li>
-                <li>{renderAcronym("OPOY")}</li>
-                <li>{renderAcronym("DPOY")}</li>
-                <li>{renderAcronym("ROY")}</li>
-                <li>{renderAcronym("All-Pro")}</li>
-                <li>{renderAcronym("SB MVP")}</li>
+                <li>{renderAcronym("HOF", undefined, "football-hof")}</li>
+                <li>{renderAcronym("Pro-Bowls", undefined, "football-probowls")}</li>
+                <li>{renderAcronym("OPOY", undefined, "football-opoy")}</li>
+                <li>{renderAcronym("DPOY", undefined, "football-dpoy")}</li>
+                <li>{renderAcronym("ROY", undefined, "football-roy")}</li>
+                <li>{renderAcronym("All-Pro", undefined, "football-allpro")}</li>
+                <li>{renderAcronym("SB MVP", undefined, "football-sbmvp")}</li>
               </ul>
             </div>
           </div>
