@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Uncover.css";
+import RulesModal from "./RulesModal";
 
 const topics = [
   "Bio",
@@ -102,6 +103,7 @@ const initialState: GameState = {
 
 const Uncover: React.FC = () => {
   const [activeSport, setActiveSport] = useState<SportType>("baseball");
+  const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
 
   const [gameState, setGameState] = useState<Record<SportType, GameState>>({
     baseball: { ...initialState },
@@ -402,16 +404,29 @@ const Uncover: React.FC = () => {
 
   return (
     <div className="uncover-game">
-      <div className="sports-navbar">
-        {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
-          <div
-            key={sport}
-            className={`nav-tab ${activeSport === sport ? "active" : ""}`}
-            onClick={() => setActiveSport(sport)}
-          >
-            {sport.toUpperCase()}
-          </div>
-        ))}
+      <div className="sports-section">
+        <div className="sports-navbar">
+          {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
+            <div
+              key={sport}
+              className={`nav-tab ${activeSport === sport ? "active" : ""}`}
+              onClick={() => setActiveSport(sport)}
+            >
+              {sport.toUpperCase()}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="puzzle-info">
+        <span className="puzzle-number">Puzzle #__</span>
+        <span className="separator">•</span>
+        <button
+          className="rules-link"
+          onClick={() => setIsRulesModalOpen(true)}
+        >
+          Rules
+        </button>
       </div>
 
       {s.message && (
@@ -539,6 +554,12 @@ const Uncover: React.FC = () => {
           </div>
         </div>
       )}
+
+
+      <RulesModal
+        isOpen={isRulesModalOpen}
+        onClose={() => setIsRulesModalOpen(false)}
+      />
     </div>
   );
 };
