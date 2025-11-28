@@ -2078,6 +2078,12 @@ describe("Uncover Component", () => {
       submitButton = screen.getByRole("button", { name: /submit/i });
 
       fireEvent.change(input, { target: { value: "Kobe Bryant" } });
+
+      // Wait for the submit button to be enabled before clicking
+      await waitFor(() => {
+        expect(submitButton).not.toBeDisabled();
+      });
+
       fireEvent.click(submitButton);
 
       await waitFor(() => {
