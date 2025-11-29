@@ -1729,15 +1729,19 @@ describe("Uncover Component", () => {
     test("opens Today's Stats modal when button is clicked", async () => {
       render(<Uncover />);
 
+      // Wait for data to load first
       await waitFor(() => {
-        const todayStatsButton = screen.getByText("Today's Stats");
-        fireEvent.click(todayStatsButton);
+        expect(screen.getByText("Bio")).toBeInTheDocument();
       });
 
+      const todayStatsButton = screen.getByText("Today's Stats");
+      fireEvent.click(todayStatsButton);
+
       await waitFor(() => {
-        // Should show mock round stats with dynamic player name
+        // Should show mock round stats with mystery player name since puzzle isn't solved
         expect(screen.getByText("Today's Baseball Stats")).toBeInTheDocument();
-        expect(screen.getByText("Babe Ruth")).toBeInTheDocument(); // Dynamic from player data
+        expect(screen.getByText("???")).toBeInTheDocument(); // Mystery player before solving
+        expect(screen.getByText("(Solve the puzzle to reveal)")).toBeInTheDocument();
       });
     });
 
