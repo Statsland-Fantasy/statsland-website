@@ -3,11 +3,72 @@
   font-family: Arial, sans-serif;
 }
 
+.puzzle-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 15px 0 10px 0;
+  font-size: 1.1rem;
+}
+
+.puzzle-number {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.separator {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.today-stats-link,
+.rules-link {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+.today-stats-link:hover {
+  color: #00b4d8;
+}
+
+.rules-link:disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.score-and-messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 20px 0 15px 0;
+  min-height: 80px;
+}
+
 .score-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0 15px 0;
+}
+
+.messages-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 200px;
+  text-align: center;
 }
 
 .score-label {
@@ -449,6 +510,8 @@
   position: relative;
   max-width: 400px;
   width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
@@ -554,4 +617,67 @@
   margin: 0;
   font-weight: bold;
   color: #155724;
+}
+
+/* Round Stats in Results Modal */
+.round-stats-section {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.round-stats-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.3rem;
+  color: #0077b6;
+  text-align: center;
+}
+
+.round-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.round-stat-item {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.round-stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.round-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0077b6;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .puzzle-info {
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+
+  .score-and-messages {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .messages-section {
+    align-items: center;
+    text-align: center;
+  }
+
+  .round-stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
