@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Uncover.css";
+import RulesModal from "./RulesModal";
 import TodayStatsModal from "./TodayStatsModal";
 
 const topics = [
@@ -246,6 +247,7 @@ const initialState: GameState = {
 
 const Uncover: React.FC = () => {
   const [activeSport, setActiveSport] = useState<SportType>("baseball");
+  const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isTodayStatsModalOpen, setIsTodayStatsModalOpen] = useState(false);
 
   const [gameState, setGameState] = useState<Record<SportType, GameState>>({
@@ -547,16 +549,18 @@ const Uncover: React.FC = () => {
 
   return (
     <div className="uncover-game">
-      <div className="sports-navbar">
-        {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
-          <div
-            key={sport}
-            className={`nav-tab ${activeSport === sport ? "active" : ""}`}
-            onClick={() => setActiveSport(sport)}
-          >
-            {sport.toUpperCase()}
-          </div>
-        ))}
+      <div className="sports-section">
+        <div className="sports-navbar">
+          {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
+            <div
+              key={sport}
+              className={`nav-tab ${activeSport === sport ? "active" : ""}`}
+              onClick={() => setActiveSport(sport)}
+            >
+              {sport.toUpperCase()}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="puzzle-info">
@@ -569,7 +573,10 @@ const Uncover: React.FC = () => {
           Today's Stats
         </button>
         <span className="separator">•</span>
-        <button className="rules-link" disabled>
+        <button
+          className="rules-link"
+          onClick={() => setIsRulesModalOpen(true)}
+        >
           Rules
         </button>
       </div>
@@ -717,6 +724,11 @@ const Uncover: React.FC = () => {
           </div>
         </div>
       )}
+
+      <RulesModal
+        isOpen={isRulesModalOpen}
+        onClose={() => setIsRulesModalOpen(false)}
+      />
 
       <TodayStatsModal
         isOpen={isTodayStatsModalOpen}
