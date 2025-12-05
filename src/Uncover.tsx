@@ -104,217 +104,6 @@ interface RoundData {
   stats: RoundStats;
 }
 
-// Mock Round Data (will be fetched from backend later)
-const mockRoundData: Record<SportType, RoundData> = {
-  baseball: {
-    playDate: "2025-11-19",
-    sport: "baseball",
-    roundId: "baseball111",
-    created: "2025-11-11T10:00:00Z",
-    lastUpdated: "2025-11-12T00:00:00Z",
-    previouslyPlayedDates: [],
-    player: {
-      sport: "baseball",
-      sportsReferencePath: "e/eckstda01",
-      name: "David Eckstein",
-      bio: "DOB: January 20, 1975 in Sanford, FL",
-      playerInformation: "5'6\", 170 lbs, Shortstop & Second Baseman, Bats: Right, Throws: Right",
-      draftInformation: "19th Rd from University of Florida",
-      yearsActive: "2001-2010",
-      teamsPlayedOn: "ANA, STL, TOR, ARI, SDP",
-      jerseyNumbers: "22, 11, 4, 3, 22",
-      careerStats: ".280 BA, 35 HR, 123 SB, 20.9 WAR",
-      personalAchievements: "2x All-Star, 2x World Series, 1x WS MVP",
-      photo: "",
-    },
-    stats: {
-      playDate: "2025-11-19",
-      sport: "baseball",
-      name: "David Eckstein",
-      totalPlays: 100,
-      percentageCorrect: 81,
-      averageScore: 55,
-      averageCorrectScore: 88,
-      highestScore: 97,
-      mostCommonFirstTileFlipped: "playerInformation",
-      mostCommonLastTileFlipped: "photo",
-      mostCommonTileFlipped: "teamsPlayedOn",
-      leastCommonTileFlipped: "bio",
-      mostFlippedTracker: {
-        bio: 11,
-        careerStats: 11,
-        draftInformation: 11,
-        jerseyNumbers: 11,
-        personalAchievements: 11,
-        photo: 11,
-        playerInformation: 11,
-        teamsPlayedOn: 11,
-        yearsActive: 11,
-      },
-      firstFlippedTracker: {
-        bio: 12,
-        careerStats: 12,
-        draftInformation: 12,
-        jerseyNumbers: 12,
-        personalAchievements: 12,
-        photo: 12,
-        playerInformation: 12,
-        teamsPlayedOn: 12,
-        yearsActive: 12,
-      },
-      lastFlippedTracker: {
-        bio: 13,
-        careerStats: 13,
-        draftInformation: 13,
-        jerseyNumbers: 13,
-        personalAchievements: 13,
-        photo: 13,
-        playerInformation: 13,
-        teamsPlayedOn: 13,
-        yearsActive: 13,
-      },
-    },
-  },
-  basketball: {
-    playDate: "2025-11-19",
-    sport: "basketball",
-    roundId: "basketball222",
-    created: "2025-11-11T10:00:00Z",
-    lastUpdated: "2025-11-12T00:00:00Z",
-    previouslyPlayedDates: [],
-    player: {
-      sport: "basketball",
-      sportsReferencePath: "l/lewisra02",
-      name: "Rashard Lewis",
-      bio: "DOB: August 8, 1979 in Pineville, LA",
-      playerInformation: "6'10\", 215 lbs, Small Forward and Power Forward. Shoots Right",
-      draftInformation: "2nd Rd (32nd) from Alief Elsik HS",
-      yearsActive: "1998-2014",
-      teamsPlayedOn: "SEA, ORL, WAS, MIA",
-      jerseyNumbers: "7, 9",
-      careerStats: "14.9 PTS, 5.2 REB, 1.7 AST, 90.9 WS",
-      personalAchievements: "2x All-Star, 1x NBA Champ",
-      photo: "",
-    },
-    stats: {
-      playDate: "2025-11-19",
-      sport: "basketball",
-      name: "Rashard Lewis",
-      totalPlays: 100,
-      percentageCorrect: 88,
-      averageScore: 66,
-      averageCorrectScore: 90,
-      highestScore: 97,
-      mostCommonFirstTileFlipped: "playerInformation",
-      mostCommonLastTileFlipped: "photo",
-      mostCommonTileFlipped: "teamsPlayedOn",
-      leastCommonTileFlipped: "bio",
-      mostFlippedTracker: {
-        bio: 21,
-        careerStats: 21,
-        draftInformation: 21,
-        jerseyNumbers: 21,
-        personalAchievements: 21,
-        photo: 21,
-        playerInformation: 21,
-        teamsPlayedOn: 21,
-        yearsActive: 21,
-      },
-      firstFlippedTracker: {
-        bio: 22,
-        careerStats: 22,
-        draftInformation: 22,
-        jerseyNumbers: 22,
-        personalAchievements: 22,
-        photo: 22,
-        playerInformation: 22,
-        teamsPlayedOn: 22,
-        yearsActive: 22,
-      },
-      lastFlippedTracker: {
-        bio: 23,
-        careerStats: 23,
-        draftInformation: 23,
-        jerseyNumbers: 23,
-        personalAchievements: 23,
-        photo: 23,
-        playerInformation: 23,
-        teamsPlayedOn: 23,
-        yearsActive: 23,
-      },
-    },
-  },
-  football: {
-    playDate: "2025-11-19",
-    sport: "football",
-    roundId: "football333",
-    created: "2025-11-11T10:00:00Z",
-    lastUpdated: "2025-11-12T00:00:00Z",
-    previouslyPlayedDates: [],
-    player: {
-      sport: "football",
-      sportsReferencePath: "M/McNaSt00",
-      name: "Steve McNair",
-      bio: "DOB: February 14, 1973 in Mount Olive, MS",
-      playerInformation: "6'2\", 230 lbs, QB. Throws Right",
-      draftInformation: "1st Rd (3rd) from Alcorn St",
-      yearsActive: "1995-2007",
-      teamsPlayedOn: "HOU, TEN, BAL",
-      jerseyNumbers: "9",
-      careerStats: "31304 Pass Yards, 174 Pass TD, 119 INT, 125 AV",
-      personalAchievements: "3x Pro Bowl, 1x MVP",
-      photo: "",
-    },
-    stats: {
-      playDate: "2025-11-19",
-      sport: "football",
-      name: "Steve McNair",
-      totalPlays: 100,
-      percentageCorrect: 90,
-      averageScore: 77,
-      averageCorrectScore: 90,
-      highestScore: 98,
-      mostCommonFirstTileFlipped: "playerInformation",
-      mostCommonLastTileFlipped: "photo",
-      mostCommonTileFlipped: "teamsPlayedOn",
-      leastCommonTileFlipped: "bio",
-      mostFlippedTracker: {
-        bio: 31,
-        careerStats: 31,
-        draftInformation: 31,
-        jerseyNumbers: 31,
-        personalAchievements: 31,
-        photo: 31,
-        playerInformation: 31,
-        teamsPlayedOn: 31,
-        yearsActive: 31,
-      },
-      firstFlippedTracker: {
-        bio: 32,
-        careerStats: 32,
-        draftInformation: 32,
-        jerseyNumbers: 32,
-        personalAchievements: 32,
-        photo: 32,
-        playerInformation: 32,
-        teamsPlayedOn: 32,
-        yearsActive: 32,
-      },
-      lastFlippedTracker: {
-        bio: 33,
-        careerStats: 33,
-        draftInformation: 33,
-        jerseyNumbers: 33,
-        personalAchievements: 33,
-        photo: 33,
-        playerInformation: 33,
-        teamsPlayedOn: 33,
-        yearsActive: 33,
-      },
-    },
-  },
-};
-
 interface PlayerData {
   Name: string;
   Bio: string;
@@ -333,6 +122,7 @@ interface PlayerData {
 interface GameState {
   playersList: PlayerData[] | null;
   playerData: PlayerData | null;
+  roundData: RoundData | null;
   playerName: string;
   message: string;
   messageType: string;
@@ -354,6 +144,7 @@ interface GameState {
 const initialState: GameState = {
   playersList: null,
   playerData: null,
+  roundData: null,
   playerName: "",
   message: "",
   messageType: "",
@@ -378,12 +169,11 @@ const getPuzzleNumber = (roundId: string): string => {
   return match ? match[0] : "1";
 };
 
-// Helper function to format date as MMDDYY
+// Helper function to format date as mm-dd-yy
 const formatDateMMDDYY = (dateString: string): string => {
-  // Parse the date string directly to avoid timezone issues
-  const [year, month, day] = dateString.split('-');
+  const [year, month, day] = dateString.split("-");
   const shortYear = year.slice(-2);
-  return `${month}${day}${shortYear}`;
+  return `${month}-${day}-${shortYear}`;
 };
 
 const Uncover: React.FC = () => {
@@ -402,19 +192,33 @@ const Uncover: React.FC = () => {
     const state = gameState[activeSport];
 
     // Already loaded → do nothing
-    if (state.playersList && state.playerData) {
+    if (state.playersList && state.playerData && state.roundData) {
       return;
     }
 
     // Load once
     fetch(sportFiles[activeSport])
       .then((res) => res.json())
-      .then((data: PlayerData[]) => {
+      .then((data: RoundData[]) => {
         const key = `playerIndex_${activeSport}`;
         const storedIndex = parseInt(localStorage.getItem(key) || "0");
 
         const index = storedIndex % data.length;
-        const playerData = data[index];
+        const roundData = data[index];
+
+        // Transform Player object to PlayerData format
+        const playerData: PlayerData = {
+          Name: roundData.player.name,
+          Bio: roundData.player.bio,
+          "Player Information": roundData.player.playerInformation,
+          "Draft Information": roundData.player.draftInformation,
+          "Years Active": roundData.player.yearsActive,
+          "Teams Played On": roundData.player.teamsPlayedOn,
+          "Jersey Numbers": roundData.player.jerseyNumbers,
+          "Career Stats": roundData.player.careerStats,
+          "Personal Achievements": roundData.player.personalAchievements,
+          Photo: [roundData.player.photo],
+        };
 
         localStorage.setItem(key, ((index + 1) % data.length).toString());
 
@@ -422,8 +226,20 @@ const Uncover: React.FC = () => {
           ...prev,
           [activeSport]: {
             ...prev[activeSport],
-            playersList: data,
+            playersList: data.map((round) => ({
+              Name: round.player.name,
+              Bio: round.player.bio,
+              "Player Information": round.player.playerInformation,
+              "Draft Information": round.player.draftInformation,
+              "Years Active": round.player.yearsActive,
+              "Teams Played On": round.player.teamsPlayedOn,
+              "Jersey Numbers": round.player.jerseyNumbers,
+              "Career Stats": round.player.careerStats,
+              "Personal Achievements": round.player.personalAchievements,
+              Photo: [round.player.photo],
+            })),
             playerData,
+            roundData,
           },
         }));
       })
@@ -492,7 +308,6 @@ const Uncover: React.FC = () => {
         previousCloseGuess: "",
         finalRank: rank,
         hint: "",
-        showResultsModal: true,
         lastSubmittedGuess: a,
       });
       return;
@@ -566,7 +381,7 @@ const Uncover: React.FC = () => {
       basketball: "https://www.basketball-reference.com/players/",
       football: "https://www.pro-football-reference.com/players/",
     };
-    return baseUrls[sport] + path + ".html";
+    return baseUrls[sport] + path + ".shtml";
   };
 
   const handleTileClick = (index: number) => {
@@ -601,7 +416,8 @@ const Uncover: React.FC = () => {
 
         let newHint = s.hint;
         if (newScore < 80 && !s.hint) {
-          newHint = s.playerData!.Name.split(" ")
+          newHint = s
+            .playerData!.Name.split(" ")
             .map((w) => w[0])
             .join(".");
         }
@@ -635,7 +451,8 @@ const Uncover: React.FC = () => {
 
       let newHint = s.hint;
       if (newScore < 80 && !s.hint) {
-        newHint = s.playerData!.Name.split(" ")
+        newHint = s
+          .playerData!.Name.split(" ")
           .map((w) => w[0])
           .join(".");
       }
@@ -670,11 +487,15 @@ const Uncover: React.FC = () => {
   };
 
   const handleShare = () => {
-    // Get daily number from playerData or default to 1
-    const dailyNumber = s.playerData!.dailyNumber || 1;
+    // Get puzzle number from roundData
+    const puzzleNumber = s.roundData
+      ? getPuzzleNumber(s.roundData.roundId)
+      : "1";
+    const sportName =
+      activeSport.charAt(0).toUpperCase() + activeSport.slice(1);
 
     // Build the share text
-    let shareText = `Daily Uncover #${dailyNumber}\n`;
+    let shareText = `Daily Athlete Unknown ${sportName} #${puzzleNumber}\n`;
 
     // Create a 3x3 grid using emojis
     for (let i = 0; i < 9; i++) {
@@ -709,22 +530,28 @@ const Uncover: React.FC = () => {
     <div className="uncover-game">
       <div className="sports-section">
         <div className="sports-navbar">
-          {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
-            <div
-              key={sport}
-              className={`nav-tab ${activeSport === sport ? "active" : ""}`}
-              onClick={() => setActiveSport(sport)}
-            >
-              {sport.toUpperCase()}
-            </div>
-          ))}
+          {(["baseball", "basketball", "football"] as SportType[]).map(
+            (sport) => (
+              <div
+                key={sport}
+                className={`nav-tab ${activeSport === sport ? "active" : ""}`}
+                onClick={() => setActiveSport(sport)}
+              >
+                {sport.toUpperCase()}
+              </div>
+            )
+          )}
         </div>
       </div>
 
       <div className="puzzle-info">
-        <span className="puzzle-number">Puzzle #{getPuzzleNumber(mockRoundData[activeSport].roundId)}</span>
+        <span className="puzzle-number">
+          Puzzle #{s.roundData ? getPuzzleNumber(s.roundData.roundId) : "..."}
+        </span>
         <span className="separator">•</span>
-        <span className="play-date">{formatDateMMDDYY(mockRoundData[activeSport].playDate)}</span>
+        <span className="play-date">
+          {s.roundData ? formatDateMMDDYY(s.roundData.playDate) : "..."}
+        </span>
         <span className="separator">•</span>
         <button
           className="today-stats-link"
@@ -752,9 +579,13 @@ const Uncover: React.FC = () => {
             <p className={`guess-message ${s.messageType}`}>{s.message}</p>
           )}
           {s.hint && !s.finalRank && (
-            <p className="guess-message hint">Hint: Player Initials — {s.hint}</p>
+            <p className="guess-message hint">
+              Hint: Player Initials — {s.hint}
+            </p>
           )}
-          {s.finalRank && <p className="final-rank">Your Rank: {s.finalRank}</p>}
+          {s.finalRank && (
+            <p className="final-rank">Your Rank: {s.finalRank}</p>
+          )}
         </div>
       </div>
 
@@ -778,7 +609,7 @@ const Uncover: React.FC = () => {
             Give Up
           </button>
         )}
-        {s.gaveUp && (
+        {(s.gaveUp || s.finalRank) && (
           <button
             onClick={() => updateState({ showResultsModal: true })}
             className="view-results-button"
@@ -853,23 +684,32 @@ const Uncover: React.FC = () => {
               ✕
             </button>
             <h2 className="results-title">
-              {s.gaveUp ? "Try Again Tomorrow!" : `Correct! Your score is ${s.score}!`}
+              {s.gaveUp
+                ? "Try Again Tomorrow!"
+                : `Correct! Your score is ${s.score}!`}
             </h2>
-            {!s.gaveUp && <p className="average-score">The average score today is {mockRoundData[activeSport].stats.averageScore}</p>}
+            {!s.gaveUp && s.roundData && (
+              <p className="average-score">
+                The average score today is {s.roundData.stats.averageScore}
+              </p>
+            )}
 
-            {s.playerData && (
+            {s.playerData && s.roundData && (
               <div className="player-info-section">
                 <a
-                  href={getSportsReferenceUrl(activeSport, mockRoundData[activeSport].player.sportsReferencePath)}
+                  href={getSportsReferenceUrl(
+                    activeSport,
+                    s.roundData.player.sportsReferencePath
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="player-name-link"
                 >
                   {s.playerData.Name}
                 </a>
-                {mockRoundData[activeSport].player.photo && (
+                {s.roundData.player.photo && (
                   <img
-                    src={mockRoundData[activeSport].player.photo}
+                    src={s.roundData.player.photo}
                     alt={s.playerData.Name}
                     className="player-photo"
                   />
@@ -899,23 +739,31 @@ const Uncover: React.FC = () => {
               </div>
             )}
 
-            <div className="round-stats-section">
-              <h3>Today's Round Stats</h3>
-              <div className="round-stats-grid">
-                <div className="round-stat-item">
-                  <div className="round-stat-label">Games Played</div>
-                  <div className="round-stat-value">{mockRoundData[activeSport].stats.totalPlays}</div>
-                </div>
-                <div className="round-stat-item">
-                  <div className="round-stat-label">Average Score</div>
-                  <div className="round-stat-value">{mockRoundData[activeSport].stats.averageScore}</div>
-                </div>
-                <div className="round-stat-item">
-                  <div className="round-stat-label">Win Rate</div>
-                  <div className="round-stat-value">{mockRoundData[activeSport].stats.percentageCorrect}%</div>
+            {s.roundData && (
+              <div className="round-stats-section">
+                <h3>Today's Round Stats</h3>
+                <div className="round-stats-grid">
+                  <div className="round-stat-item">
+                    <div className="round-stat-label">Games Played</div>
+                    <div className="round-stat-value">
+                      {s.roundData.stats.totalPlays}
+                    </div>
+                  </div>
+                  <div className="round-stat-item">
+                    <div className="round-stat-label">Average Score</div>
+                    <div className="round-stat-value">
+                      {s.roundData.stats.averageScore}
+                    </div>
+                  </div>
+                  <div className="round-stat-item">
+                    <div className="round-stat-label">Win Rate</div>
+                    <div className="round-stat-value">
+                      {s.roundData.stats.percentageCorrect}%
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}
@@ -925,14 +773,19 @@ const Uncover: React.FC = () => {
         onClose={() => setIsRulesModalOpen(false)}
       />
 
-      <TodayStatsModal
-        isOpen={isTodayStatsModalOpen}
-        onClose={() => setIsTodayStatsModalOpen(false)}
-        roundStats={{
-          ...mockRoundData[activeSport].stats,
-          name: s.finalRank || s.gaveUp ? (s.playerData?.Name || "Unknown Player") : "???",
-        }}
-      />
+      {s.roundData && (
+        <TodayStatsModal
+          isOpen={isTodayStatsModalOpen}
+          onClose={() => setIsTodayStatsModalOpen(false)}
+          roundStats={{
+            ...s.roundData.stats,
+            name:
+              s.finalRank || s.gaveUp
+                ? s.playerData?.Name || "Unknown Player"
+                : "???",
+          }}
+        />
+      )}
     </div>
   );
 };

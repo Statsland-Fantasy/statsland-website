@@ -442,25 +442,6 @@
   font-weight: bold;
 }
 
-.today-stats-link,
-.rules-link {
-  background: none;
-  border: none;
-  color: #00b4d8;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: underline;
-  transition: color 0.3s ease;
-  font-family: inherit;
-  padding: 0;
-}
-
-.today-stats-link:hover,
-.rules-link:hover {
-  color: #ffd60a;
-}
-
 .sports-navbar {
   display: flex;
   justify-content: center;
