@@ -223,6 +223,7 @@ interface GameState {
   showResultsModal: boolean;
   copiedText: string;
   lastSubmittedGuess: string;
+  currentPlayerIndex?: number;
 }
 
 const initialState: GameState = {
@@ -245,8 +246,91 @@ const initialState: GameState = {
   lastSubmittedGuess: "",
 };
 
+// Guest session persistence utilities
+const getGuestSessionKey = (sport: SportType): string => {
+  return `guestSession_${sport}`;
+};
+
+const saveGuestSession = (sport: SportType, state: GameState, playerIndex?: number): void => {
+  try {
+    // Only save persistent game state (exclude transient UI state)
+    const persistentState = {
+      playerName: state.playerName,
+      message: state.message,
+      messageType: state.messageType,
+      previousCloseGuess: state.previousCloseGuess,
+      flippedTiles: state.flippedTiles,
+      tilesFlippedCount: state.tilesFlippedCount,
+      score: state.score,
+      hint: state.hint,
+      finalRank: state.finalRank,
+      incorrectGuesses: state.incorrectGuesses,
+      lastSubmittedGuess: state.lastSubmittedGuess,
+      // Store player data identifier to verify it's the same puzzle
+      playerName_saved: state.playerData?.Name || "",
+      // Store player index so we can restore the same player
+      playerIndex_saved: playerIndex,
+    };
+    localStorage.setItem(getGuestSessionKey(sport), JSON.stringify(persistentState));
+  } catch (error) {
+    console.error("Failed to save guest session:", error);
+  }
+};
+
+const loadGuestSession = (sport: SportType, currentPlayerName: string): Partial<GameState> | null => {
+  try {
+    const saved = localStorage.getItem(getGuestSessionKey(sport));
+    if (!saved) {
+      return null;
+    }
+
+    const parsed = JSON.parse(saved);
+
+    // Only restore if it's the same player/puzzle
+    if (parsed.playerName_saved !== currentPlayerName) {
+      // Different puzzle, clear old session
+      clearGuestSession(sport);
+      return null;
+    }
+
+    // Return only the game state fields (not the saved player name or index)
+    // eslint-disable-next-line no-unused-vars
+    const { playerName_saved, playerIndex_saved, ...gameStateFields } = parsed;
+    return gameStateFields;
+  } catch (error) {
+    console.error("Failed to load guest session:", error);
+    return null;
+  }
+};
+
+const clearGuestSession = (sport: SportType): void => {
+  try {
+    localStorage.removeItem(getGuestSessionKey(sport));
+  } catch (error) {
+    console.error("Failed to clear guest session:", error);
+  }
+};
+
+const clearAllGuestSessions = (): void => {
+  const sports: SportType[] = ["baseball", "basketball", "football"];
+  sports.forEach(sport => clearGuestSession(sport));
+};
+
 const Uncover: React.FC = () => {
-  const [activeSport, setActiveSport] = useState<SportType>("baseball");
+  // Restore previously active sport from localStorage, default to baseball
+  const getInitialSport = (): SportType => {
+    try {
+      const saved = localStorage.getItem("activeSport");
+      if (saved && (saved === "baseball" || saved === "basketball" || saved === "football")) {
+        return saved as SportType;
+      }
+    } catch (error) {
+      console.error("Failed to load active sport:", error);
+    }
+    return "baseball";
+  };
+
+  const [activeSport, setActiveSport] = useState<SportType>(getInitialSport);
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isTodayStatsModalOpen, setIsTodayStatsModalOpen] = useState(false);
 
@@ -255,6 +339,15 @@ const Uncover: React.FC = () => {
     basketball: { ...initialState },
     football: { ...initialState },
   });
+
+  // Save active sport to localStorage when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("activeSport", activeSport);
+    } catch (error) {
+      console.error("Failed to save active sport:", error);
+    }
+  }, [activeSport]);
 
   // Load players JSON sequentially
   useEffect(() => {
@@ -272,19 +365,56 @@ const Uncover: React.FC = () => {
         const key = `playerIndex_${activeSport}`;
         const storedIndex = parseInt(localStorage.getItem(key) || "0");
 
-        const index = storedIndex % data.length;
-        const playerData = data[index];
+        // Check if there's a saved session to determine which player to load
+        const savedSessionRaw = localStorage.getItem(getGuestSessionKey(activeSport));
+        let playerIndex: number = storedIndex % data.length;
+        let savedSession: Partial<GameState> | null = null;
 
-        localStorage.setItem(key, ((index + 1) % data.length).toString());
+        if (savedSessionRaw) {
+          try {
+            const parsed = JSON.parse(savedSessionRaw);
+            // If session has a saved player index, use it to load the correct player
+            if (parsed.playerIndex_saved !== undefined) {
+              playerIndex = parsed.playerIndex_saved % data.length;
+            }
+          } catch (error) {
+            console.error("Failed to parse saved session:", error);
+          }
+        }
 
-        setGameState((prev) => ({
-          ...prev,
-          [activeSport]: {
+        const playerData = data[playerIndex];
+
+        // Try to load the saved session for this player
+        savedSession = loadGuestSession(activeSport, playerData.Name);
+
+        // Only increment player index if there's no saved session
+        // This keeps the same puzzle when navigating within the app
+        if (!savedSession) {
+          localStorage.setItem(key, ((playerIndex + 1) % data.length).toString());
+        }
+
+        setGameState((prev) => {
+          const newSportState = {
             ...prev[activeSport],
             playersList: data,
             playerData,
-          },
-        }));
+            // Restore saved session if available
+            ...(savedSession || {}),
+            // Store current player index for session saving
+            currentPlayerIndex: playerIndex,
+          };
+
+          // Save the session immediately after loading (even if no user actions yet)
+          // This ensures the same player loads when navigating back
+          if (!savedSession) {
+            saveGuestSession(activeSport, newSportState, playerIndex);
+          }
+
+          return {
+            ...prev,
+            [activeSport]: newSportState,
+          };
+        });
       })
       .catch((error) => {
         console.error("Error loading player data:", error);
@@ -293,16 +423,42 @@ const Uncover: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSport]); // gameState intentionally excluded to prevent infinite re-renders
 
+  // Clear guest sessions when window is closed
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      clearAllGuestSessions();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   const s = gameState[activeSport];
   if (!s.playerData) {
     return <p>Loading player data...</p>;
   }
 
   const updateState = (patch: Partial<GameState>) => {
-    setGameState((prev) => ({
-      ...prev,
-      [activeSport]: { ...prev[activeSport], ...patch },
-    }));
+    setGameState((prev) => {
+      const currentSportState = prev[activeSport];
+      const newState = { ...currentSportState, ...patch };
+
+      // Ensure currentPlayerIndex is preserved if not in the patch
+      if (newState.currentPlayerIndex === undefined && currentSportState.currentPlayerIndex !== undefined) {
+        newState.currentPlayerIndex = currentSportState.currentPlayerIndex;
+      }
+
+      // Save guest session after state update (with player index)
+      saveGuestSession(activeSport, newState, newState.currentPlayerIndex);
+
+      return {
+        ...prev,
+        [activeSport]: newState,
+      };
+    });
   };
 
   const evaluateRank = (points: number): string => {
@@ -439,7 +595,7 @@ const Uncover: React.FC = () => {
 
       // Only update score/counters if game is not won
       if (!s.finalRank) {
-        let newScore = s.score - 6;
+        const newScore = s.score - 6;
 
         let newHint = s.hint;
         if (newScore < 70 && !s.hint) {
@@ -473,7 +629,7 @@ const Uncover: React.FC = () => {
 
     // Only update score/counters if game is not won
     if (!s.finalRank) {
-      let newScore = s.score - 3;
+      const newScore = s.score - 3;
 
       let newHint = s.hint;
       if (newScore < 70 && !s.hint) {
@@ -743,4 +899,11 @@ const Uncover: React.FC = () => {
 };
 
 export default Uncover;
-export { lev };
+export {
+  lev,
+  saveGuestSession,
+  loadGuestSession,
+  clearGuestSession,
+  clearAllGuestSessions,
+  getGuestSessionKey,
+};
