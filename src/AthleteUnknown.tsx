@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./Uncover.css";
+import "./AthleteUnknown.css";
 import RulesModal from "./RulesModal";
 import TodayStatsModal from "./TodayStatsModal";
+import UserStats from "./UserStats";
 
 const topics = [
   "Bio",
@@ -42,9 +43,9 @@ const normalize = (str = ""): string => str.toLowerCase().replace(/\s/g, "");
 type SportType = "baseball" | "basketball" | "football";
 
 const sportFiles: Record<SportType, string> = {
-  baseball: "/UncoverBaseballData.json",
-  basketball: "/UncoverBasketballData.json",
-  football: "/UncoverFootballData.json",
+  baseball: "/AthleteUnknownBaseballData.json",
+  basketball: "/AthleteUnknownBasketballData.json",
+  football: "/AthleteUnknownFootballData.json",
 };
 
 // Mock Round Stats data (will be fetched from backend later)
@@ -245,10 +246,11 @@ const initialState: GameState = {
   lastSubmittedGuess: "",
 };
 
-const Uncover: React.FC = () => {
+const AthleteUnknown: React.FC = () => {
   const [activeSport, setActiveSport] = useState<SportType>("baseball");
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isTodayStatsModalOpen, setIsTodayStatsModalOpen] = useState(false);
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
 
   const [gameState, setGameState] = useState<Record<SportType, GameState>>({
     baseball: { ...initialState },
@@ -368,6 +370,7 @@ const Uncover: React.FC = () => {
 
     if (distance <= 2) {
       if (s.previousCloseGuess && s.previousCloseGuess !== a) {
+        const rank = evaluateRank(newScore);
         updateState({
           message: `Correct, you were close! Player's name: ${playerData.Name}`,
           messageType: "close",
@@ -375,6 +378,8 @@ const Uncover: React.FC = () => {
           score: newScore,
           hint: newHint,
           lastSubmittedGuess: a,
+          finalRank: rank,
+          showResultsModal: true,
         });
       } else {
         updateState({
@@ -390,6 +395,7 @@ const Uncover: React.FC = () => {
     }
 
     if (distance <= 4) {
+      const rank = evaluateRank(newScore);
       updateState({
         message: `Correct, you were close! Player's name: ${playerData.Name}`,
         messageType: "close",
@@ -397,6 +403,8 @@ const Uncover: React.FC = () => {
         score: newScore,
         hint: newHint,
         lastSubmittedGuess: a,
+        finalRank: rank,
+        showResultsModal: true,
       });
       return;
     }
@@ -516,7 +524,7 @@ const Uncover: React.FC = () => {
     const dailyNumber = s.playerData!.dailyNumber || 1;
 
     // Build the share text
-    let shareText = `Daily Uncover #${dailyNumber}\n`;
+    let shareText = `Daily Athlete Unknown #${dailyNumber}\n`;
 
     // Create a 3x3 grid using emojis
     for (let i = 0; i < 9; i++) {
@@ -548,7 +556,7 @@ const Uncover: React.FC = () => {
   };
 
   return (
-    <div className="uncover-game">
+    <div className="athlete-unknown-game">
       <div className="sports-section">
         <div className="sports-navbar">
           {(["baseball", "basketball", "football"] as SportType[]).map((sport) => (
@@ -561,6 +569,12 @@ const Uncover: React.FC = () => {
             </div>
           ))}
         </div>
+        <button
+          className="stats-button"
+          onClick={() => setIsStatsModalOpen(true)}
+        >
+          Stats
+        </button>
       </div>
 
       <div className="puzzle-info">
@@ -738,9 +752,20 @@ const Uncover: React.FC = () => {
           name: s.finalRank ? (s.playerData?.Name || "Unknown Player") : "???",
         }}
       />
+
+      {isStatsModalOpen && (
+        <div className="user-stats-modal" onClick={() => setIsStatsModalOpen(false)}>
+          <div className="user-stats-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-user-stats" onClick={() => setIsStatsModalOpen(false)}>
+              ×
+            </button>
+            <UserStats />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Uncover;
+export default AthleteUnknown;
 export { lev };
