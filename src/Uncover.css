@@ -700,6 +700,19 @@
   color: #0077b6;
 }
 
+/* Sports Reference Credit (Bottom of Page) */
+.sports-reference-credit {
+  font-size: 0.875rem;
+  color: #777;
+  text-align: center;
+  max-width: 600px;
+  margin: 60px auto 40px auto;
+  padding: 20px 30px;
+  border-top: 1px solid #e0e0e0;
+  font-style: italic;
+  line-height: 1.6;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .puzzle-info {
@@ -722,15 +735,11 @@
   }
 
   .sports-reference-credit {
-    font-size: 3.75rem;
-    color: #777;
-    text-align: center;
-    width: 80%;
-    margin: 40px auto 0 auto;
+    font-size: 0.8rem;
+    max-width: 90%;
+    margin: 40px auto 30px auto;
     padding: 15px 20px;
-    border-top: 1px solid #e0e0e0;
-    font-style: italic;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   .sports-reference-attribution {
