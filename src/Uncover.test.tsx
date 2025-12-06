@@ -1096,7 +1096,7 @@ describe("Uncover Component", () => {
       fireEvent.click(viewResultsButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
     });
 
@@ -1554,15 +1554,7 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
-      });
-
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
-
-      await waitFor(() => {
-        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
 
       // Try to flip a tile
@@ -1593,16 +1585,12 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
 
       // Verify score is 100
       const scoreBox = document.querySelector(".score-box");
       expect(scoreBox).toHaveTextContent("100");
-
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Flip a tile after winning
       const bioTile = screen.getByText("Bio").closest(".tile");
@@ -1635,15 +1623,11 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
 
       // Verify counter is 0
       expect(screen.getByText(/tiles flipped: 0/i)).toBeInTheDocument();
-
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Flip a tile after winning
       const bioTile = screen.getByText("Bio").closest(".tile");
@@ -1676,12 +1660,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Input and button should not be disabled
       expect(input).not.toBeDisabled();
@@ -1705,33 +1685,31 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
 
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
-
-      await waitFor(() => {
-        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
-      });
+      // View Results button should be visible
+      expect(screen.getByRole("button", { name: /view results/i })).toBeInTheDocument();
 
       // Try wrong answer
       fireEvent.change(input, { target: { value: "Wrong Name" } });
       fireEvent.click(submitButton);
 
-      // Modal should not reopen
-      await waitFor(() => {
-        expect(screen.queryByText(/correct! your score is/i)).not.toBeInTheDocument();
-      }, { timeout: 1000 });
+      // No change in UI (still shows "You guessed it right!")
+      expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
 
-      // Try correct answer
+      // Try correct answer again
       fireEvent.change(input, { target: { value: "Babe Ruth" } });
       fireEvent.click(submitButton);
 
-      // Modal should reopen
+      // Click View Results to open modal
+      const viewResultsButton = screen.getByRole("button", { name: /view results/i });
+      fireEvent.click(viewResultsButton);
+
+      // Modal should be open now
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        const modal = screen.getByRole("button", { name: /✕/i }).closest(".results-modal-content");
+        expect(modal).toBeInTheDocument();
       });
     });
 
@@ -1752,12 +1730,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Try wrong answer
       fireEvent.change(input, { target: { value: "Wrong Name" } });
@@ -1786,12 +1760,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Click photo tile
       const photoTile = screen.getByText("Photo").closest(".tile");
@@ -1941,7 +1911,7 @@ describe("Uncover Component", () => {
 
       await waitFor(() => {
         expect(screen.getByText("Puzzle #001")).toBeInTheDocument(); // puzzle number
-        expect(screen.getByText("111925")).toBeInTheDocument(); // playDate in MMDDYY format
+        expect(screen.getByText("11-19-25")).toBeInTheDocument(); // playDate in MM-DD-YY format
         expect(screen.getByText("Today's Stats")).toBeInTheDocument();
         expect(screen.getByText("Rules")).toBeInTheDocument();
       });
@@ -2262,7 +2232,14 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
+      });
+
+      // Click View Results to open modal
+      const viewResultsButton = screen.getByRole("button", { name: /view results/i });
+      fireEvent.click(viewResultsButton);
+
+      await waitFor(() => {
         expect(screen.getByText("Today's Round Stats")).toBeInTheDocument();
       });
     });
@@ -2281,6 +2258,14 @@ describe("Uncover Component", () => {
 
       fireEvent.change(input, { target: { value: "Babe Ruth" } });
       fireEvent.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
+      });
+
+      // Click View Results to open modal
+      const viewResultsButton = screen.getByRole("button", { name: /view results/i });
+      fireEvent.click(viewResultsButton);
 
       await waitFor(() => {
         const resultsModal = screen
@@ -2332,12 +2317,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close results modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Open Today's Stats modal
       const todayStatsButton = screen.getByText("Today's Stats");
@@ -2389,12 +2370,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close results modal
-      const closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Switch to basketball (unsolved)
       fireEvent.click(screen.getByText("BASKETBALL"));
@@ -2453,12 +2430,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close results modal
-      let closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Switch to basketball
       fireEvent.click(screen.getByText("BASKETBALL"));
@@ -2542,12 +2515,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close results modal
-      let closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Switch to basketball and solve
       fireEvent.click(screen.getByText("BASKETBALL"));
@@ -2579,12 +2548,8 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/correct! your score is/i)).toBeInTheDocument();
+        expect(screen.getByText(/you guessed it right!/i)).toBeInTheDocument();
       });
-
-      // Close results modal
-      closeButton = screen.getByRole("button", { name: /✕/i });
-      fireEvent.click(closeButton);
 
       // Switch to football (unsolved)
       fireEvent.click(screen.getByText("FOOTBALL"));
@@ -2604,7 +2569,7 @@ describe("Uncover Component", () => {
       });
 
       // Close modal
-      closeButton = screen.getByRole("button", { name: /×/i });
+      let closeButton = screen.getByRole("button", { name: /×/i });
       fireEvent.click(closeButton);
 
       // Switch back to baseball
