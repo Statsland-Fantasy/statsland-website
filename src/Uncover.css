@@ -1,6 +1,46 @@
 .uncover-game {
   text-align: center;
   font-family: Arial, sans-serif;
+  position: relative;
+}
+
+/* Sports Reference Attribution */
+.sports-reference-attribution {
+  position: absolute;
+  top: 4.5rem;
+  left: 1rem;
+  z-index: 100;
+}
+
+.sports-reference-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.sports-reference-link:hover {
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.sport-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.attribution-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0077b6;
+  white-space: nowrap;
 }
 
 .puzzle-info {
@@ -691,5 +731,22 @@
     border-top: 1px solid #e0e0e0;
     font-style: italic;
     line-height: 1.4;
+  }
+
+  .sports-reference-attribution {
+    top: 4rem;
+    left: 0.5rem;
+  }
+
+  .sports-reference-link {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .sport-icon {
+    font-size: 1.25rem;
+  }
+
+  .attribution-text {
+    font-size: 0.75rem;
   }
 }
