@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Uncover.css";
 import RulesModal from "./RulesModal";
 import TodayStatsModal from "./TodayStatsModal";
+import gameDataService from "./services/gameData";
+import type { PlayerData as APIPlayerData, RoundStats, GameResult } from "./types/api";
 
 const topics = [
   "Bio",
@@ -41,154 +43,7 @@ const normalize = (str = ""): string => str.toLowerCase().replace(/\s/g, "");
 
 type SportType = "baseball" | "basketball" | "football";
 
-const sportFiles: Record<SportType, string> = {
-  baseball: "/UncoverBaseballData.json",
-  basketball: "/UncoverBasketballData.json",
-  football: "/UncoverFootballData.json",
-};
-
-// Mock Round Stats data (will be fetched from backend later)
-// Note: name field will be populated dynamically from player data
-const mockRoundStatsTemplate: Record<SportType, any> = {
-  baseball: {
-    playDate: "2025-11-19",
-    sport: "baseball",
-    totalPlays: 100,
-    percentageCorrect: 81,
-    averageScore: 55,
-    averageCorrectScore: 88,
-    highestScore: 97,
-    mostCommonFirstTileFlipped: "playerInformation",
-    mostCommonLastTileFlipped: "photo",
-    mostCommonTileFlipped: "teamsPlayedOn",
-    leastCommonTileFlipped: "bio",
-    mostFlippedTracker: {
-      bio: 11,
-      careerStats: 11,
-      draftInformation: 11,
-      jerseyNumbers: 11,
-      personalAchievements: 11,
-      photo: 11,
-      playerInformation: 11,
-      teamsPlayedOn: 11,
-      yearsActive: 11,
-    },
-    firstFlippedTracker: {
-      bio: 12,
-      careerStats: 12,
-      draftInformation: 12,
-      jerseyNumbers: 12,
-      personalAchievements: 12,
-      photo: 12,
-      playerInformation: 12,
-      teamsPlayedOn: 12,
-      yearsActive: 12,
-    },
-    lastFlippedTracker: {
-      bio: 13,
-      careerStats: 13,
-      draftInformation: 13,
-      jerseyNumbers: 13,
-      personalAchievements: 13,
-      photo: 13,
-      playerInformation: 13,
-      teamsPlayedOn: 13,
-      yearsActive: 13,
-    },
-  },
-  basketball: {
-    playDate: "2025-11-19",
-    sport: "basketball",
-    totalPlays: 100,
-    percentageCorrect: 88,
-    averageScore: 66,
-    averageCorrectScore: 90,
-    highestScore: 97,
-    mostCommonFirstTileFlipped: "playerInformation",
-    mostCommonLastTileFlipped: "photo",
-    mostCommonTileFlipped: "teamsPlayedOn",
-    leastCommonTileFlipped: "bio",
-    mostFlippedTracker: {
-      bio: 21,
-      careerStats: 21,
-      draftInformation: 21,
-      jerseyNumbers: 21,
-      personalAchievements: 21,
-      photo: 21,
-      playerInformation: 21,
-      teamsPlayedOn: 21,
-      yearsActive: 21,
-    },
-    firstFlippedTracker: {
-      bio: 22,
-      careerStats: 22,
-      draftInformation: 22,
-      jerseyNumbers: 22,
-      personalAchievements: 22,
-      photo: 22,
-      playerInformation: 22,
-      teamsPlayedOn: 22,
-      yearsActive: 22,
-    },
-    lastFlippedTracker: {
-      bio: 23,
-      careerStats: 23,
-      draftInformation: 23,
-      jerseyNumbers: 23,
-      personalAchievements: 23,
-      photo: 23,
-      playerInformation: 23,
-      teamsPlayedOn: 23,
-      yearsActive: 23,
-    },
-  },
-  football: {
-    playDate: "2025-11-19",
-    sport: "football",
-    totalPlays: 100,
-    percentageCorrect: 90,
-    averageScore: 77,
-    averageCorrectScore: 90,
-    highestScore: 98,
-    mostCommonFirstTileFlipped: "playerInformation",
-    mostCommonLastTileFlipped: "photo",
-    mostCommonTileFlipped: "teamsPlayedOn",
-    leastCommonTileFlipped: "bio",
-    mostFlippedTracker: {
-      bio: 31,
-      careerStats: 31,
-      draftInformation: 31,
-      jerseyNumbers: 31,
-      personalAchievements: 31,
-      photo: 31,
-      playerInformation: 31,
-      teamsPlayedOn: 31,
-      yearsActive: 31,
-    },
-    firstFlippedTracker: {
-      bio: 32,
-      careerStats: 32,
-      draftInformation: 32,
-      jerseyNumbers: 32,
-      personalAchievements: 32,
-      photo: 32,
-      playerInformation: 32,
-      teamsPlayedOn: 32,
-      yearsActive: 32,
-    },
-    lastFlippedTracker: {
-      bio: 33,
-      careerStats: 33,
-      draftInformation: 33,
-      jerseyNumbers: 33,
-      personalAchievements: 33,
-      photo: 33,
-      playerInformation: 33,
-      teamsPlayedOn: 33,
-      yearsActive: 33,
-    },
-  },
-};
+// Round stats are now fetched from API/backend - no more hardcoded data
 
 interface PlayerData {
   Name: string;
@@ -208,6 +63,7 @@ interface PlayerData {
 interface GameState {
   playersList: PlayerData[] | null;
   playerData: PlayerData | null;
+  roundStats: RoundStats | null;
   playerName: string;
   message: string;
   messageType: string;
@@ -223,11 +79,16 @@ interface GameState {
   showResultsModal: boolean;
   copiedText: string;
   lastSubmittedGuess: string;
+  isLoading: boolean;
+  error: string | null;
+  firstTileFlipped: string | null;
+  lastTileFlipped: string | null;
 }
 
 const initialState: GameState = {
   playersList: null,
   playerData: null,
+  roundStats: null,
   playerName: "",
   message: "",
   messageType: "",
@@ -243,6 +104,10 @@ const initialState: GameState = {
   showResultsModal: false,
   copiedText: "",
   lastSubmittedGuess: "",
+  isLoading: true,
+  error: null,
+  firstTileFlipped: null,
+  lastTileFlipped: null,
 };
 
 const Uncover: React.FC = () => {
@@ -256,46 +121,132 @@ const Uncover: React.FC = () => {
     football: { ...initialState },
   });
 
-  // Load players JSON sequentially
+  // Load player data and round stats from API
   useEffect(() => {
     const state = gameState[activeSport];
 
     // Already loaded → do nothing
-    if (state.playersList && state.playerData) {
+    if (state.playerData && state.roundStats) {
       return;
     }
 
-    // Load once
-    fetch(sportFiles[activeSport])
-      .then((res) => res.json())
-      .then((data: PlayerData[]) => {
-        const key = `playerIndex_${activeSport}`;
-        const storedIndex = parseInt(localStorage.getItem(key) || "0");
+    // Load player data and round stats from API
+    const loadData = async () => {
+      try {
+        updateState({ isLoading: true, error: null });
 
-        const index = storedIndex % data.length;
-        const playerData = data[index];
+        // Fetch both player data and round stats in parallel
+        const [playerData, roundStats] = await Promise.all([
+          gameDataService.getPlayerData(activeSport),
+          gameDataService.getRoundStats(activeSport),
+        ]);
 
-        localStorage.setItem(key, ((index + 1) % data.length).toString());
+        updateState({
+          playerData,
+          roundStats,
+          isLoading: false,
+          error: null,
+        });
+      } catch (error) {
+        console.error("Error loading game data:", error);
+        updateState({
+          error: error instanceof Error ? error.message : "Failed to load game data",
+          isLoading: false,
+        });
+      }
+    };
 
-        setGameState((prev) => ({
-          ...prev,
-          [activeSport]: {
-            ...prev[activeSport],
-            playersList: data,
-            playerData,
-          },
-        }));
-      })
-      .catch((error) => {
-        console.error("Error loading player data:", error);
-        // Keep showing loading state if fetch fails
-      });
+    loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSport]); // gameState intentionally excluded to prevent infinite re-renders
 
+  // Submit game results when player wins
+  useEffect(() => {
+    const submitResults = async () => {
+      const state = gameState[activeSport];
+
+      // Only submit if game is won and we haven't submitted yet
+      if (!state.finalRank || !state.playerData || !state.roundStats) {
+        return;
+      }
+
+      // Check if already submitted (you might want to track this in localStorage)
+      const submissionKey = `submitted_${activeSport}_${state.playerData.playDate || state.roundStats.playDate}`;
+      if (localStorage.getItem(submissionKey)) {
+        return; // Already submitted
+      }
+
+      try {
+        const playDate = (state.playerData.playDate || state.roundStats.playDate || new Date().toISOString().split('T')[0]) as string;
+
+        const gameResult: GameResult = {
+          userId: "temp_user_123", // TODO: Replace with actual user ID from auth
+          sport: activeSport,
+          playDate,
+          playerName: state.playerData.Name,
+          score: state.score,
+          tilesFlipped: state.tilesFlippedCount,
+          incorrectGuesses: state.incorrectGuesses,
+          flippedTilesPattern: state.flippedTiles,
+          firstTileFlipped: state.firstTileFlipped || undefined,
+          lastTileFlipped: state.lastTileFlipped || undefined,
+          completed: true,
+          completedAt: new Date().toISOString(),
+          rank: state.finalRank,
+        };
+
+        console.log('[Game] Submitting game results:', gameResult);
+        const response = await gameDataService.submitGameResults(gameResult);
+
+        if (response?.success) {
+          console.log('[Game] Results submitted successfully');
+          localStorage.setItem(submissionKey, 'true');
+
+          // Optionally update round stats if backend returns updated stats
+          if (response.roundStats) {
+            updateState({ roundStats: response.roundStats });
+          }
+        }
+      } catch (error) {
+        console.error('[Game] Failed to submit results:', error);
+        // Don't block the user experience if submission fails
+      }
+    };
+
+    submitResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState[activeSport].finalRank, activeSport]);
+
   const s = gameState[activeSport];
-  if (!s.playerData) {
-    return <p>Loading player data...</p>;
+
+  // Show loading state
+  if (s.isLoading) {
+    return (
+      <div className="uncover-game">
+        <p>Loading player data and round statistics...</p>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (s.error) {
+    return (
+      <div className="uncover-game">
+        <div className="error-message">
+          <p>Error: {s.error}</p>
+          <button onClick={() => window.location.reload()}>Retry</button>
+        </div>
+      </div>
+    );
+  }
+
+  // Ensure data is loaded
+  if (!s.playerData || !s.roundStats) {
+    return (
+      <div className="uncover-game">
+        <p>Loading game data...</p>
+      </div>
+    );
   }
 
   const updateState = (patch: Partial<GameState>) => {
@@ -411,6 +362,11 @@ const Uncover: React.FC = () => {
     });
   };
 
+  // Helper to convert topic index to camelCase name for tracking
+  const getTileName = (index: number): string => {
+    return topics[index].replace(/\s+/g, '').replace(/^(.)/, (m) => m.toLowerCase());
+  };
+
   const handleTileClick = (index: number) => {
     // If photo is already revealed, allow clicking to toggle back
     if (s.photoRevealed) {
@@ -431,6 +387,11 @@ const Uncover: React.FC = () => {
     if (s.flippedTiles[index]) {
       return;
     }
+
+    // Track first and last tiles flipped
+    const tileName = getTileName(index);
+    const isFirstTile = s.tilesFlippedCount === 0;
+    const firstTile = isFirstTile ? tileName : s.firstTileFlipped;
 
     // If Photo tile is clicked for the first time, reveal the photo puzzle immediately
     if (topics[index] === "Photo") {
@@ -455,6 +416,8 @@ const Uncover: React.FC = () => {
           hint: newHint,
           photoRevealed: true,
           returningFromPhoto: false,
+          firstTileFlipped: firstTile,
+          lastTileFlipped: tileName,
         });
       } else {
         // Game won - just update visual state
@@ -487,6 +450,8 @@ const Uncover: React.FC = () => {
         tilesFlippedCount: s.tilesFlippedCount + 1,
         score: newScore,
         hint: newHint,
+        firstTileFlipped: firstTile,
+        lastTileFlipped: tileName,
       });
     } else {
       // Game won - just update visual state
@@ -709,15 +674,15 @@ const Uncover: React.FC = () => {
               <div className="round-stats-grid">
                 <div className="round-stat-item">
                   <div className="round-stat-label">Games Played</div>
-                  <div className="round-stat-value">{mockRoundStatsTemplate[activeSport].totalPlays}</div>
+                  <div className="round-stat-value">{s.roundStats.totalPlays}</div>
                 </div>
                 <div className="round-stat-item">
                   <div className="round-stat-label">Average Score</div>
-                  <div className="round-stat-value">{mockRoundStatsTemplate[activeSport].averageScore}</div>
+                  <div className="round-stat-value">{s.roundStats.averageScore}</div>
                 </div>
                 <div className="round-stat-item">
                   <div className="round-stat-label">Win Rate</div>
-                  <div className="round-stat-value">{mockRoundStatsTemplate[activeSport].percentageCorrect}%</div>
+                  <div className="round-stat-value">{s.roundStats.percentageCorrect}%</div>
                 </div>
               </div>
             </div>
@@ -734,8 +699,8 @@ const Uncover: React.FC = () => {
         isOpen={isTodayStatsModalOpen}
         onClose={() => setIsTodayStatsModalOpen(false)}
         roundStats={{
-          ...mockRoundStatsTemplate[activeSport],
-          name: s.finalRank ? (s.playerData?.Name || "Unknown Player") : "???",
+          ...s.roundStats,
+          name: s.finalRank ? (s.playerData.Name || "Unknown Player") : "???",
         }}
       />
     </div>
