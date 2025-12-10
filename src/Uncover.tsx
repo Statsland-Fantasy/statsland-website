@@ -540,10 +540,10 @@ const Uncover: React.FC = () => {
     football: "https://www.pro-football-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite"
   };
 
-  const sportIcons: Record<SportType, string> = {
-    baseball: "⚾",
-    basketball: "🏀",
-    football: "🏈"
+  const sportLogos: Record<SportType, string> = {
+    baseball: "https://cdn.ssref.net/req/202512031/logos/br-logo.svg",
+    basketball: "https://cdn.ssref.net/req/202512031/logos/bbr-logo.svg",
+    football: "https://cdn.ssref.net/req/202512101/logos/pfr-logo.svg"
   };
 
   return (
@@ -556,8 +556,11 @@ const Uncover: React.FC = () => {
           className="sports-reference-link"
           title={`Data from ${activeSport.charAt(0).toUpperCase() + activeSport.slice(1)} Reference`}
         >
-          <span className="sport-icon">{sportIcons[activeSport]}</span>
-          <span className="attribution-text">Sports Reference</span>
+          <img
+            src={sportLogos[activeSport]}
+            alt={`${activeSport.charAt(0).toUpperCase() + activeSport.slice(1)} Reference`}
+            className="sports-reference-logo"
+          />
         </a>
       </div>
 
@@ -802,8 +805,7 @@ const Uncover: React.FC = () => {
       )}
 
       <div className="sports-reference-credit">
-        Please Note: All sports information and images are from Sports Reference
-        LLC.
+        All information and images courtesy of Sports-Reference (sports-reference.com)
       </div>
 
       <RulesModal

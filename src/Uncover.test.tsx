@@ -2603,11 +2603,10 @@ describe("Uncover Component", () => {
         expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
       });
 
-      // Check that Sports Reference link is present
-      const sportsRefLink = screen.getByRole("link", {
-        name: /sports reference/i,
-      });
-      expect(sportsRefLink).toBeInTheDocument();
+      // Check that Sports Reference logo link is present
+      const sportsRefLogo = screen.getByAltText(/reference/i);
+      expect(sportsRefLogo).toBeInTheDocument();
+      expect(sportsRefLogo.closest("a")).toBeInTheDocument();
     });
 
     test("displays correct URL for baseball", async () => {
@@ -2617,9 +2616,8 @@ describe("Uncover Component", () => {
         expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
       });
 
-      const sportsRefLink = screen.getByRole("link", {
-        name: /sports reference/i,
-      });
+      const sportsRefLogo = screen.getByAltText("Baseball Reference");
+      const sportsRefLink = sportsRefLogo.closest("a");
       expect(sportsRefLink).toHaveAttribute(
         "href",
         "https://www.baseball-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite"
@@ -2658,9 +2656,8 @@ describe("Uncover Component", () => {
       fireEvent.click(screen.getByText("BASKETBALL"));
 
       await waitFor(() => {
-        const sportsRefLink = screen.getByRole("link", {
-          name: /sports reference/i,
-        });
+        const sportsRefLogo = screen.getByAltText("Basketball Reference");
+        const sportsRefLink = sportsRefLogo.closest("a");
         expect(sportsRefLink).toHaveAttribute(
           "href",
           "https://www.basketball-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite&__hstc=213859787.d5011e8d60fd9a5193cb043be2a32532.1764028511872.1764187685470.1764486206944.5&__hssc=213859787.1.1764486206944&__hsfp=2724220660"
@@ -2700,9 +2697,8 @@ describe("Uncover Component", () => {
       fireEvent.click(screen.getByText("FOOTBALL"));
 
       await waitFor(() => {
-        const sportsRefLink = screen.getByRole("link", {
-          name: /sports reference/i,
-        });
+        const sportsRefLogo = screen.getByAltText("Football Reference");
+        const sportsRefLink = sportsRefLogo.closest("a");
         expect(sportsRefLink).toHaveAttribute(
           "href",
           "https://www.pro-football-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite"
@@ -2717,14 +2713,13 @@ describe("Uncover Component", () => {
         expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
       });
 
-      const sportsRefLink = screen.getByRole("link", {
-        name: /sports reference/i,
-      });
+      const sportsRefLogo = screen.getByAltText("Baseball Reference");
+      const sportsRefLink = sportsRefLogo.closest("a");
       expect(sportsRefLink).toHaveAttribute("target", "_blank");
       expect(sportsRefLink).toHaveAttribute("rel", "noopener noreferrer");
     });
 
-    test("displays correct sport icon for each sport", async () => {
+    test("displays correct sport logo for each sport", async () => {
       const mockBasketballData: RoundData[] = [
         createMockRoundData(
           "Michael Jordan",
@@ -2765,8 +2760,10 @@ describe("Uncover Component", () => {
         expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
       });
 
-      // Baseball should show baseball icon
-      expect(screen.getByText("⚾")).toBeInTheDocument();
+      // Baseball should show baseball logo
+      const baseballLogo = screen.getByAltText("Baseball Reference");
+      expect(baseballLogo).toBeInTheDocument();
+      expect(baseballLogo).toHaveAttribute("src", "https://cdn.ssref.net/req/202512031/logos/br-logo.svg");
 
       // Switch to basketball
       (global.fetch as jest.Mock).mockResolvedValue({
@@ -2775,7 +2772,9 @@ describe("Uncover Component", () => {
       fireEvent.click(screen.getByText("BASKETBALL"));
 
       await waitFor(() => {
-        expect(screen.getByText("🏀")).toBeInTheDocument();
+        const basketballLogo = screen.getByAltText("Basketball Reference");
+        expect(basketballLogo).toBeInTheDocument();
+        expect(basketballLogo).toHaveAttribute("src", "https://cdn.ssref.net/req/202512031/logos/bbr-logo.svg");
       });
 
       // Switch to football
@@ -2785,7 +2784,9 @@ describe("Uncover Component", () => {
       fireEvent.click(screen.getByText("FOOTBALL"));
 
       await waitFor(() => {
-        expect(screen.getByText("🏈")).toBeInTheDocument();
+        const footballLogo = screen.getByAltText("Football Reference");
+        expect(footballLogo).toBeInTheDocument();
+        expect(footballLogo).toHaveAttribute("src", "https://cdn.ssref.net/req/202512101/logos/pfr-logo.svg");
       });
     });
   });
