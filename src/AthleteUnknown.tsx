@@ -324,7 +324,7 @@ const AthleteUnknown: React.FC = () => {
         .join(".");
     }
 
-    if (distance <= 2) {
+    if (distance <= 3) {
       if (s.previousCloseGuess && s.previousCloseGuess !== a) {
         const rank = evaluateRank(newScore);
         updateState({
@@ -347,21 +347,6 @@ const AthleteUnknown: React.FC = () => {
           lastSubmittedGuess: a,
         });
       }
-      return;
-    }
-
-    if (distance <= 4) {
-      const rank = evaluateRank(newScore);
-      updateState({
-        message: `Correct, you were close! Player's name: ${playerData.Name}`,
-        messageType: "close",
-        previousCloseGuess: "",
-        score: newScore,
-        hint: newHint,
-        lastSubmittedGuess: a,
-        finalRank: rank,
-        showResultsModal: true,
-      });
       return;
     }
 

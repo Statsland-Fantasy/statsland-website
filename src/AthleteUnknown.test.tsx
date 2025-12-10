@@ -461,7 +461,7 @@ describe("AthleteUnknown Component", () => {
       });
     });
 
-    test("close guess (distance <= 2) shows almost message", async () => {
+    test("close guess (distance <= 3) shows almost message", async () => {
       render(<AthleteUnknown />);
 
       await waitFor(() => {
