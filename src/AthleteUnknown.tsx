@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./Uncover.css";
+import "./AthleteUnknown.css";
 import RulesModal from "./RulesModal";
 import TodayStatsModal from "./TodayStatsModal";
+import UserStats from "./UserStats";
 import {
   type SportType,
   TILE_TOPICS,
@@ -244,7 +245,7 @@ const clearAllGuestSessions = (): void => {
   SPORT_LIST.forEach(sport => clearGuestSession(sport));
 };
 
-const Uncover: React.FC = () => {
+const AthleteUnknown: React.FC = () => {
   // Restore previously active sport from localStorage, default to baseball
   const getInitialSport = (): SportType => {
     try {
@@ -261,6 +262,7 @@ const Uncover: React.FC = () => {
   const [activeSport, setActiveSport] = useState<SportType>(getInitialSport);
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isTodayStatsModalOpen, setIsTodayStatsModalOpen] = useState(false);
+  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
 
   const [gameState, setGameState] = useState<Record<SportType, GameState>>({
     [SPORTS.BASEBALL]: { ...initialState },
@@ -477,6 +479,7 @@ const Uncover: React.FC = () => {
 
     if (distance <= GUESS_ACCURACY.VERY_CLOSE_DISTANCE) {
       if (s.previousCloseGuess && s.previousCloseGuess !== a) {
+        const rank = evaluateRank(newScore);
         updateState({
           message: `Correct, you were close! Player's name: ${playerData.Name}`,
           messageType: "close",
@@ -484,6 +487,8 @@ const Uncover: React.FC = () => {
           score: newScore,
           hint: newHint,
           lastSubmittedGuess: a,
+          finalRank: rank,
+          showResultsModal: true,
         });
       } else {
         updateState({
@@ -495,18 +500,6 @@ const Uncover: React.FC = () => {
           lastSubmittedGuess: a,
         });
       }
-      return;
-    }
-
-    if (distance <= GUESS_ACCURACY.CLOSE_DISTANCE) {
-      updateState({
-        message: `Correct, you were close! Player's name: ${playerData.Name}`,
-        messageType: "close",
-        previousCloseGuess: "",
-        score: newScore,
-        hint: newHint,
-        lastSubmittedGuess: a,
-      });
       return;
     }
 
@@ -698,7 +691,7 @@ const Uncover: React.FC = () => {
   };
 
   return (
-    <div className="uncover-game">
+    <div className="athlete-unknown-game">
       <div className="sports-reference-attribution">
         <a
           href={sportsReferenceUrls[activeSport]}
@@ -727,6 +720,12 @@ const Uncover: React.FC = () => {
             </div>
           ))}
         </div>
+        <button
+          className="stats-button"
+          onClick={() => setIsStatsModalOpen(true)}
+        >
+          Stats
+        </button>
       </div>
 
       <div className="puzzle-info">
@@ -975,11 +974,22 @@ const Uncover: React.FC = () => {
           }}
         />
       )}
+
+      {isStatsModalOpen && (
+        <div className="user-stats-modal" onClick={() => setIsStatsModalOpen(false)}>
+          <div className="user-stats-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-user-stats" onClick={() => setIsStatsModalOpen(false)}>
+              ×
+            </button>
+            <UserStats />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Uncover;
+export default AthleteUnknown;
 export {
   lev,
   saveGuestSession,

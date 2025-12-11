@@ -80,11 +80,8 @@ export const RANKS = {
 // ============================================================================
 
 export const GUESS_ACCURACY = {
-  // Maximum edit distance for "very close" guess (shows initials hint)
-  VERY_CLOSE_DISTANCE: 2,
-
-  // Maximum edit distance for "close" guess (reveals player name)
-  CLOSE_DISTANCE: 4,
+  // Maximum edit distance for "close" guess (requires second close guess to reveal player name)
+  VERY_CLOSE_DISTANCE: 3,
 } as const;
 
 // ============================================================================
@@ -158,7 +155,7 @@ export const DEFAULTS = {
 // ============================================================================
 
 export const LEGACY_SPORT_FILES: Record<SportType, string> = {
-  baseball: "/UncoverBaseballData.json",
-  basketball: "/UncoverBasketballData.json",
-  football: "/UncoverFootballData.json",
+  baseball: "/AthleteUnknownBaseballData.json",
+  basketball: "/AthleteUnknownBasketballData.json",
+  football: "/AthleteUnknownFootballData.json",
 } as const;
