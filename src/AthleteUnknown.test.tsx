@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Uncover from "./Uncover";
+import AthleteUnknown from "./AthleteUnknown";
 
 // Mock CSS imports
-jest.mock("./Uncover.css", () => ({}));
+jest.mock("./AthleteUnknown.css", () => ({}));
 jest.mock("./TodayStatsModal.css", () => ({}));
 
 // Mock fetch
@@ -117,7 +117,7 @@ const mockBaseballRoundStats: RoundStats = {
 // Legacy array format for backwards compatibility with some tests
 const mockBaseballData: PlayerData[] = [mockBaseballPlayerData];
 
-describe("Uncover Component", () => {
+describe("AthleteUnknown Component", () => {
   beforeEach(() => {
     // Clear call history but preserve mock implementations
     localStorageMock.getItem.mockClear();
@@ -155,12 +155,12 @@ describe("Uncover Component", () => {
 
   describe("Component Rendering", () => {
     test("renders loading state initially", () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
       expect(screen.getByText(/loading player data/i)).toBeInTheDocument();
     });
 
     test("renders sport navigation tabs", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -170,7 +170,7 @@ describe("Uncover Component", () => {
     });
 
     test("renders all topic tiles", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Bio")).toBeInTheDocument();
@@ -186,7 +186,7 @@ describe("Uncover Component", () => {
     });
 
     test("renders player input and submit button", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -199,7 +199,7 @@ describe("Uncover Component", () => {
     });
 
     test("displays initial score of 100", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -208,7 +208,7 @@ describe("Uncover Component", () => {
     });
 
     test("displays initial tiles flipped count of 0", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText(/tiles flipped: 0/i)).toBeInTheDocument();
@@ -218,7 +218,7 @@ describe("Uncover Component", () => {
 
   describe("Data Loading", () => {
     test("fetches baseball data on mount", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         // Should make API call to /v1/round endpoint
@@ -231,7 +231,7 @@ describe("Uncover Component", () => {
     });
 
     test("loads player data from API", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       // Wait for component to load player data
       await waitFor(() => {
@@ -322,7 +322,7 @@ describe("Uncover Component", () => {
           }),
         });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASKETBALL")).toBeInTheDocument();
@@ -343,7 +343,7 @@ describe("Uncover Component", () => {
 
   describe("Player Name Guessing", () => {
     test("correct guess shows success message", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -363,7 +363,7 @@ describe("Uncover Component", () => {
     });
 
     test("correct guess is case-insensitive", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -383,7 +383,7 @@ describe("Uncover Component", () => {
     });
 
     test("correct guess ignores spaces", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -403,7 +403,7 @@ describe("Uncover Component", () => {
     });
 
     test("wrong guess shows error message", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -422,8 +422,8 @@ describe("Uncover Component", () => {
       });
     });
 
-    test("close guess (distance <= 2) shows almost message", async () => {
-      render(<Uncover />);
+    test("close guess (distance <= 3) shows almost message", async () => {
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -443,7 +443,7 @@ describe("Uncover Component", () => {
     });
 
     test("second close guess reveals player name", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -467,12 +467,12 @@ describe("Uncover Component", () => {
       fireEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(screen.getByText(/Babe Ruth/i)).toBeInTheDocument();
+        expect(screen.getByText(/Correct, you were close! Player's name: Babe Ruth/i)).toBeInTheDocument();
       });
     });
 
     test("wrong guess decreases score by 2", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -492,7 +492,7 @@ describe("Uncover Component", () => {
     });
 
     test("cannot submit the same incorrect guess consecutively", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -521,7 +521,7 @@ describe("Uncover Component", () => {
     });
 
     test("can submit different guess after incorrect guess", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -551,7 +551,7 @@ describe("Uncover Component", () => {
     });
 
     test("consecutive guess check is case-insensitive and space-insensitive", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -594,7 +594,7 @@ describe("Uncover Component", () => {
 
   describe("Tile Flipping", () => {
     test("clicking a tile flips it and reveals content", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Bio")).toBeInTheDocument();
@@ -611,7 +611,7 @@ describe("Uncover Component", () => {
     });
 
     test("flipping a tile increases tiles flipped count", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText(/tiles flipped: 0/i)).toBeInTheDocument();
@@ -626,7 +626,7 @@ describe("Uncover Component", () => {
     });
 
     test("flipping a regular tile decreases score by 3", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -643,7 +643,7 @@ describe("Uncover Component", () => {
     });
 
     test("flipping photo tile decreases score by 6", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const scoreBox = document.querySelector(".score-box");
@@ -660,7 +660,7 @@ describe("Uncover Component", () => {
     });
 
     test("clicking already flipped tile does not change score", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Bio")).toBeInTheDocument();
@@ -686,7 +686,7 @@ describe("Uncover Component", () => {
 
   describe("Photo Puzzle", () => {
     test("clicking photo tile reveals photo puzzle", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Photo")).toBeInTheDocument();
@@ -703,7 +703,7 @@ describe("Uncover Component", () => {
     });
 
     test("clicking after photo reveal returns to normal view", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Photo")).toBeInTheDocument();
@@ -730,7 +730,7 @@ describe("Uncover Component", () => {
     });
 
     test("photo puzzle shows background images on tiles", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Photo")).toBeInTheDocument();
@@ -755,7 +755,7 @@ describe("Uncover Component", () => {
 
   describe("Hint System", () => {
     test("hint appears when score drops below 70", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -779,7 +779,7 @@ describe("Uncover Component", () => {
     });
 
     test("hint shows correct initials format", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -805,7 +805,7 @@ describe("Uncover Component", () => {
 
   describe("Ranking System", () => {
     test("displays Amazing rank for score >= 95", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -831,7 +831,7 @@ describe("Uncover Component", () => {
     });
 
     test("displays Elite rank for score >= 90 and < 95", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -857,7 +857,7 @@ describe("Uncover Component", () => {
     });
 
     test("displays Solid rank for score >= 80 and < 90", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -883,7 +883,7 @@ describe("Uncover Component", () => {
     });
 
     test("displays no rank for score < 80", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -993,7 +993,7 @@ describe("Uncover Component", () => {
           }),
         });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("FOOTBALL")).toBeInTheDocument();
@@ -1093,7 +1093,7 @@ describe("Uncover Component", () => {
           }),
         });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       // Wait for baseball to load
       await waitFor(() => {
@@ -1136,7 +1136,7 @@ describe("Uncover Component", () => {
 
   describe("Levenshtein Distance Helper", () => {
     test("lev function calculates correct distance", () => {
-      const { lev } = require("./Uncover");
+      const { lev } = require("./AthleteUnknown");
 
       // Test exact match
       expect(lev("test", "test")).toBe(0);
@@ -1161,7 +1161,7 @@ describe("Uncover Component", () => {
 
   describe("Results Modal", () => {
     test("results modal appears on correct answer", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1181,7 +1181,7 @@ describe("Uncover Component", () => {
     });
 
     test("results modal displays correct score", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1207,7 +1207,7 @@ describe("Uncover Component", () => {
     });
 
     test("results modal displays average score", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1227,7 +1227,7 @@ describe("Uncover Component", () => {
     });
 
     test("results modal displays 3x3 grid of tiles", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1248,7 +1248,7 @@ describe("Uncover Component", () => {
     });
 
     test("results modal shows flip symbol (↻) on flipped tiles", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Bio")).toBeInTheDocument();
@@ -1276,7 +1276,7 @@ describe("Uncover Component", () => {
     });
 
     test("results modal can be closed and reopened", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1312,7 +1312,7 @@ describe("Uncover Component", () => {
     });
 
     test("results modal has share button", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1343,7 +1343,7 @@ describe("Uncover Component", () => {
     });
 
     test("share button copies grid to clipboard", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1370,7 +1370,7 @@ describe("Uncover Component", () => {
     });
 
     test("share copies correct format with header, grid, and score", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1401,7 +1401,7 @@ describe("Uncover Component", () => {
     });
 
     test("share uses blue squares for unflipped, yellow for flipped", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Bio")).toBeInTheDocument();
@@ -1437,7 +1437,7 @@ describe("Uncover Component", () => {
     });
 
     test("share shows copied confirmation message", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1464,7 +1464,7 @@ describe("Uncover Component", () => {
     });
 
     test("copied confirmation shows the actual copied text", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1496,7 +1496,7 @@ describe("Uncover Component", () => {
     test("copied confirmation disappears after 3 seconds", async () => {
       jest.useFakeTimers();
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1534,7 +1534,7 @@ describe("Uncover Component", () => {
 
   describe("Post-Win Game State", () => {
     test("tiles can still be flipped after winning", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1573,7 +1573,7 @@ describe("Uncover Component", () => {
     });
 
     test("score does not change after winning when flipping tiles", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1615,7 +1615,7 @@ describe("Uncover Component", () => {
     });
 
     test("tiles flipped counter does not change after winning", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1656,7 +1656,7 @@ describe("Uncover Component", () => {
     });
 
     test("input and submit button remain enabled after winning", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1685,7 +1685,7 @@ describe("Uncover Component", () => {
     });
 
     test("only correct answer reopens modal after winning", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1732,7 +1732,7 @@ describe("Uncover Component", () => {
     });
 
     test("wrong answers do not show messages after winning", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1766,7 +1766,7 @@ describe("Uncover Component", () => {
     });
 
     test("photo tile can still be toggled after winning", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1806,7 +1806,7 @@ describe("Uncover Component", () => {
 
   describe("Edge Cases", () => {
     test("handles empty player name submission", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1828,7 +1828,7 @@ describe("Uncover Component", () => {
     });
 
     test("button is enabled when player name is entered", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1856,7 +1856,7 @@ describe("Uncover Component", () => {
     });
 
     test("whitespace-only input keeps button disabled", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -1879,7 +1879,7 @@ describe("Uncover Component", () => {
       (global.fetch as jest.Mock).mockClear();
       (global.fetch as jest.Mock).mockRejectedValue(new Error("Network error"));
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       // Component should show error UI with retry button
       await waitFor(() => {
@@ -1891,7 +1891,7 @@ describe("Uncover Component", () => {
     test("handles missing localStorage data", async () => {
       localStorageMock.getItem.mockReturnValue(null);
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         // Component should still load successfully
@@ -1900,7 +1900,7 @@ describe("Uncover Component", () => {
     });
 
     test("renders successfully with API data", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         // Component should load player data from API
@@ -1911,7 +1911,7 @@ describe("Uncover Component", () => {
 
   describe("Puzzle Info Section", () => {
     test("renders puzzle info section with all elements", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Puzzle #__")).toBeInTheDocument();
@@ -1921,7 +1921,7 @@ describe("Uncover Component", () => {
     });
 
     test("puzzle number has correct styling", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -1932,7 +1932,7 @@ describe("Uncover Component", () => {
     });
 
     test("separators are present", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -1943,7 +1943,7 @@ describe("Uncover Component", () => {
     });
 
     test("Today's Stats button is clickable", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const todayStatsButton = screen.getByText("Today's Stats");
@@ -1953,7 +1953,7 @@ describe("Uncover Component", () => {
     });
 
     test("Rules button is enabled and clickable", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const rulesButton = screen.getByText("Rules");
@@ -1965,7 +1965,7 @@ describe("Uncover Component", () => {
 
   describe("Rules Modal Integration", () => {
     test("does not show Rules modal by default", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -1975,7 +1975,7 @@ describe("Uncover Component", () => {
     });
 
     test("opens Rules modal when Rules button is clicked", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -1990,7 +1990,7 @@ describe("Uncover Component", () => {
     });
 
     test("Rules modal displays game rules", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2008,7 +2008,7 @@ describe("Uncover Component", () => {
     });
 
     test("closes Rules modal when close button is clicked", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2034,7 +2034,7 @@ describe("Uncover Component", () => {
     });
 
     test("closes Rules modal when clicking outside", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2060,7 +2060,7 @@ describe("Uncover Component", () => {
     });
 
     test("game remains functional after Rules modal", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2094,7 +2094,7 @@ describe("Uncover Component", () => {
     });
 
     test("modal content does not close when clicking inside it", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2119,7 +2119,7 @@ describe("Uncover Component", () => {
     });
 
     test("Rules modal displays all sport sections", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2146,7 +2146,7 @@ describe("Uncover Component", () => {
     });
 
     test("can open Rules modal multiple times", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("BASEBALL")).toBeInTheDocument();
@@ -2180,7 +2180,7 @@ describe("Uncover Component", () => {
 
   describe("Today's Stats Modal", () => {
     test("opens Today's Stats modal when button is clicked", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       // Wait for data to load first
       await waitFor(() => {
@@ -2199,7 +2199,7 @@ describe("Uncover Component", () => {
     });
 
     test("shows round stats with correct sport data", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         const todayStatsButton = screen.getByText("Today's Stats");
@@ -2220,7 +2220,7 @@ describe("Uncover Component", () => {
 
   describe("Round Stats in Results Modal", () => {
     test("results modal includes round stats section", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -2241,7 +2241,7 @@ describe("Uncover Component", () => {
     });
 
     test("round stats display correct values", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -2270,7 +2270,7 @@ describe("Uncover Component", () => {
 
   describe("Mystery Player Hiding", () => {
     test("hides mystery player name before puzzle is solved", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText("Today's Stats")).toBeInTheDocument();
@@ -2290,7 +2290,7 @@ describe("Uncover Component", () => {
     });
 
     test("reveals mystery player name after puzzle is solved", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -2407,7 +2407,7 @@ describe("Uncover Component", () => {
           }),
         });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -2531,7 +2531,7 @@ describe("Uncover Component", () => {
           }),
         });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -2663,7 +2663,7 @@ describe("Uncover Component", () => {
         .mockResolvedValueOnce({ ok: true, json: async () => mockFootballPlayerData })
         .mockResolvedValueOnce({ ok: true, json: async () => mockFootballRoundStats });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(
@@ -2757,7 +2757,7 @@ describe("Uncover Component", () => {
 
   describe.skip("Guest Session Persistence", () => {
     test("saves game state to localStorage when tiles are flipped", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText(/bio/i)).toBeInTheDocument();
@@ -2791,7 +2791,7 @@ describe("Uncover Component", () => {
     });
 
     test("saves game state to localStorage when guesses are made", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByPlaceholderText(/enter player name/i)).toBeInTheDocument();
@@ -2854,7 +2854,7 @@ describe("Uncover Component", () => {
         return null;
       });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         // Verify state was restored
@@ -2885,7 +2885,7 @@ describe("Uncover Component", () => {
         return null;
       });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         // Verify state was NOT restored (fresh state)
@@ -2899,7 +2899,7 @@ describe("Uncover Component", () => {
       // TODO: Update this test for API-based data loading
       // Skipping implementation details for now
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       // Wait for baseball to load
       await waitFor(() => {
@@ -2943,7 +2943,7 @@ describe("Uncover Component", () => {
     });
 
     test("clears all sessions on window beforeunload", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText(/bio/i)).toBeInTheDocument();
@@ -2996,7 +2996,7 @@ describe("Uncover Component", () => {
         return Promise.resolve({ json: async () => mockBaseballData });
       });
 
-      const { unmount } = render(<Uncover />);
+      const { unmount } = render(<AthleteUnknown />);
 
       // Wait for baseball to load
       await waitFor(() => {
@@ -3034,7 +3034,7 @@ describe("Uncover Component", () => {
         return null;
       });
 
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       // Verify session was restored
       await waitFor(() => {
@@ -3045,7 +3045,7 @@ describe("Uncover Component", () => {
     });
 
     test("saves winning state and restores it", async () => {
-      render(<Uncover />);
+      render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByPlaceholderText(/enter player name/i)).toBeInTheDocument();
@@ -3078,7 +3078,7 @@ describe("Uncover Component", () => {
       const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
       // First render normally to let component mount
-      const { rerender } = render(<Uncover />);
+      const { rerender } = render(<AthleteUnknown />);
 
       await waitFor(() => {
         expect(screen.getByText(/bio/i)).toBeInTheDocument();
@@ -3111,6 +3111,206 @@ describe("Uncover Component", () => {
 
       consoleErrorSpy.mockRestore();
       localStorageMock.setItem.mockRestore();
+    });
+  });
+
+  describe("Sports Reference Attribution", () => {
+    test("renders Sports Reference attribution link", async () => {
+      render(<AthleteUnknown />);
+
+      await waitFor(() => {
+        expect(screen.getByText(/loading player data/i)).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
+      });
+
+      // Check that Sports Reference logo link is present
+      const sportsRefLogo = screen.getByAltText(/reference/i);
+      expect(sportsRefLogo).toBeInTheDocument();
+      expect(sportsRefLogo.closest("a")).toBeInTheDocument();
+    });
+
+    test("displays correct URL for baseball", async () => {
+      render(<AthleteUnknown />);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
+      });
+
+      const sportsRefLogo = screen.getByAltText("Baseball Reference");
+      const sportsRefLink = sportsRefLogo.closest("a");
+      expect(sportsRefLink).toHaveAttribute(
+        "href",
+        "https://www.baseball-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite"
+      );
+    });
+
+    test("displays correct URL for basketball", async () => {
+      const mockBasketballData: RoundData[] = [
+        createMockRoundData(
+          "Michael Jordan",
+          "Greatest basketball player",
+          "Guard",
+          "1st Rd (3rd) from North Carolina",
+          "1984-2003",
+          "CHI, WAS",
+          "23, 45",
+          "30.1 PPG, 6.2 RPG",
+          "6x NBA Champ, 5x MVP",
+          "/images/michael-jordan.jpg",
+          "basketball",
+          1
+        ),
+      ];
+
+      (global.fetch as jest.Mock).mockResolvedValue({
+        json: async () => mockBasketballData,
+      });
+
+      render(<AthleteUnknown />);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
+      });
+
+      // Switch to basketball
+      fireEvent.click(screen.getByText("BASKETBALL"));
+
+      await waitFor(() => {
+        const sportsRefLogo = screen.getByAltText("Basketball Reference");
+        const sportsRefLink = sportsRefLogo.closest("a");
+        expect(sportsRefLink).toHaveAttribute(
+          "href",
+          "https://www.basketball-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite&__hstc=213859787.d5011e8d60fd9a5193cb043be2a32532.1764028511872.1764187685470.1764486206944.5&__hssc=213859787.1.1764486206944&__hsfp=2724220660"
+        );
+      });
+    });
+
+    test("displays correct URL for football", async () => {
+      const mockFootballData: RoundData[] = [
+        createMockRoundData(
+          "Tom Brady",
+          "Greatest quarterback",
+          "Quarterback",
+          "6th Rd (199th) from Michigan",
+          "2000-2022",
+          "NE, TB",
+          "12",
+          "89,214 Pass Yards, 649 TD",
+          "7x SB Champ, 5x MVP",
+          "/images/tom-brady.jpg",
+          "football",
+          1
+        ),
+      ];
+
+      (global.fetch as jest.Mock).mockResolvedValue({
+        json: async () => mockFootballData,
+      });
+
+      render(<AthleteUnknown />);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
+      });
+
+      // Switch to football
+      fireEvent.click(screen.getByText("FOOTBALL"));
+
+      await waitFor(() => {
+        const sportsRefLogo = screen.getByAltText("Football Reference");
+        const sportsRefLink = sportsRefLogo.closest("a");
+        expect(sportsRefLink).toHaveAttribute(
+          "href",
+          "https://www.pro-football-reference.com/?utm_campaign=2023_07_ig_header_logo&utm_source=ig&utm_medium=sr_xsite"
+        );
+      });
+    });
+
+    test("attribution link opens in new tab", async () => {
+      render(<AthleteUnknown />);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
+      });
+
+      const sportsRefLogo = screen.getByAltText("Baseball Reference");
+      const sportsRefLink = sportsRefLogo.closest("a");
+      expect(sportsRefLink).toHaveAttribute("target", "_blank");
+      expect(sportsRefLink).toHaveAttribute("rel", "noopener noreferrer");
+    });
+
+    test("displays correct sport logo for each sport", async () => {
+      const mockBasketballData: RoundData[] = [
+        createMockRoundData(
+          "Michael Jordan",
+          "Greatest basketball player",
+          "Guard",
+          "1st Rd (3rd) from North Carolina",
+          "1984-2003",
+          "CHI, WAS",
+          "23, 45",
+          "30.1 PPG, 6.2 RPG",
+          "6x NBA Champ, 5x MVP",
+          "/images/michael-jordan.jpg",
+          "basketball",
+          1
+        ),
+      ];
+
+      const mockFootballData: RoundData[] = [
+        createMockRoundData(
+          "Tom Brady",
+          "Greatest quarterback",
+          "Quarterback",
+          "6th Rd (199th) from Michigan",
+          "2000-2022",
+          "NE, TB",
+          "12",
+          "89,214 Pass Yards, 649 TD",
+          "7x SB Champ, 5x MVP",
+          "/images/tom-brady.jpg",
+          "football",
+          1
+        ),
+      ];
+
+      render(<AthleteUnknown />);
+
+      await waitFor(() => {
+        expect(screen.queryByText(/loading player data/i)).not.toBeInTheDocument();
+      });
+
+      // Baseball should show baseball logo
+      const baseballLogo = screen.getByAltText("Baseball Reference");
+      expect(baseballLogo).toBeInTheDocument();
+      expect(baseballLogo).toHaveAttribute("src", "https://cdn.ssref.net/req/202512031/logos/br-logo.svg");
+
+      // Switch to basketball
+      (global.fetch as jest.Mock).mockResolvedValue({
+        json: async () => mockBasketballData,
+      });
+      fireEvent.click(screen.getByText("BASKETBALL"));
+
+      await waitFor(() => {
+        const basketballLogo = screen.getByAltText("Basketball Reference");
+        expect(basketballLogo).toBeInTheDocument();
+        expect(basketballLogo).toHaveAttribute("src", "https://cdn.ssref.net/req/202512031/logos/bbr-logo.svg");
+      });
+
+      // Switch to football
+      (global.fetch as jest.Mock).mockResolvedValue({
+        json: async () => mockFootballData,
+      });
+      fireEvent.click(screen.getByText("FOOTBALL"));
+
+      await waitFor(() => {
+        const footballLogo = screen.getByAltText("Football Reference");
+        expect(footballLogo).toBeInTheDocument();
+        expect(footballLogo).toHaveAttribute("src", "https://cdn.ssref.net/req/202512101/logos/pfr-logo.svg");
+      });
     });
   });
 });

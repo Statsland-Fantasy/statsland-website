@@ -64,10 +64,17 @@ class ApiService {
   /**
    * Get round data (includes both player and stats)
    * @param sport - The sport (baseball, basketball, football)
-   * @param date - The date in YYYY-MM-DD format (optional, defaults to today)
+   * @param date - The date in YYYY-MM-DD format (optional, defaults to today in browser's local timezone)
    */
   private async getRound(sport: string, date?: string): Promise<any> {
-    const dateParam = date || new Date().toISOString().split('T')[0];
+    // Use browser's local timezone for date calculation
+    const dateParam = date || (() => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    })();
     const url = `${this.baseUrl}${API_CONFIG.endpoints.getRound(sport, dateParam)}`;
 
     try {
@@ -138,7 +145,14 @@ class ApiService {
   async submitGameResults(
     gameResult: GameResult
   ): Promise<GameResultResponse> {
-    const dateParam = gameResult.playDate || new Date().toISOString().split('T')[0];
+    // Use browser's local timezone for date calculation
+    const dateParam = gameResult.playDate || (() => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    })();
     const url = `${this.baseUrl}${API_CONFIG.endpoints.submitGameResults(gameResult.sport, dateParam)}`;
 
     // Transform frontend format to backend format
