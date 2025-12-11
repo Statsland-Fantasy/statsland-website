@@ -635,6 +635,25 @@ const AthleteUnknown: React.FC = () => {
     football: "https://cdn.ssref.net/req/202512101/logos/pfr-logo.svg"
   };
 
+  // Format date for display (MM-DD-YY)
+  const formatDate = (dateString: string | undefined): string => {
+    if (!dateString) {
+      return "";
+    }
+    try {
+      const date = new Date(dateString);
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const year = String(date.getFullYear()).slice(-2);
+      return `${month}-${day}-${year}`;
+    } catch {
+      return dateString;
+    }
+  };
+
+  const playDate = (s.playerData?.playDate || s.roundStats?.playDate) as string | undefined;
+  const puzzleNumber = s.playerData?.dailyNumber || 1;
+
   return (
     <div className="athlete-unknown-game">
       <div className="sports-reference-attribution">
@@ -674,7 +693,13 @@ const AthleteUnknown: React.FC = () => {
       </div>
 
       <div className="puzzle-info">
-        <span className="puzzle-number">Puzzle #__</span>
+        <span className="puzzle-number">Puzzle #{puzzleNumber}</span>
+        {playDate && (
+          <>
+            <span className="separator">•</span>
+            <span className="puzzle-date">{formatDate(playDate)}</span>
+          </>
+        )}
         <span className="separator">•</span>
         <button
           className="today-stats-link"
