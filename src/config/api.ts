@@ -1,7 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
-  baseUrl: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080',
-  useMockData: process.env.REACT_APP_USE_MOCK_DATA === 'true',
+  baseUrl: process.env.REACT_APP_API_BASE_URL || "http://localhost:8080",
+  useMockData: process.env.REACT_APP_USE_MOCK_DATA === "true",
   endpoints: {
     // Round endpoint - returns both player data and stats
     getRound: (sport: string, date: string) =>

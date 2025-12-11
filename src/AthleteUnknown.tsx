@@ -3,7 +3,7 @@ import "./AthleteUnknown.css";
 import RulesModal from "./RulesModal";
 import TodayStatsModal from "./TodayStatsModal";
 import gameDataService from "./services/gameData";
-import type { PlayerData as APIPlayerData, RoundStats, GameResult } from "./types/api";
+import type { RoundStats, GameResult } from "./types/api";
 import UserStats from "./UserStats";
 import {
   type SportType,
@@ -113,19 +113,6 @@ const initialState: GameState = {
   firstTileFlipped: null,
   lastTileFlipped: null,
   gaveUp: false,
-};
-
-// Helper function to extract puzzle number from roundId
-const getPuzzleNumber = (roundId: string): string => {
-  const match = roundId.match(/\d+$/);
-  return match ? match[0] : "1";
-};
-
-// Helper function to format date as mm-dd-yy
-const formatDateMMDDYY = (dateString: string): string => {
-  const [year, month, day] = dateString.split("-");
-  const shortYear = year.slice(-2);
-  return `${month}-${day}-${shortYear}`;
 };
 
 // Guest session persistence utilities
@@ -308,7 +295,7 @@ const AthleteUnknown: React.FC = () => {
       }
 
       try {
-        const playDate = (state.playerData.playDate || state.roundStats.playDate || new Date().toISOString().split('T')[0]) as string;
+        const playDate = (state.playerData.playDate || state.roundStats.playDate || new Date().toISOString().split("T")[0]) as string;
 
         const gameResult: GameResult = {
           userId: "temp_user_123", // TODO: Replace with actual user ID from auth
@@ -326,12 +313,12 @@ const AthleteUnknown: React.FC = () => {
           rank: state.finalRank,
         };
 
-        console.log('[Game] Submitting game results:', gameResult);
+        console.log("[Game] Submitting game results:", gameResult);
         const response = await gameDataService.submitGameResults(gameResult);
 
         if (response?.success) {
-          console.log('[Game] Results submitted successfully');
-          localStorage.setItem(submissionKey, 'true');
+          console.log("[Game] Results submitted successfully");
+          localStorage.setItem(submissionKey, "true");
 
           // Optionally update round stats if backend returns updated stats
           if (response.roundStats) {
@@ -339,7 +326,7 @@ const AthleteUnknown: React.FC = () => {
           }
         }
       } catch (error) {
-        console.error('[Game] Failed to submit results:', error);
+        console.error("[Game] Failed to submit results:", error);
         // Don't block the user experience if submission fails
       }
     };
@@ -479,7 +466,7 @@ const AthleteUnknown: React.FC = () => {
 
   // Helper to convert topic index to camelCase name for tracking
   const getTileName = (index: number): string => {
-    return topics[index].replace(/\s+/g, '').replace(/^(.)/, (m) => m.toLowerCase());
+    return topics[index].replace(/\s+/g, "").replace(/^(.)/, (m) => m.toLowerCase());
   };
 
   const handleGiveUp = () => {
@@ -488,22 +475,6 @@ const AthleteUnknown: React.FC = () => {
       finalRank: "",
       showResultsModal: true,
     });
-  };
-
-  const getSportsReferenceUrl = (sport: SportType, path: string): string => {
-    const baseUrls: Record<SportType, string> = {
-      baseball: "https://www.baseball-reference.com/players/",
-      basketball: "https://www.basketball-reference.com/players/",
-      football: "https://www.pro-football-reference.com/players/",
-    };
-
-    const extensions: Record<SportType, string> = {
-      baseball: ".shtml",
-      basketball: ".html",
-      football: ".htm",
-    };
-
-    return baseUrls[sport] + path + extensions[sport];
   };
 
   const handleTileClick = (index: number) => {
@@ -600,7 +571,7 @@ const AthleteUnknown: React.FC = () => {
     }
   };
 
-  const photoUrl = s.playerData.Photo?.[0] || '';
+  const photoUrl = s.playerData.Photo?.[0] || "";
 
   // Calculate background position for photo segments (3x3 grid)
   const getPhotoSegmentStyle = (index: number): React.CSSProperties => {

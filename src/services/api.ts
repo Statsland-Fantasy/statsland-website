@@ -1,11 +1,11 @@
-import API_CONFIG from '../config/api';
+import API_CONFIG from "../config/api";
 import type {
   PlayerData,
   RoundStats,
   GameResult,
   GameResultResponse,
   ApiError,
-} from '../types/api';
+} from "../types/api";
 
 class ApiService {
   private baseUrl: string;
@@ -28,7 +28,7 @@ class ApiService {
         ...options,
         signal: controller.signal,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           ...options.headers,
         },
       });
@@ -71,8 +71,8 @@ class ApiService {
     const dateParam = date || (() => {
       const now = new Date();
       const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     })();
     const url = `${this.baseUrl}${API_CONFIG.endpoints.getRound(sport, dateParam)}`;
@@ -81,8 +81,8 @@ class ApiService {
       const response = await this.fetchWithTimeout(url);
       return this.handleResponse<any>(response);
     } catch (error) {
-      console.error('Error fetching round data:', error);
-      throw this.formatError(error, 'Failed to load round data');
+      console.error("Error fetching round data:", error);
+      throw this.formatError(error, "Failed to load round data");
     }
   }
 
@@ -116,8 +116,8 @@ class ApiService {
 
       return playerData;
     } catch (error) {
-      console.error('Error fetching player data:', error);
-      throw this.formatError(error, 'Failed to load player data');
+      console.error("Error fetching player data:", error);
+      throw this.formatError(error, "Failed to load player data");
     }
   }
 
@@ -133,8 +133,8 @@ class ApiService {
       // Return the stats from the round
       return round.stats as RoundStats;
     } catch (error) {
-      console.error('Error fetching round stats:', error);
-      throw this.formatError(error, 'Failed to load round statistics');
+      console.error("Error fetching round stats:", error);
+      throw this.formatError(error, "Failed to load round statistics");
     }
   }
 
@@ -149,8 +149,8 @@ class ApiService {
     const dateParam = gameResult.playDate || (() => {
       const now = new Date();
       const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     })();
     const url = `${this.baseUrl}${API_CONFIG.endpoints.submitGameResults(gameResult.sport, dateParam)}`;
@@ -166,19 +166,19 @@ class ApiService {
 
     try {
       const response = await this.fetchWithTimeout(url, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(backendPayload),
       });
       const result = await this.handleResponse<any>(response);
 
       return {
         success: true,
-        message: 'Results submitted successfully',
+        message: "Results submitted successfully",
         roundStats: result,
       };
     } catch (error) {
-      console.error('Error submitting game results:', error);
-      throw this.formatError(error, 'Failed to submit game results');
+      console.error("Error submitting game results:", error);
+      throw this.formatError(error, "Failed to submit game results");
     }
   }
 
@@ -193,15 +193,15 @@ class ApiService {
       const response = await this.fetchWithTimeout(url);
       return this.handleResponse<any>(response);
     } catch (error) {
-      console.error('Error fetching user stats:', error);
-      throw this.formatError(error, 'Failed to load user statistics');
+      console.error("Error fetching user stats:", error);
+      throw this.formatError(error, "Failed to load user statistics");
     }
   }
 
   private formatError(error: any, defaultMessage: string): ApiError {
-    if (error.name === 'AbortError') {
+    if (error.name === "AbortError") {
       return {
-        message: 'Request timeout - please try again',
+        message: "Request timeout - please try again",
         status: 408,
       };
     }
