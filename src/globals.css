@@ -1,0 +1,92 @@
+.map-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+  cursor: grab;
+}
+
+.map-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+  object-fit: contain;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.region {
+  fill: rgba(255, 200, 0, 0.2);
+  stroke: #ffc300;
+  stroke-width: 2;
+  cursor: pointer;
+  pointer-events: auto;
+  transition:
+    fill 0.2s,
+    stroke 0.2s;
+}
+
+.region:hover {
+  fill: rgba(255, 200, 0, 0.35);
+}
+
+.info-panel {
+  position: fixed;
+  right: -320px;
+  top: 0;
+  width: 320px;
+  height: 100vh;
+  background: white;
+  padding: 24px;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s;
+}
+
+.info-panel.open {
+  right: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+}
+
+.exit-map-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(30, 30, 47, 0.9);
+  color: white;
+  border: 2px solid #00b4d8;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  pointer-events: auto;
+  transition:
+    background 0.3s,
+    transform 0.2s;
+  font-family: "Poppins", sans-serif;
+}
+
+.exit-map-btn:hover {
+  background: rgba(0, 180, 216, 0.9);
+  transform: scale(1.05);
+}

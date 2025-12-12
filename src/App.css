@@ -129,6 +129,13 @@ body {
   border-top: 3px solid #00b4d8;
 }
 
+/* Fullscreen Map Mode */
+.App.fullscreen-map .header,
+.App.fullscreen-map .navbar,
+.App.fullscreen-map .footer {
+  display: none;
+}
+
 /* Mobile Stylings */
 @media (max-width: 600px) {
   .site-title {

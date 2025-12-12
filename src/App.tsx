@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import "./App.css";
 import ContactForm from "./ContactForm";
 import AthleteUnknown from "./AthleteUnknown";
+import MapContainer from "./MapContainer";
 
-type PageType = "Home" | "Daily Fact" | "Athlete Unknown" | "Projects" | "Contact";
+type PageType =
+  | "Home"
+  | "Daily Fact"
+  | "Athlete Unknown"
+  | "Projects"
+  | "Contact"
+  | "Park Map";
 
 function App() {
   const [activePage, setActivePage] = useState<PageType>("Home");
@@ -60,13 +67,15 @@ function App() {
             <ContactForm />
           </section>
         );
+      case "Park Map":
+        return <MapContainer onExit={() => setActivePage("Home")} />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="App">
+    <div className={`App ${activePage === "Park Map" ? "fullscreen-map" : ""}`}>
       <header className="header">
         <h1 className="site-title">Bizarro Fantasy Sports</h1>
         <p className="tagline">Daily Fantasy Sports Games</p>
@@ -103,6 +112,12 @@ function App() {
             onClick={() => setActivePage("Contact")}
           >
             Contact Us
+          </li>
+          <li
+            className={activePage === "Park Map" ? "active" : ""}
+            onClick={() => setActivePage("Park Map")}
+          >
+            Park Map
           </li>
         </ul>
       </nav>
