@@ -22,6 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Claude Code
+.claude
 # Local testing files (keep local only)
 test-round-data-today.json
 test-round-data-dynamodb.json
