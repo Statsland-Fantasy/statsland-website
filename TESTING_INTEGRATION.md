@@ -376,7 +376,7 @@ Check Application > LocalStorage in DevTools:
 Currently using hardcoded userId: `"temp_user_123"`. Replace with actual user ID from your auth system:
 
 ```typescript
-// In Uncover.tsx, line 183
+// In AthleteUnknown.tsx, line 183
 userId: "temp_user_123", // TODO: Replace with actual user ID from auth
 ```
 

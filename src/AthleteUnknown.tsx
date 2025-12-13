@@ -368,7 +368,7 @@ const AthleteUnknown: React.FC = () => {
   // Show loading state
   if (s.isLoading) {
     return (
-      <div className="uncover-game">
+      <div className="athlete-unknown-game">
         <p>Loading player data and round statistics...</p>
       </div>
     );
@@ -377,7 +377,7 @@ const AthleteUnknown: React.FC = () => {
   // Show error state
   if (s.error) {
     return (
-      <div className="uncover-game">
+      <div className="athlete-unknown-game">
         <div className="error-message">
           <p>Error: {s.error}</p>
           <button onClick={() => window.location.reload()}>Retry</button>
@@ -389,7 +389,7 @@ const AthleteUnknown: React.FC = () => {
   // Ensure data is loaded
   if (!s.playerData || !s.roundStats) {
     return (
-      <div className="uncover-game">
+      <div className="athlete-unknown-game">
         <p>Loading game data...</p>
       </div>
     );
@@ -617,7 +617,7 @@ const AthleteUnknown: React.FC = () => {
     const dailyNumber = s.playerData!.dailyNumber || 1;
 
     // Build the share text
-    let shareText = `Daily Uncover #${dailyNumber}\n`;
+    let shareText = `Daily Athlete Unknown #${dailyNumber}\n`;
 
     // Create a 3x3 grid using emojis
     for (let i = 0; i < TOTAL_TILES; i++) {
