@@ -6,6 +6,7 @@
 import { useCallback } from "react";
 import type { GameState } from "./useGameState";
 import { TOTAL_TILES, PHOTO_GRID, TIMING } from "../config";
+import { extractRoundNumber } from "../utils/stringMatching";
 
 interface UseShareResultsProps {
   state: GameState;
@@ -18,10 +19,10 @@ export const useShareResults = ({
 }: UseShareResultsProps) => {
   const handleShare = useCallback(() => {
     // Get daily number from playerData or default to 1
-    const dailyNumber = state.playerData!.dailyNumber || 1;
+    const roundNumber = extractRoundNumber(state.round?.roundId!);
 
     // Build the share text
-    let shareText = `Daily Athlete Unknown #${dailyNumber}\n`;
+    let shareText = `Athlete Unknown ${state.round?.sport} #${roundNumber}\n`;
 
     // Create a 3x3 grid using emojis
     for (let i = 0; i < TOTAL_TILES; i++) {

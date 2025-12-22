@@ -8,10 +8,11 @@ import { useGameData } from "./hooks/useGameData";
 import { useGuestSession } from "./hooks/useGuestSession";
 import { useShareResults } from "./hooks/useShareResults";
 import { STORAGE_KEYS } from "./utils/storage";
+import { extractRoundNumber } from "./utils/stringMatching";
 import {
   SportsReferenceAttribution,
   GameHeader,
-  PuzzleInfo,
+  RoundInfo,
   ScoreDisplay,
   GameStats,
   PlayerInput,
@@ -99,7 +100,7 @@ const AthleteUnknown: React.FC = () => {
   }
 
   // Ensure data is loaded
-  if (!state.playerData || !state.roundStats) {
+  if (!state.round) {
     return (
       <div className="athlete-unknown-game">
         <p>Loading game data...</p>
@@ -107,9 +108,8 @@ const AthleteUnknown: React.FC = () => {
     );
   }
 
-  const playDate = (state.playerData?.playDate ||
-    state.roundStats?.playDate) as string | undefined;
-  const puzzleNumber = state.playerData?.dailyNumber || 1;
+  const playDate = state.round?.playDate as string | undefined;
+  const roundNumber = extractRoundNumber(state.round.roundId);
 
   return (
     <div className="athlete-unknown-game">
@@ -121,8 +121,8 @@ const AthleteUnknown: React.FC = () => {
         onStatsClick={() => setIsStatsModalOpen(true)}
       />
 
-      <PuzzleInfo
-        puzzleNumber={puzzleNumber}
+      <RoundInfo
+        roundNumber={roundNumber}
         playDate={playDate}
         onRoundStatsClick={() => setIsRoundStatsModalOpen(true)}
         onRulesClick={() => setIsRulesModalOpen(true)}
@@ -156,7 +156,7 @@ const AthleteUnknown: React.FC = () => {
         flippedTiles={state.flippedTiles}
         photoRevealed={state.photoRevealed}
         returningFromPhoto={state.returningFromPhoto}
-        playerData={state.playerData}
+        playerData={state.round.player}
         onTileClick={handleTileClick}
       />
 
@@ -166,7 +166,7 @@ const AthleteUnknown: React.FC = () => {
         score={state.score}
         flippedTiles={state.flippedTiles}
         copiedText={state.copiedText}
-        roundStats={state.roundStats}
+        roundStats={state.round.stats}
         onClose={() => updateState({ showResultsModal: false })}
         onShare={handleShare}
       />
@@ -178,15 +178,15 @@ const AthleteUnknown: React.FC = () => {
         onClose={() => setIsRulesModalOpen(false)}
       />
 
-      {state.roundStats && (
+      {state.round.stats && (
         <RoundStatsModal
           isOpen={isRoundStatsModalOpen}
           onClose={() => setIsRoundStatsModalOpen(false)}
           roundStats={{
-            ...state.roundStats,
+            ...state.round.stats,
             name:
               state.finalRank || state.gaveUp
-                ? state.playerData?.name || "Unknown Player"
+                ? state.round.player?.name || "Unknown Player"
                 : "???",
           }}
         />

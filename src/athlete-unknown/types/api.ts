@@ -1,6 +1,19 @@
 // Athlete Unknown API Types
 
+export interface Round {
+  roundId: string;
+  sport: string;
+  playDate: string;
+  created?: string;
+  lastUpdated?: string;
+  theme?: string;
+  player: PlayerData;
+  stats: RoundStats;
+}
+
 export interface PlayerData {
+  sport: string;
+  sportsReferenceURL: string;
   name: string;
   bio: string;
   playerInformation: string;
@@ -11,22 +24,7 @@ export interface PlayerData {
   careerStats: string;
   personalAchievements: string;
   photo: string;
-  dailyNumber?: number;
-  playDate?: string;
-  sport?: string;
   [key: string]: string | number | undefined;
-}
-
-export interface TileTracker {
-  bio: number;
-  careerStats: number;
-  draftInformation: number;
-  jerseyNumbers: number;
-  personalAchievements: number;
-  photo: number;
-  playerInformation: number;
-  teamsPlayedOn: number;
-  yearsActive: number;
 }
 
 export interface RoundStats {
@@ -45,6 +43,18 @@ export interface RoundStats {
   mostFlippedTracker: TileTracker;
   firstFlippedTracker: TileTracker;
   lastFlippedTracker: TileTracker;
+}
+
+export interface TileTracker {
+  bio: number;
+  playerInformation: number;
+  draftInformation: number;
+  yearsActive: number;
+  teamsPlayedOn: number;
+  jerseyNumbers: number;
+  careerStats: number;
+  personalAchievements: number;
+  photo: number;
 }
 
 export interface GameResult {

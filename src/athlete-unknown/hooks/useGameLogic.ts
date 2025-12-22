@@ -28,9 +28,8 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
       return;
     }
 
-    const playerData = state.playerData!;
     const normalizedGuess = normalize(state.playerName);
-    const normalizedAnswer = normalize(playerData.name);
+    const normalizedAnswer = normalize(state.round?.player.name);
     const distance = calculateLevenshteinDistance(
       normalizedGuess,
       normalizedAnswer
@@ -70,7 +69,11 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
 
     // Incorrect guess - deduct points
     const newScore = calculateNewScore(state.score, "incorrectGuess");
-    const newHint = generateHint(newScore, state.hint, playerData.name);
+    const newHint = generateHint(
+      newScore,
+      state.hint,
+      state.round?.player.name || ""
+    );
 
     // Check if guess was very close
     if (distance <= GUESS_ACCURACY.VERY_CLOSE_DISTANCE) {
@@ -81,7 +84,7 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
       ) {
         const rank = evaluateRank(newScore);
         updateState({
-          message: `Correct, you were close! Player's name: ${playerData.name}`,
+          message: `Correct, you were close! Player's name: ${state.round?.player.name || ""}`,
           messageType: "close",
           previousCloseGuess: "",
           score: newScore,

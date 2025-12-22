@@ -1,12 +1,7 @@
 import API_CONFIG from "../../config/api";
 import athleteUnknownApiService from "./api";
 import MockDataService from "./mockData";
-import type {
-  PlayerData,
-  RoundStats,
-  GameResult,
-  GameResultResponse,
-} from "../types/api";
+import type { GameResult, GameResultResponse, Round } from "../types/api";
 
 /**
  * Unified game data service that switches between API and mock data
@@ -23,53 +18,26 @@ class GameDataService {
   }
 
   /**
-   * Get player data by sport and date
+   * Get round data by sport and date
    * Falls back to mock data if API call fails
    */
-  async getPlayerData(sport: string, date?: string): Promise<PlayerData> {
+  async getRoundData(sport: string, date?: string): Promise<Round> {
     if (this.useMockData) {
-      console.log(`[MOCK] Fetching player data for ${sport}`);
-      return MockDataService.getPlayerData(sport, date);
+      console.log(`[MOCK] Fetching round data for ${sport}`);
+      return MockDataService.getRoundData(sport);
     }
 
     try {
       console.log(
         `[API] Fetching player data for ${sport} on ${date || "today"}`
       );
-      return await athleteUnknownApiService.getPlayerBySportAndDate(
-        sport,
-        date
-      );
+      return await athleteUnknownApiService.getRound(sport, date);
     } catch (error) {
       console.warn(
-        "[API] Failed to fetch player data, falling back to mock data:",
+        "[API] Failed to fetch round data, falling back to mock data:",
         error
       );
-      return MockDataService.getPlayerData(sport, date);
-    }
-  }
-
-  /**
-   * Get round statistics by sport and date
-   * Falls back to mock data if API call fails
-   */
-  async getRoundStats(sport: string, date?: string): Promise<RoundStats> {
-    if (this.useMockData) {
-      console.log(`[MOCK] Fetching round stats for ${sport}`);
-      return MockDataService.getRoundStats(sport, date);
-    }
-
-    try {
-      console.log(
-        `[API] Fetching round stats for ${sport} on ${date || "today"}`
-      );
-      return await athleteUnknownApiService.getRoundStats(sport, date);
-    } catch (error) {
-      console.warn(
-        "[API] Failed to fetch round stats, falling back to mock data:",
-        error
-      );
-      return MockDataService.getRoundStats(sport, date);
+      return MockDataService.getRoundData(sport);
     }
   }
 

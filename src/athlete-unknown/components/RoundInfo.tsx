@@ -1,22 +1,22 @@
 import React from "react";
 import { formatDate } from "../../utils/formatting";
 
-interface PuzzleInfoProps {
-  puzzleNumber: number;
+interface RoundInfoProps {
+  roundNumber: number;
   playDate?: string;
   onRoundStatsClick: () => void;
   onRulesClick: () => void;
 }
 
-export const PuzzleInfo: React.FC<PuzzleInfoProps> = ({
-  puzzleNumber,
+export const RoundInfo: React.FC<RoundInfoProps> = ({
+  roundNumber,
   playDate,
   onRoundStatsClick,
   onRulesClick,
 }) => {
   return (
     <div className="puzzle-info">
-      <span className="puzzle-number">Puzzle #{puzzleNumber}</span>
+      <span className="puzzle-number">Puzzle #{roundNumber}</span>
       {playDate && (
         <>
           <span className="separator">•</span>

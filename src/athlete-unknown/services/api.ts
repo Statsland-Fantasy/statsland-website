@@ -38,7 +38,7 @@ class AthleteUnknownApiService {
    * @param sport - The sport (baseball, basketball, football)
    * @param date - The date in YYYY-MM-DD format (optional, defaults to today in browser's local timezone)
    */
-  private async getRound(sport: string, date?: string): Promise<any> {
+  async getRound(sport: string, date?: string): Promise<any> {
     // Use browser's local timezone for date calculation
     const dateParam =
       date ||
@@ -56,61 +56,6 @@ class AthleteUnknownApiService {
     } catch (error) {
       console.error("Error fetching round data:", error);
       throw this.httpClient.formatError(error, "Failed to load round data");
-    }
-  }
-
-  /**
-   * Get player data by sport and date
-   * @param sport - The sport (baseball, basketball, football)
-   * @param date - The date in YYYY-MM-DD format (optional, defaults to today)
-   */
-  async getPlayerBySportAndDate(
-    sport: string,
-    date?: string
-  ): Promise<PlayerData> {
-    try {
-      const round = await this.getRound(sport, date);
-
-      // Transform backend Round.Player to frontend PlayerData format
-      const playerData: PlayerData = {
-        name: round.player.name,
-        bio: round.player.bio,
-        playerInformation: round.player.playerInformation,
-        draftInformation: round.player.draftInformation,
-        yearsActive: round.player.yearsActive,
-        teamsPlayedOn: round.player.teamsPlayedOn,
-        jerseyNumbers: round.player.jerseyNumbers,
-        careerStats: round.player.careerStats,
-        personalAchievements: round.player.personalAchievements,
-        photo: round.player.photo,
-        playDate: round.playDate,
-        sport: round.sport,
-      };
-
-      return playerData;
-    } catch (error) {
-      console.error("Error fetching player data:", error);
-      throw this.httpClient.formatError(error, "Failed to load player data");
-    }
-  }
-
-  /**
-   * Get round statistics by sport and date
-   * @param sport - The sport (baseball, basketball, football)
-   * @param date - The date in YYYY-MM-DD format (optional, defaults to today)
-   */
-  async getRoundStats(sport: string, date?: string): Promise<RoundStats> {
-    try {
-      const round = await this.getRound(sport, date);
-
-      // Return the stats from the round
-      return round.stats as RoundStats;
-    } catch (error) {
-      console.error("Error fetching round stats:", error);
-      throw this.httpClient.formatError(
-        error,
-        "Failed to load round statistics"
-      );
     }
   }
 
@@ -150,10 +95,7 @@ class AthleteUnknownApiService {
       };
     } catch (error) {
       console.error("Error submitting game results:", error);
-      throw this.httpClient.formatError(
-        error,
-        "Failed to submit game results"
-      );
+      throw this.httpClient.formatError(error, "Failed to submit game results");
     }
   }
 

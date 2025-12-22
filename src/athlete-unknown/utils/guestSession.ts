@@ -33,7 +33,7 @@ export const saveGuestSession = (
       firstTileFlipped: state.firstTileFlipped,
       lastTileFlipped: state.lastTileFlipped,
       // Store player data identifier to verify it's the same puzzle
-      playerName_saved: state.playerData?.name || "",
+      playerName_saved: state.round?.player?.name || "",
       // Store player index so we can restore the same player
       playerIndex_saved: playerIndex,
     };

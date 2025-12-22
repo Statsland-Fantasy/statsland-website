@@ -24,7 +24,7 @@ export const useGameData = ({
   // Load player data and round stats from API
   useEffect(() => {
     // Already loaded - do nothing
-    if (state.playerData && state.roundStats) {
+    if (state.round) {
       return;
     }
 
@@ -32,15 +32,14 @@ export const useGameData = ({
       try {
         updateState({ isLoading: true, error: null });
 
-        // Fetch both player data and round stats in parallel
-        const [playerData, roundStats] = await Promise.all([
-          gameDataService.getPlayerData(activeSport),
-          gameDataService.getRoundStats(activeSport),
-        ]);
+        // const testPlayDate = "???";
+        const roundData = await gameDataService.getRoundData(
+          activeSport,
+          undefined // until a testPlayDate can be inserted from FE to BE
+        );
 
         updateState({
-          playerData,
-          roundStats,
+          round: roundData,
           isLoading: false,
           error: null,
         });
@@ -62,16 +61,15 @@ export const useGameData = ({
   useEffect(() => {
     const submitResults = async () => {
       // Only submit if game is won and we haven't submitted yet
-      if (!state.finalRank || !state.playerData || !state.roundStats) {
+      if (!state.finalRank || !state.round) {
         return;
       }
 
       // Check if already submitted
-      const playDate = (state.playerData.playDate ||
-        state.roundStats.playDate ||
+      const playDate = (state.round.playDate ||
         new Date().toISOString().split("T")[0]) as string;
-      const submissionKey = getGameSubmissionKey(activeSport, playDate);
 
+      const submissionKey = getGameSubmissionKey(activeSport, playDate);
       if (localStorage.getItem(submissionKey)) {
         return; // Already submitted
       }
@@ -81,7 +79,7 @@ export const useGameData = ({
           userId: "temp_user_123", // TODO: Replace with actual user ID from auth
           sport: activeSport,
           playDate,
-          playerName: state.playerData.name,
+          playerName: state.round.player.name,
           score: state.score,
           tilesFlipped: state.tilesFlippedCount,
           incorrectGuesses: state.incorrectGuesses,
@@ -93,20 +91,15 @@ export const useGameData = ({
           rank: state.finalRank,
         };
 
-        console.log("[Game] Submitting game results:", gameResult);
+        console.log("[Athlete Unknown] Submitting game results:", gameResult);
         const response = await gameDataService.submitGameResults(gameResult);
 
         if (response?.success) {
-          console.log("[Game] Results submitted successfully");
+          console.log("[Athlete Unknown] Results submitted successfully");
           localStorage.setItem(submissionKey, "true");
-
-          // Update round stats if backend returns updated stats
-          if (response.roundStats) {
-            updateState({ roundStats: response.roundStats });
-          }
         }
       } catch (error) {
-        console.error("[Game] Failed to submit results:", error);
+        console.error("[Athlete Unknown] Failed to submit results:", error);
         // Don't block the user experience if submission fails
       }
     };
@@ -119,14 +112,14 @@ export const useGameData = ({
     try {
       updateState({ isLoading: true, error: null });
 
-      const [playerData, roundStats] = await Promise.all([
-        gameDataService.getPlayerData(activeSport),
-        gameDataService.getRoundStats(activeSport),
-      ]);
+      const testPlayDate = "???";
+      const roundData = await gameDataService.getRoundData(
+        activeSport,
+        undefined // until a testPlayDate can be inserted from FE to BE
+      );
 
       updateState({
-        playerData,
-        roundStats,
+        round: roundData,
         isLoading: false,
         error: null,
       });

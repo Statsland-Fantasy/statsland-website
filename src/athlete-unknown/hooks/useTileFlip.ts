@@ -53,7 +53,7 @@ export const useTileFlip = ({ state, updateState }: UseTileFlipProps) => {
           const newHint = generateHint(
             newScore,
             state.hint,
-            state.playerData!.name
+            state.round?.player.name!
           );
 
           updateState({
@@ -84,7 +84,7 @@ export const useTileFlip = ({ state, updateState }: UseTileFlipProps) => {
         const newHint = generateHint(
           newScore,
           state.hint,
-          state.playerData!.name
+          state.round?.player.name!
         );
 
         updateState({
