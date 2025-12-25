@@ -7,6 +7,7 @@ import { useTileFlip } from "./hooks/useTileFlip";
 import { useGameData } from "./hooks/useGameData";
 import { useGuestSession } from "./hooks/useGuestSession";
 import { useShareResults } from "./hooks/useShareResults";
+import { useFaceDetection } from "./hooks/useFaceDetection";
 import { STORAGE_KEYS } from "./utils/storage";
 import { extractRoundNumber } from "./utils/stringMatching";
 import {
@@ -46,9 +47,14 @@ const AthleteUnknown: React.FC = () => {
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isRoundStatsModalOpen, setIsRoundStatsModalOpen] = useState(false);
   const [isUserStatsModalOpen, setIsUserStatsModalOpen] = useState(false);
+  const [processedPhotoUrl, setProcessedPhotoUrl] = useState<string | null>(null);
+  const [processingPhoto, setProcessingPhoto] = useState(false);
 
   // Core state management
   const { state, updateState } = useGameState(activeSport);
+
+  // Face detection for photo cropping
+  const { modelsLoaded, processFacePhoto } = useFaceDetection();
 
   // Data fetching & submission
   // updates the following fields in state
@@ -91,6 +97,45 @@ const AthleteUnknown: React.FC = () => {
     }
   }, [activeSport]);
 
+  // Process photo with face detection when round data and models are ready
+  useEffect(() => {
+    const processPhoto = async () => {
+      if (!state.round?.player?.photo || !modelsLoaded || processingPhoto) {
+        return;
+      }
+
+      const photoUrl = state.round.player.photo;
+
+      // Check if we already processed this photo
+      if (processedPhotoUrl && photoUrl === state.round.player.photo) {
+        return;
+      }
+
+      try {
+        setProcessingPhoto(true);
+        console.log('[AthleteUnknown] Processing photo with face detection:', photoUrl);
+
+        const croppedPhoto = await processFacePhoto(photoUrl);
+
+        if (croppedPhoto) {
+          setProcessedPhotoUrl(croppedPhoto);
+          console.log('[AthleteUnknown] Photo processed successfully');
+        } else {
+          // Fall back to original photo if processing fails
+          setProcessedPhotoUrl(photoUrl);
+          console.log('[AthleteUnknown] Using original photo (face detection failed)');
+        }
+      } catch (error) {
+        console.error('[AthleteUnknown] Error processing photo:', error);
+        setProcessedPhotoUrl(photoUrl); // Fallback to original
+      } finally {
+        setProcessingPhoto(false);
+      }
+    };
+
+    processPhoto();
+  }, [state.round?.player?.photo, modelsLoaded, processFacePhoto, processingPhoto, processedPhotoUrl]);
+
   // Show loading state
   if (state.isLoading) {
     return (
@@ -123,6 +168,12 @@ const AthleteUnknown: React.FC = () => {
 
   const playDate = state.round?.playDate as string | undefined;
   const roundNumber = extractRoundNumber(state.round.roundId);
+
+  // Use face-detected photo if available, otherwise use original
+  const playerDataWithProcessedPhoto = {
+    ...state.round.player,
+    photo: processedPhotoUrl || state.round.player.photo,
+  };
 
   return (
     <div className="athlete-unknown-game">
@@ -166,7 +217,7 @@ const AthleteUnknown: React.FC = () => {
         flippedTiles={state.flippedTiles}
         photoRevealed={state.photoRevealed}
         returningFromPhoto={state.returningFromPhoto}
-        playerData={state.round.player}
+        playerData={playerDataWithProcessedPhoto}
         onTileClick={handleTileClick}
       />
 
