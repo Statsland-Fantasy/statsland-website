@@ -31,7 +31,7 @@ export const RoundInfo: React.FC<RoundInfoProps> = ({
         onClick={onTitleClick}
         style={isPlaytester ? { cursor: "default" } : undefined}
       >
-        Puzzle #{roundNumber}
+        Round #{roundNumber}
       </span>
       {showDatePicker && isPlaytester && onDateSelect && (
         <input
