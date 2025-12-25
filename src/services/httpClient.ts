@@ -1,4 +1,4 @@
-import type { ApiError } from "../types/http";
+import type { ApiError } from "@/types";
 
 /**
  * Generic HTTP client with auth, timeout, and error handling

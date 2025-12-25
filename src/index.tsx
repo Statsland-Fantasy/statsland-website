@@ -1,13 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import RootLayout from "./RootLayout";
-import AthleteUnknown from "./athlete-unknown/AthleteUnknown";
-import ContactForm from "./ContactForm";
+import { RootLayout, Home, AthleteUnknown, ContactForm } from "@/pages/routes";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        Component: App,
+        Component: Home,
       },
       {
         path: "/daily-fact",
