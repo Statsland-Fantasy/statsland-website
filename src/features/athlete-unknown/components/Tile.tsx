@@ -13,7 +13,7 @@ interface TileProps {
   onClick: () => void;
 }
 
-export const Tile: React.FC<TileProps> = ({
+export function Tile({
   tileName,
   index,
   isFlipped,
@@ -22,7 +22,7 @@ export const Tile: React.FC<TileProps> = ({
   playerData,
   photoSegmentStyle,
   onClick,
-}) => {
+}: TileProps): React.ReactElement {
   const photoUrl = playerData.photo || "";
 
   return (
@@ -67,4 +67,4 @@ export const Tile: React.FC<TileProps> = ({
       </div>
     </div>
   );
-};
+}

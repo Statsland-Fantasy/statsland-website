@@ -8,12 +8,12 @@ interface RoundInfoProps {
   onRulesClick: () => void;
 }
 
-export const RoundInfo: React.FC<RoundInfoProps> = ({
+export function RoundInfo({
   roundNumber,
   playDate,
   onRoundStatsClick,
   onRulesClick,
-}) => {
+}: RoundInfoProps): React.ReactElement {
   return (
     <div className="round-info">
       <span className="round-number">Round #{roundNumber}</span>
@@ -33,4 +33,4 @@ export const RoundInfo: React.FC<RoundInfoProps> = ({
       </button>
     </div>
   );
-};
+}

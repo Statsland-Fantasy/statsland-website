@@ -181,7 +181,7 @@ const sampleUserStats: UserStatsData = {
   userCreated: "2025-11-19T07:47:47.242Z",
 };
 
-const UserStatsModal: React.FC = () => {
+function UserStatsModal(): React.ReactElement {
   const [selectedSport, setSelectedSport] = useState<string>("basketball");
   const [userStats] = useState<UserStatsData>(sampleUserStats);
 
@@ -347,6 +347,6 @@ const UserStatsModal: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export { UserStatsModal };

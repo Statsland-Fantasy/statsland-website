@@ -11,13 +11,13 @@ interface TileGridProps {
   onTileClick: (index: number) => void;
 }
 
-export const TileGrid: React.FC<TileGridProps> = ({
+export function TileGrid({
   flippedTiles,
   photoRevealed,
   returningFromPhoto,
   playerData,
   onTileClick,
-}) => {
+}: TileGridProps): React.ReactElement {
   const photoUrl = playerData.photo || "";
 
   // Calculate background position for photo segments (3x3 grid)
@@ -52,4 +52,4 @@ export const TileGrid: React.FC<TileGridProps> = ({
       ))}
     </div>
   );
-};
+}

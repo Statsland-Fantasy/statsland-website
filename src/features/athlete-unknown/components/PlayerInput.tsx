@@ -11,7 +11,7 @@ interface PlayerInputProps {
   onViewResults: () => void;
 }
 
-export const PlayerInput: React.FC<PlayerInputProps> = ({
+export function PlayerInput({
   playerName,
   score,
   finalRank,
@@ -20,7 +20,7 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({
   onSubmit,
   onGiveUp,
   onViewResults,
-}) => {
+}: PlayerInputProps): React.ReactElement {
   return (
     <div className="player-input">
       <input
@@ -44,4 +44,4 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({
       )}
     </div>
   );
-};
+}

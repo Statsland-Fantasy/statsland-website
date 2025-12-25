@@ -47,11 +47,11 @@ const formatTileName = (tileName: string): string => {
     .trim();
 };
 
-const RoundStatsModal: React.FC<RoundStatsModalProps> = ({
+function RoundStatsModal({
   isOpen,
   onClose,
   roundStats,
-}) => {
+}: RoundStatsModalProps): React.ReactElement | null {
   if (!isOpen) {
     return null;
   }
@@ -165,6 +165,6 @@ const RoundStatsModal: React.FC<RoundStatsModalProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export { RoundStatsModal };

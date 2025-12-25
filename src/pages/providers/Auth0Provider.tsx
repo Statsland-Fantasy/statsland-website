@@ -5,7 +5,7 @@ interface Auth0ProviderProps {
   children: React.ReactNode;
 }
 
-export const Auth0Provider: React.FC<Auth0ProviderProps> = ({ children }) => {
+export function Auth0Provider({ children }: Auth0ProviderProps): React.ReactElement {
   return (
     <Auth0ProviderBase
       domain={process.env.REACT_APP_AUTH0_DOMAIN!}
@@ -20,4 +20,4 @@ export const Auth0Provider: React.FC<Auth0ProviderProps> = ({ children }) => {
       {children}
     </Auth0ProviderBase>
   );
-};
+}

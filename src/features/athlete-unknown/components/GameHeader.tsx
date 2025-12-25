@@ -8,11 +8,11 @@ interface GameHeaderProps {
   onStatsClick: () => void;
 }
 
-export const GameHeader: React.FC<GameHeaderProps> = ({
+export function GameHeader({
   activeSport,
   onSportChange,
   onStatsClick,
-}) => {
+}: GameHeaderProps): React.ReactElement {
   return (
     <div className="sports-section">
       <div className="sports-navbar">
@@ -31,4 +31,4 @@ export const GameHeader: React.FC<GameHeaderProps> = ({
       </button>
     </div>
   );
-};
+}

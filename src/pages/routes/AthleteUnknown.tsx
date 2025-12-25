@@ -31,7 +31,7 @@ import {
   UserStatsModal,
 } from "@/features/athlete-unknown/components";
 
-export const AthleteUnknown: React.FC = () => {
+export function AthleteUnknown(): React.ReactElement {
   // Restore previously active sport from localStorage, default to baseball
   const getInitialSport = (): SportType => {
     try {
@@ -231,4 +231,4 @@ export const AthleteUnknown: React.FC = () => {
       )}
     </div>
   );
-};
+}

@@ -10,7 +10,7 @@ interface ScoreDisplayProps {
   incorrectGuesses: number;
 }
 
-export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
+export function ScoreDisplay({
   score,
   message,
   messageType,
@@ -18,7 +18,7 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
   finalRank,
   tilesFlipped,
   incorrectGuesses,
-}) => {
+}: ScoreDisplayProps): React.ReactElement {
   return (
     <div>
       <div className="score-and-messages">
@@ -43,4 +43,4 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
       </div>
     </div>
   );
-};
+}

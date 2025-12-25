@@ -76,7 +76,7 @@ const acronymDefinitions: Record<string, { full: string; link?: string }> = {
   "SB MVP": { full: "Super Bowl MVP" },
 };
 
-const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
+function RulesModal({ isOpen, onClose }: RulesModalProps): React.ReactElement | null {
   const [hoveredTile, setHoveredTile] = useState<string | null>(null);
   const [hoveredAcronym, setHoveredAcronym] = useState<string | null>(null);
 
@@ -417,6 +417,6 @@ const RulesModal: React.FC<RulesModalProps> = ({ isOpen, onClose }) => {
       </div>
     </div>
   );
-};
+}
 
 export { RulesModal };

@@ -20,9 +20,9 @@ const sportLogos: Record<SportType, string> = {
   football: "https://cdn.ssref.net/req/202512101/logos/pfr-logo.svg",
 };
 
-export const SportsReferenceAttribution: React.FC<
-  SportsReferenceAttributionProps
-> = ({ activeSport }) => {
+export function SportsReferenceAttribution({
+  activeSport,
+}: SportsReferenceAttributionProps): React.ReactElement {
   return (
     <div className="sports-reference-attribution">
       <a
@@ -40,4 +40,4 @@ export const SportsReferenceAttribution: React.FC<
       </a>
     </div>
   );
-};
+}

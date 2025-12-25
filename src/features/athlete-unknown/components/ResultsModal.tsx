@@ -12,7 +12,7 @@ interface ResultsModalProps {
   onShare: () => void;
 }
 
-export const ResultsModal: React.FC<ResultsModalProps> = ({
+export function ResultsModal({
   isOpen,
   gaveUp,
   score,
@@ -21,7 +21,7 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({
   roundStats,
   onClose,
   onShare,
-}) => {
+}: ResultsModalProps): React.ReactElement | null {
   if (!isOpen) {
     return null;
   }
@@ -92,4 +92,4 @@ export const ResultsModal: React.FC<ResultsModalProps> = ({
       </div>
     </div>
   );
-};
+}

@@ -1,5 +1,8 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider as RouterProviderBase } from "react-router";
+import {
+  createBrowserRouter,
+  RouterProvider as RouterProviderBase,
+} from "react-router";
 import { RootLayout, Home, AthleteUnknown, ContactForm } from "@/pages/routes";
 
 const router = createBrowserRouter([
@@ -20,7 +23,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/athlete-unknown",
+        path: "/athlete-unknown/:sport",
         Component: AthleteUnknown,
       },
       {
@@ -43,10 +46,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-interface RouterProviderProps {
-  children?: React.ReactNode;
-}
-
-export const RouterProvider: React.FC<RouterProviderProps> = () => {
+export function RouterProvider(): React.ReactElement {
   return <RouterProviderBase router={router} />;
-};
+}
