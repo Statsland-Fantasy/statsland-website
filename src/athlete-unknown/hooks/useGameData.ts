@@ -61,11 +61,11 @@ export const useGameData = ({
         return;
       }
 
-      const roundPlayDate = (state.round.playDate ||
-        new Date().toISOString().split("T")[0]) as string;
+      // Get current date in local timezone
+      const now = new Date();
+      const currentDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
-      // Get current date
-      const currentDate = new Date().toISOString().split("T")[0];
+      const roundPlayDate = state.round.playDate || currentDate;
 
       // Only submit stats if current date matches the round's playDate
       // This prevents stat submission for playtesting future rounds
