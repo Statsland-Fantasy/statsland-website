@@ -74,7 +74,7 @@
     "roundId": "football002",
     "created": "2025-11-12T10:00:00Z",
     "lastUpdated": "2025-11-13T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "football",
       "sportsReferencePath": "J/JohnCh04",
@@ -143,7 +143,7 @@
     "roundId": "football003",
     "created": "2025-11-13T10:00:00Z",
     "lastUpdated": "2025-11-14T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "football",
       "sportsReferencePath": "J/JohnCa00",
@@ -212,7 +212,7 @@
     "roundId": "football004",
     "created": "2025-11-14T10:00:00Z",
     "lastUpdated": "2025-11-15T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "football",
       "sportsReferencePath": "H/HopkBr00",
@@ -281,7 +281,7 @@
     "roundId": "football005",
     "created": "2025-11-15T10:00:00Z",
     "lastUpdated": "2025-11-16T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "football",
       "sportsReferencePath": "S/SmitBr00",
@@ -350,7 +350,7 @@
     "roundId": "football006",
     "created": "2025-11-16T10:00:00Z",
     "lastUpdated": "2025-11-17T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "football",
       "sportsReferencePath": "C/CunnZa00",
@@ -419,7 +419,7 @@
     "roundId": "football007",
     "created": "2025-11-17T10:00:00Z",
     "lastUpdated": "2025-11-18T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "football",
       "sportsReferencePath": "C/ClinHa00",

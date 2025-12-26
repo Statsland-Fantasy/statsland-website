@@ -74,7 +74,7 @@
     "roundId": "baseball002",
     "created": "2025-11-12T10:00:00Z",
     "lastUpdated": "2025-11-13T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "baseball",
       "sportsReferencePath": "p/poseybu01",
@@ -143,7 +143,7 @@
     "roundId": "baseball003",
     "created": "2025-11-13T10:00:00Z",
     "lastUpdated": "2025-11-14T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "baseball",
       "sportsReferencePath": "c/casteni01",
@@ -212,7 +212,7 @@
     "roundId": "baseball004",
     "created": "2025-11-14T10:00:00Z",
     "lastUpdated": "2025-11-15T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "baseball",
       "sportsReferencePath": "p/powelbo01",
@@ -281,7 +281,7 @@
     "roundId": "baseball005",
     "created": "2025-11-15T10:00:00Z",
     "lastUpdated": "2025-11-16T00:00:00Z",
-    "previouslyPlayedDates": [],
+    "theme": "",
     "player": {
       "sport": "baseball",
       "sportsReferencePath": "c/cabreor01",

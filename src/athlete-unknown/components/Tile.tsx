@@ -24,15 +24,10 @@ export const Tile: React.FC<TileProps> = ({
   onClick,
 }) => {
   const photoUrl = playerData.photo || "";
-  const tileContent = playerData[tileName];
+  const tileContent = String(playerData[tileName] || "");
 
   // Show tooltip for flipped tiles (not in photo reveal mode)
   const tooltipText = isFlipped && !photoRevealed ? camelCaseToTitleCase(tileName) : "";
-
-  // Debug logging
-  if (isFlipped && !photoRevealed && tileName !== "photo") {
-    console.log(`Tile ${tileName} is flipped. Content:`, tileContent);
-  }
 
   return (
     <div className="tile" onClick={onClick} data-tooltip={tooltipText}>
@@ -54,23 +49,36 @@ export const Tile: React.FC<TileProps> = ({
           className={`tile-back ${photoRevealed ? "photo-segment" : ""}`}
           style={photoRevealed ? photoSegmentStyle : {}}
         >
-          {!photoRevealed &&
-            (tileName === "photo" ? (
-              <img
-                src={photoUrl}
-                alt="Player"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                }}
-              />
-            ) : (
-              <span style={{ fontSize: "0.85rem", lineHeight: "1.3" }}>
-                {tileContent || "No data"}
-              </span>
-            ))}
+          {!photoRevealed && tileName === "photo" && (
+            <img
+              src={photoUrl}
+              alt="Player"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
+            />
+          )}
+          {!photoRevealed && tileName !== "photo" && (
+            <div
+              style={{
+                fontSize: "0.8rem",
+                lineHeight: "1.4",
+                padding: "5px",
+                color: "#000",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              {tileContent}
+            </div>
+          )}
           {photoRevealed && index === 2 && (
             <div className="flip-back-arrow">↻</div>
           )}
