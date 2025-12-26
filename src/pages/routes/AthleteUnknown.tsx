@@ -131,6 +131,10 @@ export function AthleteUnknown(): React.ReactElement {
     }
   }, [activeSport]);
 
+  useEffect(() => {
+    setActiveSport(getValidSport(sport));
+  }, [sport, setActiveSport]);
+
   // Show loading state
   if (state.isLoading) {
     return (
