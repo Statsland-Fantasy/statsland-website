@@ -42,12 +42,12 @@ export const Tile: React.FC<TileProps> = ({
                 ? "flipped"
                 : ""
         }`}
-        title={tooltipTitle}
       >
         <div className="tile-front">{camelCaseToTitleCase(tileName)}</div>
         <div
           className={`tile-back ${photoRevealed ? "photo-segment" : ""}`}
           style={photoRevealed ? photoSegmentStyle : {}}
+          title={tooltipTitle}
         >
           {!photoRevealed &&
             (tileName === "photo" ? (
