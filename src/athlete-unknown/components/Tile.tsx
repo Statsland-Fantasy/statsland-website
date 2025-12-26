@@ -26,8 +26,8 @@ export const Tile: React.FC<TileProps> = ({
   const photoUrl = playerData.photo || "";
   const tileContent = String(playerData[tileName] || "");
 
-  // Show tooltip for flipped tiles (not in photo reveal mode)
-  const tooltipText = isFlipped && !photoRevealed ? camelCaseToTitleCase(tileName) : "";
+  // Show tooltip for flipped tiles (not in photo reveal mode, and not for photo tile)
+  const tooltipText = isFlipped && !photoRevealed && tileName !== "photo" ? camelCaseToTitleCase(tileName) : "";
 
   // Determine tooltip position based on tile index
   // Grid is 3x3: [0,1,2], [3,4,5], [6,7,8]
