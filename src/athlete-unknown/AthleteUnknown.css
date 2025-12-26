@@ -362,6 +362,7 @@
   background-color: #0077b6;
   color: white;
   z-index: 2;
+  transform: rotateY(0deg);
 }
 
 .tile-back {
@@ -370,6 +371,9 @@
   overflow: auto;
   z-index: 1;
   transform: rotateY(180deg);
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: center;
 }
 
 .tile-back.photo-segment {

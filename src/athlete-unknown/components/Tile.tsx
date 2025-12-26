@@ -24,9 +24,15 @@ export const Tile: React.FC<TileProps> = ({
   onClick,
 }) => {
   const photoUrl = playerData.photo || "";
+  const tileContent = playerData[tileName];
 
   // Show tooltip for flipped tiles (not in photo reveal mode)
   const tooltipText = isFlipped && !photoRevealed ? camelCaseToTitleCase(tileName) : "";
+
+  // Debug logging
+  if (isFlipped && !photoRevealed && tileName !== "photo") {
+    console.log(`Tile ${tileName} is flipped. Content:`, tileContent);
+  }
 
   return (
     <div className="tile" onClick={onClick} data-tooltip={tooltipText}>
@@ -61,7 +67,9 @@ export const Tile: React.FC<TileProps> = ({
                 }}
               />
             ) : (
-              playerData[tileName]
+              <span style={{ fontSize: "0.85rem", lineHeight: "1.3" }}>
+                {tileContent || "No data"}
+              </span>
             ))}
           {photoRevealed && index === 2 && (
             <div className="flip-back-arrow">↻</div>
