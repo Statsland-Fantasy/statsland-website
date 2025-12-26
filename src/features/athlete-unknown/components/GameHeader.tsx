@@ -1,4 +1,5 @@
 // import React from "react";
+import { useNavigate } from "react-router";
 import type { SportType } from "@/features/athlete-unknown/config";
 import { SPORT_LIST } from "@/features/athlete-unknown/config";
 
@@ -13,6 +14,13 @@ export function GameHeader({
   onSportChange,
   onStatsClick,
 }: GameHeaderProps): React.ReactElement {
+  const navigate = useNavigate();
+
+  const handleSportClick = (sport: SportType) => {
+    onSportChange(sport);
+    navigate(`/athlete-unknown/${sport}`);
+  };
+
   return (
     <div className="sports-section">
       <div className="sports-navbar">
@@ -20,7 +28,7 @@ export function GameHeader({
           <div
             key={sport}
             className={`nav-tab ${activeSport === sport ? "active" : ""}`}
-            onClick={() => onSportChange(sport)}
+            onClick={() => handleSportClick(sport)}
           >
             {sport.toUpperCase()}
           </div>

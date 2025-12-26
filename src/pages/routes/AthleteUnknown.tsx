@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useParams } from "react-router";
 import "./AthleteUnknown.css";
 import {
   type SportType,
@@ -35,6 +36,7 @@ import {
 export function AthleteUnknown(): React.ReactElement {
   const { getAccessTokenSilently } = useAuth0();
   const [userRoles, setUserRoles] = useState<string[]>([]);
+  const { sport } = useParams();
 
   // Extract roles from access token
   useEffect(() => {
@@ -59,25 +61,21 @@ export function AthleteUnknown(): React.ReactElement {
     extractRoles();
   }, [getAccessTokenSilently]);
 
-  // Restore previously active sport from localStorage, default to baseball
-  const getInitialSport = (): SportType => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.ACTIVE_SPORT);
-      if (
-        saved &&
-        (saved === SPORTS.BASEBALL ||
-          saved === SPORTS.BASKETBALL ||
-          saved === SPORTS.FOOTBALL)
-      ) {
-        return saved as SportType;
-      }
-    } catch (error) {
-      console.error("Failed to load active sport:", error);
+  // Validate and set the active sport from URL params, falling back to DEFAULT_SPORT
+  const getValidSport = (sportParam: string | undefined): SportType => {
+    if (
+      sportParam === SPORTS.BASEBALL ||
+      sportParam === SPORTS.BASKETBALL ||
+      sportParam === SPORTS.FOOTBALL
+    ) {
+      return sportParam as SportType;
     }
     return DEFAULT_SPORT;
   };
 
-  const [activeSport, setActiveSport] = useState<SportType>(getInitialSport);
+  const [activeSport, setActiveSport] = useState<SportType>(
+    getValidSport(sport)
+  );
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isRoundStatsModalOpen, setIsRoundStatsModalOpen] = useState(false);
   const [isUserStatsModalOpen, setIsUserStatsModalOpen] = useState(false);
@@ -132,6 +130,10 @@ export function AthleteUnknown(): React.ReactElement {
       console.error("Failed to save active sport:", error);
     }
   }, [activeSport]);
+
+  useEffect(() => {
+    setActiveSport(getValidSport(sport));
+  }, [sport, setActiveSport]);
 
   // Show loading state
   if (state.isLoading) {
