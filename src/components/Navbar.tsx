@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import "./Navbar.css";
 
 function Navbar() {
@@ -38,7 +38,12 @@ function Navbar() {
         <ul className="nav-links">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/daily-fact">Daily Fact</NavLink>
-          <NavLink to="/athlete-unknown">Athlete Unknown</NavLink>
+          <Link to="/athlete-unknown">
+            {"Athlete Unknown Default -> Baseball"}
+          </Link>
+          <NavLink to="/athlete-unknown/baseball">AU Baseball</NavLink>
+          <NavLink to="/athlete-unknown/basketball">AU Basketball</NavLink>
+          <NavLink to="/athlete-unknown/football">AU Football</NavLink>
           <NavLink to="/projects">Upcoming Projects</NavLink>
           <NavLink to="/contact">Contact Us</NavLink>
         </ul>

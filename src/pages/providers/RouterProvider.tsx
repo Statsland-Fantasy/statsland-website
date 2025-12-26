@@ -2,6 +2,7 @@ import React from "react";
 import {
   createBrowserRouter,
   RouterProvider as RouterProviderBase,
+  Navigate,
 } from "react-router";
 import { RootLayout, Home, AthleteUnknown, ContactForm } from "@/pages/routes";
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/athlete-unknown",
+        Component: () => <Navigate to="/athlete-unknown/baseball" replace />,
+      },
+      {
+        path: "/athlete-unknown/:sport",
         Component: AthleteUnknown,
       },
       {
