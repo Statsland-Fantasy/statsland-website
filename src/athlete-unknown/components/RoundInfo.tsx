@@ -6,6 +6,11 @@ interface RoundInfoProps {
   playDate?: string;
   onRoundStatsClick: () => void;
   onRulesClick: () => void;
+  isPlaytester?: boolean;
+  showDatePicker?: boolean;
+  selectedPlayDate?: string;
+  onTitleClick?: () => void;
+  onDateSelect?: (date: string) => void;
 }
 
 export const RoundInfo: React.FC<RoundInfoProps> = ({
@@ -13,10 +18,30 @@ export const RoundInfo: React.FC<RoundInfoProps> = ({
   playDate,
   onRoundStatsClick,
   onRulesClick,
+  isPlaytester = false,
+  showDatePicker = false,
+  selectedPlayDate,
+  onTitleClick,
+  onDateSelect,
 }) => {
   return (
     <div className="round-info">
-      <span className="round-number">Round #{roundNumber}</span>
+      <span
+        className={`round-number ${isPlaytester ? "playtester-clickable" : ""}`}
+        onClick={onTitleClick}
+        style={isPlaytester ? { cursor: "default" } : undefined}
+      >
+        Round #{roundNumber}
+      </span>
+      {showDatePicker && isPlaytester && onDateSelect && (
+        <input
+          type="date"
+          className="date-picker"
+          value={selectedPlayDate || ""}
+          onChange={(e) => onDateSelect(e.target.value)}
+          onClick={(e) => e.stopPropagation()}
+        />
+      )}
       {playDate && (
         <>
           <span className="separator">•</span>
