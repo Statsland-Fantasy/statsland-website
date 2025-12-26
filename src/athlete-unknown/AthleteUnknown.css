@@ -309,11 +309,11 @@
   cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
+  transform-style: preserve-3d;
 }
 
 /* Transition for returning from photo reveal */
 .tile-inner.returning-from-photo {
-  transform-style: preserve-3d;
   transition: transform 0.6s ease-out;
 }
 
@@ -330,18 +330,14 @@
   color: transparent;
 }
 
-/* No animation for regular tiles - just hide front and show back */
-.tile-inner.flipped:not(.photo-reveal) .tile-front {
-  display: none;
-}
-
-.tile-inner.flipped:not(.photo-reveal) .tile-back {
-  display: flex;
+/* Flip animation for regular tiles */
+.tile-inner.flipped:not(.photo-reveal) {
+  transform: rotateY(180deg);
+  transition: transform 0.6s ease-out;
 }
 
 /* Flip animation for photo reveal */
 .tile-inner.photo-reveal {
-  transform-style: preserve-3d;
   transform: rotateY(180deg);
   transition: transform 0.6s ease-out;
 }
@@ -359,6 +355,7 @@
   font-weight: bold;
   border-radius: 8px;
   overflow: hidden;
+  backface-visibility: hidden;
 }
 
 .tile-front {
@@ -372,17 +369,6 @@
   color: #000;
   overflow: auto;
   z-index: 1;
-  display: none;
-}
-
-/* For photo reveal mode, use transforms */
-.tile-inner.photo-reveal .tile-front,
-.tile-inner.photo-reveal .tile-back {
-  backface-visibility: hidden;
-}
-
-.tile-inner.photo-reveal .tile-back {
-  display: flex;
   transform: rotateY(180deg);
 }
 
