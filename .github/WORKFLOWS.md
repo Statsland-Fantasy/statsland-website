@@ -8,6 +8,7 @@ This document explains all GitHub Actions workflows configured for the Statsland
   - [CI Pipeline](#ci-pipeline)
   - [PR Checks](#pr-checks)
   - [Deploy to Dev](#deploy-to-dev)
+  - [Changelog Reminder](#changelog-reminder)
 - [Setup & Configuration](#setup--configuration)
 - [Secrets Required](#secrets-required)
 - [Troubleshooting](#troubleshooting)
@@ -29,6 +30,7 @@ Our GitHub Actions workflows provide automated:
 | CI Pipeline | Push to `main` | Validate production code |
 | PR Checks | Pull requests to `main`/`develop` | Validate changes before merge |
 | Deploy to Dev | Push to `release/**` branches | Auto-deploy to dev environment |
+| Changelog Reminder | Pull requests opened/updated | Remind to update CHANGELOG.md (optional) |
 
 ---
 
@@ -163,6 +165,89 @@ This workflow includes **placeholder deployment steps**. You must configure your
     aws s3 sync build/ s3://your-dev-bucket --delete
     aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
 ```
+
+---
+
+### Changelog Reminder
+**File:** `.github/workflows/changelog-reminder.yml`
+
+Automatically reminds contributors to update the changelog when opening or updating pull requests.
+
+#### Jobs
+
+**1. Check Changelog**
+- Detects if `CHANGELOG.md` was modified in the PR
+- Analyzes commits and generates suggested changelog entry
+- Comments on PR with reminder and suggestion
+- Adds/removes `needs-changelog` label
+- Updates comment when changelog is added
+
+#### When It Runs
+- ✅ Pull requests opened to `main` or `develop`
+- ✅ Pull requests synchronized (new commits pushed)
+- ✅ Pull requests reopened
+
+#### Expected Duration
+~30 seconds
+
+#### How It Works
+
+**If CHANGELOG.md is NOT updated:**
+1. Workflow analyzes the PR title and commits
+2. Generates a suggested changelog entry based on changes
+3. Posts a comment on the PR with:
+   - Reminder about changelog
+   - Auto-generated suggested entry
+   - Instructions on how to update
+4. Adds `needs-changelog` label to PR
+
+**If CHANGELOG.md IS updated:**
+1. Workflow detects the changelog modification
+2. Updates the comment to show ✅ changelog updated
+3. Removes `needs-changelog` label from PR
+
+#### PR Comment Example
+
+When a PR doesn't include changelog updates, the bot comments:
+
+```markdown
+## 📝 Changelog Reminder
+
+This PR does not include an update to `CHANGELOG.md`.
+
+**Is a changelog entry needed?**
+- ✅ Yes, if this PR includes user-facing changes
+- ❌ No, if this is internal refactoring or tests only
+
+### Suggested Changelog Entry
+[Auto-generated entry based on your commits]
+
+<details>
+<summary>How to update CHANGELOG.md</summary>
+[Instructions...]
+</details>
+```
+
+#### Important Notes
+
+⚠️ **This is a reminder, not a blocker**
+- You can merge PRs without updating the changelog
+- Useful for internal changes that don't affect users
+- Helps maintain documentation for user-facing changes
+
+**When to update CHANGELOG.md:**
+- ✅ New features
+- ✅ Bug fixes
+- ✅ Breaking changes
+- ✅ Deprecations
+- ✅ Security fixes
+
+**When you can skip:**
+- ❌ Internal refactoring
+- ❌ Test additions/updates
+- ❌ Documentation-only changes
+- ❌ CI/CD updates
+- ❌ Dependency updates (unless they fix bugs)
 
 ---
 
