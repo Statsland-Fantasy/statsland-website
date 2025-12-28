@@ -19,8 +19,8 @@ interface RoundStats {
   name: string;
   totalPlays: number;
   percentageCorrect: number;
-  averageScore: number;
   averageCorrectScore: number;
+  averageNumberOfTileFlips: number;
   highestScore: number;
   mostCommonFirstTileFlipped: string;
   mostCommonLastTileFlipped: string;
@@ -106,10 +106,6 @@ function RoundStatsModal({
               <div className="stat-value">{roundStats.totalPlays}</div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Avg Score</div>
-              <div className="stat-value">{roundStats.averageScore}</div>
-            </div>
-            <div className="stat-item">
               <div className="stat-label">Win Rate</div>
               <div className="stat-value">{roundStats.percentageCorrect}%</div>
             </div>
@@ -120,6 +116,12 @@ function RoundStatsModal({
             <div className="stat-item">
               <div className="stat-label">Avg Correct Score</div>
               <div className="stat-value">{roundStats.averageCorrectScore}</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-label">Avg # of Tile Flips</div>
+              <div className="stat-value">
+                {roundStats.averageNumberOfTileFlips}
+              </div>
             </div>
           </div>
 

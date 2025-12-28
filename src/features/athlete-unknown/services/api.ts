@@ -89,7 +89,7 @@ class AthleteUnknownApiService {
       return {
         success: true,
         message: "Results submitted successfully",
-        roundStats: result,
+        result: result,
       };
     } catch (error) {
       console.error("Error submitting game results:", error);
@@ -99,10 +99,10 @@ class AthleteUnknownApiService {
 
   /**
    * Get user statistics
-   * @param userId - The user ID
+   * userId passed via bearer token
    */
-  async getUserStats(userId: string): Promise<any> {
-    const endpoint = `/v1/stats/user?userId=${userId}`;
+  async getUserStats(): Promise<any> {
+    const endpoint = `/v1/stats/user`;
 
     try {
       return await this.httpClient.get<any>(endpoint);
