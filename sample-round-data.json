@@ -25,14 +25,14 @@
     "sport": "baseball",
     "totalPlays": 0,
     "percentageCorrect": 0,
-    "averageScore": 0,
     "averageCorrectScore": 0,
+    "averageNumberOfTileFlips": 0,
     "highestScore": 0,
     "mostCommonFirstTileFlipped": "",
     "mostCommonLastTileFlipped": "",
     "mostCommonTileFlipped": "",
     "leastCommonTileFlipped": "",
-    "mostFlippedTracker": {
+    "mostTileFlippedTracker": {
       "bio": 0,
       "careerStats": 0,
       "draftInformation": 0,
@@ -43,7 +43,7 @@
       "teamsPlayedOn": 0,
       "yearsActive": 0
     },
-    "firstFlippedTracker": {
+    "firstTileFlippedTracker": {
       "bio": 0,
       "careerStats": 0,
       "draftInformation": 0,
@@ -54,7 +54,7 @@
       "teamsPlayedOn": 0,
       "yearsActive": 0
     },
-    "lastFlippedTracker": {
+    "lastTileFlippedTracker": {
       "bio": 0,
       "careerStats": 0,
       "draftInformation": 0,

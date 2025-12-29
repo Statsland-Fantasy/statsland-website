@@ -35,7 +35,7 @@ export function GameHeader({
         ))}
       </div>
       <button className="stats-button" onClick={onStatsClick}>
-        Stats
+        User Stats
       </button>
     </div>
   );

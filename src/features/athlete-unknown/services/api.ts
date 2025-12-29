@@ -4,6 +4,8 @@ import { TILE_NAMES } from "@/features/athlete-unknown/config";
 import type {
   GameResult,
   GameResultResponse,
+  Round,
+  UserStats,
 } from "@/features/athlete-unknown/types";
 
 /**
@@ -36,7 +38,7 @@ class AthleteUnknownApiService {
    * @param sport - The sport (baseball, basketball, football)
    * @param date - The date in YYYY-MM-DD format (optional, defaults to today in browser's local timezone)
    */
-  async getRound(sport: string, date?: string): Promise<any> {
+  async getRound(sport: string, date?: string): Promise<Round> {
     // Use browser's local timezone for date calculation
     const dateParam =
       date ||
@@ -89,7 +91,7 @@ class AthleteUnknownApiService {
       return {
         success: true,
         message: "Results submitted successfully",
-        roundStats: result,
+        result: result,
       };
     } catch (error) {
       console.error("Error submitting game results:", error);
@@ -99,10 +101,10 @@ class AthleteUnknownApiService {
 
   /**
    * Get user statistics
-   * @param userId - The user ID
+   * userId passed via bearer token
    */
-  async getUserStats(userId: string): Promise<any> {
-    const endpoint = `/v1/stats/user?userId=${userId}`;
+  async getUserStats(): Promise<UserStats> {
+    const endpoint = `/v1/stats/user`;
 
     try {
       return await this.httpClient.get<any>(endpoint);

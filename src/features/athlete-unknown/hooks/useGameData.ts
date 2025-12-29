@@ -7,6 +7,7 @@ import { useEffect, useCallback } from "react";
 import type { SportType } from "@/features/athlete-unknown/config";
 import type { GameState } from "./useGameState";
 import { gameDataService } from "@/features/athlete-unknown/services";
+import { userStatsService } from "@/features/athlete-unknown/services";
 import type { GameResult } from "@/features/athlete-unknown/types";
 import { getGameSubmissionKey } from "@/features/athlete-unknown/utils";
 
@@ -29,13 +30,14 @@ export const useGameData = ({
       try {
         updateState({ isLoading: true, error: null });
 
-        const roundData = await gameDataService.getRoundData(
-          activeSport,
-          playDate // Pass the playDate for playtesting
-        );
+        const [roundData, userStatsData] = await Promise.all([
+          gameDataService.getRoundData(activeSport, playDate),
+          userStatsService.getUserStats(),
+        ]);
 
         updateState({
           round: roundData,
+          userStats: userStatsData,
           isLoading: false,
           error: null,
         });
@@ -60,13 +62,10 @@ export const useGameData = ({
       if (!state.finalRank || !state.round) {
         return;
       }
-
       // Get current date in local timezone
       const now = new Date();
       const currentDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-
       const roundPlayDate = state.round.playDate || currentDate;
-
       // Only submit stats if current date matches the round's playDate
       // This prevents stat submission for playtesting future rounds
       if (currentDate !== roundPlayDate) {
@@ -75,12 +74,10 @@ export const useGameData = ({
         );
         return;
       }
-
       const submissionKey = getGameSubmissionKey(activeSport, roundPlayDate);
       if (localStorage.getItem(submissionKey)) {
         return; // Already submitted
       }
-
       try {
         const gameResult: GameResult = {
           userId: "temp_user_123", // TODO: Replace with actual user ID from auth
@@ -97,10 +94,8 @@ export const useGameData = ({
           completedAt: new Date().toISOString(),
           rank: state.finalRank,
         };
-
         console.log("[Athlete Unknown] Submitting game results:", gameResult);
         const response = await gameDataService.submitGameResults(gameResult);
-
         if (response?.success) {
           console.log("[Athlete Unknown] Results submitted successfully");
           localStorage.setItem(submissionKey, "true");
@@ -110,7 +105,6 @@ export const useGameData = ({
         // Don't block the user experience if submission fails
       }
     };
-
     submitResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -128,13 +122,14 @@ export const useGameData = ({
     try {
       updateState({ isLoading: true, error: null });
 
-      const roundData = await gameDataService.getRoundData(
-        activeSport,
-        playDate // Pass the playDate for playtesting
-      );
+      const [roundData, userStatsData] = await Promise.all([
+        gameDataService.getRoundData(activeSport, playDate),
+        userStatsService.getUserStats(),
+      ]);
 
       updateState({
         round: roundData,
+        userStats: userStatsData,
         isLoading: false,
         error: null,
       });

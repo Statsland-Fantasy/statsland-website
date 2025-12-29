@@ -26,14 +26,14 @@
       "name": "Kurt Rambis",
       "totalPlays": 156,
       "percentageCorrect": 68,
-      "averageScore": 54,
       "averageCorrectScore": 79,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 91,
       "mostCommonFirstTileFlipped": "playerInformation",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "personalAchievements",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 34,
         "careerStats": 128,
         "draftInformation": 76,
@@ -44,7 +44,7 @@
         "teamsPlayedOn": 118,
         "yearsActive": 67
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 8,
         "careerStats": 24,
         "draftInformation": 11,
@@ -55,7 +55,7 @@
         "teamsPlayedOn": 19,
         "yearsActive": 14
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 12,
         "careerStats": 18,
         "draftInformation": 14,
@@ -95,14 +95,14 @@
       "name": "Carmelo Anthony",
       "totalPlays": 287,
       "percentageCorrect": 85,
-      "averageScore": 71,
       "averageCorrectScore": 89,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 100,
       "mostCommonFirstTileFlipped": "careerStats",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "careerStats",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 56,
         "careerStats": 234,
         "draftInformation": 123,
@@ -113,7 +113,7 @@
         "teamsPlayedOn": 176,
         "yearsActive": 98
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 17,
         "careerStats": 89,
         "draftInformation": 23,
@@ -124,7 +124,7 @@
         "teamsPlayedOn": 34,
         "yearsActive": 21
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 21,
         "careerStats": 28,
         "draftInformation": 19,
@@ -164,14 +164,14 @@
       "name": "Ronny Turiaf",
       "totalPlays": 142,
       "percentageCorrect": 64,
-      "averageScore": 49,
       "averageCorrectScore": 76,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 88,
       "mostCommonFirstTileFlipped": "teamsPlayedOn",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "teamsPlayedOn",
       "leastCommonTileFlipped": "careerStats",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 38,
         "careerStats": 67,
         "draftInformation": 72,
@@ -182,7 +182,7 @@
         "teamsPlayedOn": 139,
         "yearsActive": 81
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 9,
         "careerStats": 14,
         "draftInformation": 12,
@@ -193,7 +193,7 @@
         "teamsPlayedOn": 48,
         "yearsActive": 16
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 13,
         "careerStats": 11,
         "draftInformation": 15,
@@ -233,14 +233,14 @@
       "name": "James Harden",
       "totalPlays": 312,
       "percentageCorrect": 89,
-      "averageScore": 75,
       "averageCorrectScore": 91,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 100,
       "mostCommonFirstTileFlipped": "careerStats",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "personalAchievements",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 61,
         "careerStats": 256,
         "draftInformation": 134,
@@ -251,7 +251,7 @@
         "teamsPlayedOn": 187,
         "yearsActive": 112
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 19,
         "careerStats": 97,
         "draftInformation": 26,
@@ -262,7 +262,7 @@
         "teamsPlayedOn": 38,
         "yearsActive": 24
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 24,
         "careerStats": 31,
         "draftInformation": 21,
@@ -302,14 +302,14 @@
       "name": "Kyle Korver",
       "totalPlays": 203,
       "percentageCorrect": 76,
-      "averageScore": 63,
       "averageCorrectScore": 84,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 94,
       "mostCommonFirstTileFlipped": "teamsPlayedOn",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "teamsPlayedOn",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 47,
         "careerStats": 167,
         "draftInformation": 98,
@@ -320,7 +320,7 @@
         "teamsPlayedOn": 198,
         "yearsActive": 89
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 13,
         "careerStats": 36,
         "draftInformation": 18,
@@ -331,7 +331,7 @@
         "teamsPlayedOn": 71,
         "yearsActive": 22
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 17,
         "careerStats": 23,
         "draftInformation": 16,

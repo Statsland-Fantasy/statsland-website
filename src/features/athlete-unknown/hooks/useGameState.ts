@@ -4,13 +4,18 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
-import type { PlayerData, Round } from "@/features/athlete-unknown/types";
+import type {
+  PlayerData,
+  Round,
+  UserStats,
+} from "@/features/athlete-unknown/types";
 import type { SportType } from "@/features/athlete-unknown/config";
 import { TOTAL_TILES, SCORING } from "@/features/athlete-unknown/config";
 
 export interface GameState {
   playersList: PlayerData[] | null;
   round: Round | null;
+  userStats: UserStats | null;
   playerName: string;
   message: string;
   messageType: string;
@@ -37,6 +42,7 @@ export interface GameState {
 const createInitialState = (): GameState => ({
   playersList: null,
   round: null,
+  userStats: null,
   playerName: "",
   message: "",
   messageType: "",

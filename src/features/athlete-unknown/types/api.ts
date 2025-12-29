@@ -27,36 +27,7 @@ export interface PlayerData {
   [key: string]: string | number | undefined;
 }
 
-export interface RoundStats {
-  playDate: string;
-  sport: string;
-  name?: string;
-  totalPlays: number;
-  percentageCorrect: number;
-  averageScore: number;
-  averageCorrectScore: number;
-  highestScore: number;
-  mostCommonFirstTileFlipped: string;
-  mostCommonLastTileFlipped: string;
-  mostCommonTileFlipped: string;
-  leastCommonTileFlipped: string;
-  mostFlippedTracker: TileTracker;
-  firstFlippedTracker: TileTracker;
-  lastFlippedTracker: TileTracker;
-}
-
-export interface TileTracker {
-  bio: number;
-  playerInformation: number;
-  draftInformation: number;
-  yearsActive: number;
-  teamsPlayedOn: number;
-  jerseyNumbers: number;
-  careerStats: number;
-  personalAchievements: number;
-  photo: number;
-}
-
+// what is processed by FE before sending to BE
 export interface GameResult {
   userId: string;
   sport: string;
@@ -73,9 +44,69 @@ export interface GameResult {
   rank?: string;
 }
 
+// what is actually sent and returned from BE API
+export interface Result {
+  score: number;
+  isCorrect: boolean;
+  tilesFlipped: string[];
+  incorrectGuesses: number;
+}
+
 export interface GameResultResponse {
   success: boolean;
   message: string;
-  result?: GameResult;
-  roundStats?: RoundStats;
+  result?: Result; // optional for mock data response
+}
+
+// Stats represents base statistics tracking
+interface Stats {
+  totalPlays: number;
+  percentageCorrect: number;
+  highestScore: number;
+  averageCorrectScore: number;
+  averageNumberOfTileFlips: number;
+  mostCommonFirstTileFlipped: string;
+  mostCommonLastTileFlipped: string;
+  mostCommonTileFlipped: string;
+  leastCommonTileFlipped: string;
+  mostTileFlippedTracker: TileTracker;
+  firstTileFlippedTracker: TileTracker;
+  lastTileFlippedTracker: TileTracker;
+}
+
+export interface RoundStats extends Stats {
+  playDate: string;
+  sport: string;
+  name?: string;
+}
+
+export interface UserStats {
+  userId: string;
+  userName: string;
+  userCreated: string;
+  currentDailyStreak: number;
+  lastDayPlayed: string;
+  sports: UserSportStats[];
+}
+
+export interface UserSportStats {
+  sport: string;
+  stats: Stats;
+  history: RoundHistory[];
+}
+
+export interface RoundHistory extends Result {
+  playDate: string;
+}
+
+export interface TileTracker {
+  bio: number;
+  playerInformation: number;
+  draftInformation: number;
+  yearsActive: number;
+  teamsPlayedOn: number;
+  jerseyNumbers: number;
+  careerStats: number;
+  personalAchievements: number;
+  photo: number;
 }

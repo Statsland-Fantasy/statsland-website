@@ -26,14 +26,14 @@
       "name": "Shohei Ohtani",
       "totalPlays": 245,
       "percentageCorrect": 78,
-      "averageScore": 62,
       "averageCorrectScore": 85,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 100,
       "mostCommonFirstTileFlipped": "playerInformation",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "careerStats",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 45,
         "careerStats": 189,
         "draftInformation": 67,
@@ -44,7 +44,7 @@
         "teamsPlayedOn": 156,
         "yearsActive": 78
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 12,
         "careerStats": 34,
         "draftInformation": 8,
@@ -55,7 +55,7 @@
         "teamsPlayedOn": 28,
         "yearsActive": 22
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 18,
         "careerStats": 22,
         "draftInformation": 14,
@@ -95,14 +95,14 @@
       "name": "Buster Posey",
       "totalPlays": 198,
       "percentageCorrect": 82,
-      "averageScore": 68,
       "averageCorrectScore": 87,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 97,
       "mostCommonFirstTileFlipped": "careerStats",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "personalAchievements",
       "leastCommonTileFlipped": "jerseyNumbers",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 52,
         "careerStats": 167,
         "draftInformation": 89,
@@ -113,7 +113,7 @@
         "teamsPlayedOn": 98,
         "yearsActive": 67
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 18,
         "careerStats": 56,
         "draftInformation": 12,
@@ -124,7 +124,7 @@
         "teamsPlayedOn": 15,
         "yearsActive": 9
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 22,
         "careerStats": 19,
         "draftInformation": 16,
@@ -164,14 +164,14 @@
       "name": "Nick Castellanos",
       "totalPlays": 167,
       "percentageCorrect": 71,
-      "averageScore": 58,
       "averageCorrectScore": 81,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 94,
       "mostCommonFirstTileFlipped": "teamsPlayedOn",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "teamsPlayedOn",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 38,
         "careerStats": 143,
         "draftInformation": 67,
@@ -182,7 +182,7 @@
         "teamsPlayedOn": 158,
         "yearsActive": 76
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 9,
         "careerStats": 28,
         "draftInformation": 11,
@@ -193,7 +193,7 @@
         "teamsPlayedOn": 67,
         "yearsActive": 15
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 15,
         "careerStats": 18,
         "draftInformation": 12,
@@ -233,14 +233,14 @@
       "name": "Boog Powell",
       "totalPlays": 134,
       "percentageCorrect": 69,
-      "averageScore": 55,
       "averageCorrectScore": 79,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 91,
       "mostCommonFirstTileFlipped": "yearsActive",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "yearsActive",
       "leastCommonTileFlipped": "draftInformation",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 41,
         "careerStats": 109,
         "draftInformation": 28,
@@ -251,7 +251,7 @@
         "teamsPlayedOn": 89,
         "yearsActive": 124
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 11,
         "careerStats": 19,
         "draftInformation": 6,
@@ -262,7 +262,7 @@
         "teamsPlayedOn": 21,
         "yearsActive": 45
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 13,
         "careerStats": 16,
         "draftInformation": 9,
@@ -302,14 +302,14 @@
       "name": "Orlando Cabrera",
       "totalPlays": 189,
       "percentageCorrect": 74,
-      "averageScore": 61,
       "averageCorrectScore": 83,
+      "averageNumberOfTileFlips": 4.4,
       "highestScore": 95,
       "mostCommonFirstTileFlipped": "teamsPlayedOn",
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "teamsPlayedOn",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 47,
         "careerStats": 156,
         "draftInformation": 54,
@@ -320,7 +320,7 @@
         "teamsPlayedOn": 182,
         "yearsActive": 89
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 14,
         "careerStats": 31,
         "draftInformation": 9,
@@ -331,7 +331,7 @@
         "teamsPlayedOn": 72,
         "yearsActive": 19
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 17,
         "careerStats": 21,
         "draftInformation": 13,

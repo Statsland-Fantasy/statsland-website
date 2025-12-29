@@ -84,20 +84,20 @@ You need to have the backend API running locally. The backend should provide the
   "sport": "baseball",
   "totalPlays": 100,
   "percentageCorrect": 81,
-  "averageScore": 55,
   "averageCorrectScore": 88,
+  "averageNumberOfTileFlips": 1.1,
   "highestScore": 97,
   "mostCommonFirstTileFlipped": "playerInformation",
   "mostCommonLastTileFlipped": "photo",
   "mostCommonTileFlipped": "teamsPlayedOn",
   "leastCommonTileFlipped": "bio",
-  "mostFlippedTracker": {
+  "mostTileFlippedTracker": {
     "bio": 11,
     "careerStats": 11,
     ... (all 9 tiles)
   },
-  "firstFlippedTracker": { ... },
-  "lastFlippedTracker": { ... }
+  "firstTileFlippedTracker": { ... },
+  "lastTileFlippedTracker": { ... }
 }
 ```
 

@@ -5,4 +5,7 @@ export type {
   TileTracker,
   GameResult,
   GameResultResponse,
+  UserStats,
+  UserSportStats,
+  RoundHistory,
 } from "./api";

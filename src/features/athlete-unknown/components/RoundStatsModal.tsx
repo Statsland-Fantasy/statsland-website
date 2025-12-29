@@ -1,35 +1,6 @@
 import React from "react";
 import "./RoundStatsModal.css";
-
-interface TileTracker {
-  bio: number;
-  careerStats: number;
-  draftInformation: number;
-  jerseyNumbers: number;
-  personalAchievements: number;
-  photo: number;
-  playerInformation: number;
-  teamsPlayedOn: number;
-  yearsActive: number;
-}
-
-interface RoundStats {
-  playDate: string;
-  sport: string;
-  name: string;
-  totalPlays: number;
-  percentageCorrect: number;
-  averageScore: number;
-  averageCorrectScore: number;
-  highestScore: number;
-  mostCommonFirstTileFlipped: string;
-  mostCommonLastTileFlipped: string;
-  mostCommonTileFlipped: string;
-  leastCommonTileFlipped: string;
-  mostFlippedTracker: TileTracker;
-  firstFlippedTracker: TileTracker;
-  lastFlippedTracker: TileTracker;
-}
+import { RoundStats } from "@/features/athlete-unknown/types";
 
 interface RoundStatsModalProps {
   isOpen: boolean;
@@ -106,10 +77,6 @@ function RoundStatsModal({
               <div className="stat-value">{roundStats.totalPlays}</div>
             </div>
             <div className="stat-item">
-              <div className="stat-label">Avg Score</div>
-              <div className="stat-value">{roundStats.averageScore}</div>
-            </div>
-            <div className="stat-item">
               <div className="stat-label">Win Rate</div>
               <div className="stat-value">{roundStats.percentageCorrect}%</div>
             </div>
@@ -120,6 +87,12 @@ function RoundStatsModal({
             <div className="stat-item">
               <div className="stat-label">Avg Correct Score</div>
               <div className="stat-value">{roundStats.averageCorrectScore}</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-label">Avg # of Tile Flips</div>
+              <div className="stat-value">
+                {roundStats.averageNumberOfTileFlips}
+              </div>
             </div>
           </div>
 

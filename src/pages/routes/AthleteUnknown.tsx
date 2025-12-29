@@ -32,6 +32,7 @@ import {
   SportsReferenceCredit,
   UserStatsModal,
 } from "@/features/athlete-unknown/components";
+import { athleteUnknownApiService } from "@/features";
 
 export function AthleteUnknown(): React.ReactElement {
   const { getAccessTokenSilently } = useAuth0();
@@ -59,6 +60,11 @@ export function AthleteUnknown(): React.ReactElement {
     };
 
     extractRoles();
+  }, [getAccessTokenSilently]);
+
+  // Set up Auth0 token for API calls
+  useEffect(() => {
+    athleteUnknownApiService.setGetAccessToken(getAccessTokenSilently);
   }, [getAccessTokenSilently]);
 
   // Validate and set the active sport from URL params, falling back to DEFAULT_SPORT
@@ -288,7 +294,11 @@ export function AthleteUnknown(): React.ReactElement {
             >
               ×
             </button>
-            <UserStatsModal />
+            <UserStatsModal
+              isOpen={isUserStatsModalOpen}
+              onClose={() => setIsUserStatsModalOpen(false)}
+              userStats={state.userStats}
+            />
           </div>
         </div>
       )}
