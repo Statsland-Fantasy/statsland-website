@@ -32,7 +32,7 @@
     "mostCommonLastTileFlipped": "photo",
     "mostCommonTileFlipped": "teamsPlayedOn",
     "leastCommonTileFlipped": "bio",
-    "mostFlippedTracker": {
+    "mostTileFlippedTracker": {
       "bio": 31,
       "careerStats": 31,
       "draftInformation": 31,
@@ -43,7 +43,7 @@
       "teamsPlayedOn": 31,
       "yearsActive": 31
     },
-    "firstFlippedTracker": {
+    "firstTileFlippedTracker": {
       "bio": 32,
       "careerStats": 32,
       "draftInformation": 32,
@@ -54,7 +54,7 @@
       "teamsPlayedOn": 32,
       "yearsActive": 32
     },
-    "lastFlippedTracker": {
+    "lastTileFlippedTracker": {
       "bio": 33,
       "careerStats": 33,
       "draftInformation": 33,

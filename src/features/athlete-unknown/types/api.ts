@@ -69,9 +69,9 @@ interface Stats {
   mostCommonLastTileFlipped: string;
   mostCommonTileFlipped: string;
   leastCommonTileFlipped: string;
-  mostFlippedTracker: TileTracker;
-  firstFlippedTracker: TileTracker;
-  lastFlippedTracker: TileTracker;
+  mostTileFlippedTracker: TileTracker;
+  firstTileFlippedTracker: TileTracker;
+  lastTileFlippedTracker: TileTracker;
 }
 
 export interface RoundStats extends Stats {

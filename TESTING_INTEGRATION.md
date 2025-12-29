@@ -91,13 +91,13 @@ You need to have the backend API running locally. The backend should provide the
   "mostCommonLastTileFlipped": "photo",
   "mostCommonTileFlipped": "teamsPlayedOn",
   "leastCommonTileFlipped": "bio",
-  "mostFlippedTracker": {
+  "mostTileFlippedTracker": {
     "bio": 11,
     "careerStats": 11,
     ... (all 9 tiles)
   },
-  "firstFlippedTracker": { ... },
-  "lastFlippedTracker": { ... }
+  "firstTileFlippedTracker": { ... },
+  "lastTileFlippedTracker": { ... }
 }
 ```
 

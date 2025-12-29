@@ -4,6 +4,8 @@ import { TILE_NAMES } from "@/features/athlete-unknown/config";
 import type {
   GameResult,
   GameResultResponse,
+  Round,
+  UserStats,
 } from "@/features/athlete-unknown/types";
 
 /**
@@ -36,7 +38,7 @@ class AthleteUnknownApiService {
    * @param sport - The sport (baseball, basketball, football)
    * @param date - The date in YYYY-MM-DD format (optional, defaults to today in browser's local timezone)
    */
-  async getRound(sport: string, date?: string): Promise<any> {
+  async getRound(sport: string, date?: string): Promise<Round> {
     // Use browser's local timezone for date calculation
     const dateParam =
       date ||
@@ -101,7 +103,7 @@ class AthleteUnknownApiService {
    * Get user statistics
    * userId passed via bearer token
    */
-  async getUserStats(): Promise<any> {
+  async getUserStats(): Promise<UserStats> {
     const endpoint = `/v1/stats/user`;
 
     try {

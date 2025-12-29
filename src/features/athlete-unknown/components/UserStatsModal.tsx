@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./UserStatsModal.css";
 import { TileTracker, UserSportStats, UserStats } from "../types";
+import { useParams } from "react-router";
 
 interface UserStatsModalProps {
   isOpen: boolean;
@@ -13,7 +14,8 @@ function UserStatsModal({
   onClose,
   userStats,
 }: UserStatsModalProps): React.ReactElement | null {
-  const [selectedSport, setSelectedSport] = useState<string>("baseball");
+  const { sport } = useParams();
+  const [selectedSport, setSelectedSport] = useState<string>(sport ?? "");
   const [selectedSportStats, setSelectedSportStats] =
     useState<UserSportStats | null>();
 
@@ -159,34 +161,34 @@ function UserStatsModal({
               </tr>
             </thead>
             <tbody>
-              {Object.keys(selectedSportStats.stats.firstFlippedTracker).map(
-                (tile) => (
-                  <tr key={tile}>
-                    <td className="tile-name">{formatTileName(tile)}</td>
-                    <td>
-                      {
-                        selectedSportStats.stats.firstFlippedTracker[
-                          tile as keyof TileTracker
-                        ]
-                      }
-                    </td>
-                    <td>
-                      {
-                        selectedSportStats.stats.lastFlippedTracker[
-                          tile as keyof TileTracker
-                        ]
-                      }
-                    </td>
-                    <td>
-                      {
-                        selectedSportStats.stats.mostFlippedTracker[
-                          tile as keyof TileTracker
-                        ]
-                      }
-                    </td>
-                  </tr>
-                )
-              )}
+              {Object.keys(
+                selectedSportStats.stats.firstTileFlippedTracker
+              ).map((tile) => (
+                <tr key={tile}>
+                  <td className="tile-name">{formatTileName(tile)}</td>
+                  <td>
+                    {
+                      selectedSportStats.stats.firstTileFlippedTracker[
+                        tile as keyof TileTracker
+                      ]
+                    }
+                  </td>
+                  <td>
+                    {
+                      selectedSportStats.stats.lastTileFlippedTracker[
+                        tile as keyof TileTracker
+                      ]
+                    }
+                  </td>
+                  <td>
+                    {
+                      selectedSportStats.stats.mostTileFlippedTracker[
+                        tile as keyof TileTracker
+                      ]
+                    }
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -33,7 +33,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "personalAchievements",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 78,
         "careerStats": 312,
         "draftInformation": 167,
@@ -44,7 +44,7 @@
         "teamsPlayedOn": 145,
         "yearsActive": 134
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 23,
         "careerStats": 118,
         "draftInformation": 32,
@@ -55,7 +55,7 @@
         "teamsPlayedOn": 34,
         "yearsActive": 29
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 29,
         "careerStats": 38,
         "draftInformation": 26,
@@ -102,7 +102,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "careerStats",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 51,
         "careerStats": 189,
         "draftInformation": 98,
@@ -113,7 +113,7 @@
         "teamsPlayedOn": 134,
         "yearsActive": 87
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 14,
         "careerStats": 67,
         "draftInformation": 19,
@@ -124,7 +124,7 @@
         "teamsPlayedOn": 26,
         "yearsActive": 18
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 18,
         "careerStats": 24,
         "draftInformation": 17,
@@ -171,7 +171,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "personalAchievements",
       "leastCommonTileFlipped": "jerseyNumbers",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 64,
         "careerStats": 223,
         "draftInformation": 134,
@@ -182,7 +182,7 @@
         "teamsPlayedOn": 89,
         "yearsActive": 112
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 19,
         "careerStats": 56,
         "draftInformation": 28,
@@ -193,7 +193,7 @@
         "teamsPlayedOn": 16,
         "yearsActive": 23
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 22,
         "careerStats": 29,
         "draftInformation": 21,
@@ -240,7 +240,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "yearsActive",
       "leastCommonTileFlipped": "careerStats",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 42,
         "careerStats": 59,
         "draftInformation": 76,
@@ -251,7 +251,7 @@
         "teamsPlayedOn": 108,
         "yearsActive": 134
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 11,
         "careerStats": 9,
         "draftInformation": 15,
@@ -262,7 +262,7 @@
         "teamsPlayedOn": 42,
         "yearsActive": 19
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 14,
         "careerStats": 8,
         "draftInformation": 13,
@@ -309,7 +309,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "personalAchievements",
       "leastCommonTileFlipped": "jerseyNumbers",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 71,
         "careerStats": 256,
         "draftInformation": 145,
@@ -320,7 +320,7 @@
         "teamsPlayedOn": 112,
         "yearsActive": 123
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 21,
         "careerStats": 92,
         "draftInformation": 31,
@@ -331,7 +331,7 @@
         "teamsPlayedOn": 23,
         "yearsActive": 26
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 25,
         "careerStats": 34,
         "draftInformation": 23,
@@ -378,7 +378,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "teamsPlayedOn",
       "leastCommonTileFlipped": "personalAchievements",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 36,
         "careerStats": 98,
         "draftInformation": 67,
@@ -389,7 +389,7 @@
         "teamsPlayedOn": 131,
         "yearsActive": 76
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 9,
         "careerStats": 18,
         "draftInformation": 13,
@@ -400,7 +400,7 @@
         "teamsPlayedOn": 51,
         "yearsActive": 15
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 12,
         "careerStats": 15,
         "draftInformation": 11,
@@ -447,7 +447,7 @@
       "mostCommonLastTileFlipped": "photo",
       "mostCommonTileFlipped": "careerStats",
       "leastCommonTileFlipped": "bio",
-      "mostFlippedTracker": {
+      "mostTileFlippedTracker": {
         "bio": 41,
         "careerStats": 145,
         "draftInformation": 89,
@@ -458,7 +458,7 @@
         "teamsPlayedOn": 129,
         "yearsActive": 82
       },
-      "firstFlippedTracker": {
+      "firstTileFlippedTracker": {
         "bio": 12,
         "careerStats": 29,
         "draftInformation": 17,
@@ -469,7 +469,7 @@
         "teamsPlayedOn": 28,
         "yearsActive": 16
       },
-      "lastFlippedTracker": {
+      "lastTileFlippedTracker": {
         "bio": 15,
         "careerStats": 21,
         "draftInformation": 14,
