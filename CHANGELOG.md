@@ -15,6 +15,52 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [Guest User Stats Tracking]
+
+### Added
+
+- LocalStorage statistics tracking for guest (non-authenticated) users
+  - Automatically saves comprehensive game statistics upon round completion
+  - Storage key: `guestStats`
+  - Tracks stats per sport: basketball, baseball, football
+  - Statistics tracked include:
+    - Total plays and percentage correct
+    - Highest score and average correct score
+    - Average number of tile flips
+    - Most/least common tiles flipped (first, last, and overall)
+    - Detailed tile flip trackers for all 9 tile types
+  - Mirrors backend statistics calculation logic
+  - Only updates stats for guest users (authenticated users use backend)
+  - Console logging for debugging stats updates
+
+### Changed
+
+- Enhanced `useGameData` hook to accept `isGuest` parameter
+- Updated `AthleteUnknown` component to detect authentication status
+- Passes `!isAuthenticated` as `isGuest` to useGameData hook
+
+### Technical Details
+
+- Created `guestStats.ts` utility module with:
+  - `GuestSportStats` interface matching backend stats model
+  - `TileTracker` interface for tracking tile flip counts
+  - `GuestGameResult` interface for game completion data
+  - `loadGuestStats()` - Load all guest stats from localStorage
+  - `updateGuestStats()` - Update stats with new game result
+  - `clearGuestStats()` - Clear all guest stats
+- Stats calculation includes:
+  - Running averages for scores and tile flips
+  - Percentage calculations
+  - Tile frequency tracking across three dimensions
+  - Most/least common tile determination
+
+### Impact
+
+- Guest users now have persistent statistics across sessions
+- Enables future features like guest leaderboards
+- Provides data for improving guest-to-authenticated conversion
+- Stats format matches backend for seamless migration when user signs up
+
 ## [PR-37]
 
 ### Changed

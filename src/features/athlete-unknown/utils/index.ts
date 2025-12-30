@@ -15,3 +15,10 @@ export {
   normalize,
   extractRoundNumber,
 } from "./stringMatching";
+export {
+  loadGuestStats,
+  updateGuestStats,
+  clearGuestStats,
+  type GuestSportStats,
+  type GuestGameResult,
+} from "./guestStats";

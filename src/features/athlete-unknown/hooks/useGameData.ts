@@ -9,13 +9,19 @@ import type { GameState } from "./useGameState";
 import { gameDataService } from "@/features/athlete-unknown/services";
 import { userStatsService } from "@/features/athlete-unknown/services";
 import type { GameResult } from "@/features/athlete-unknown/types";
-import { getGameSubmissionKey } from "@/features/athlete-unknown/utils";
+import {
+  getGameSubmissionKey,
+  updateGuestStats,
+  type GuestGameResult,
+} from "@/features/athlete-unknown/utils";
+import { TILE_NAMES } from "@/features/athlete-unknown/config";
 
 interface UseGameDataProps {
   activeSport: SportType;
   state: GameState;
   updateState: (patch: Partial<GameState>) => void;
   playDate?: string;
+  isGuest?: boolean; // Whether the user is a guest (not authenticated)
 }
 
 export const useGameData = ({
@@ -23,6 +29,7 @@ export const useGameData = ({
   state,
   updateState,
   playDate,
+  isGuest = false,
 }: UseGameDataProps) => {
   // Load player data and round stats from API
   useEffect(() => {
@@ -94,6 +101,28 @@ export const useGameData = ({
           completedAt: new Date().toISOString(),
           rank: state.finalRank,
         };
+
+        // Update guest stats if user is not authenticated
+        if (isGuest) {
+          console.log(
+            "[Athlete Unknown] Updating guest stats for",
+            activeSport
+          );
+          // Convert flippedTilesPattern to tile names array
+          const tilesFlipped = state.flippedTiles
+            .map((flipped, index) => (flipped ? TILE_NAMES[index] : null))
+            .filter((tile) => tile !== null) as string[];
+
+          const guestResult: GuestGameResult = {
+            sport: activeSport,
+            score: state.score,
+            isCorrect: true, // finalRank exists, so they got it correct
+            tilesFlipped,
+          };
+
+          updateGuestStats(guestResult);
+        }
+
         console.log("[Athlete Unknown] Submitting game results:", gameResult);
         const response = await gameDataService.submitGameResults(gameResult);
         if (response?.success) {
