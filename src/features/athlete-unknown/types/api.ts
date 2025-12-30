@@ -27,23 +27,6 @@ export interface PlayerData {
   [key: string]: string | number | undefined;
 }
 
-// what is processed by FE before sending to BE
-export interface GameResult {
-  userId: string;
-  sport: string;
-  playDate: string;
-  playerName: string;
-  score: number;
-  tilesFlipped: number;
-  incorrectGuesses: number;
-  flippedTilesPattern: boolean[];
-  firstTileFlipped?: string;
-  lastTileFlipped?: string;
-  completed: boolean;
-  completedAt?: string;
-  rank?: string;
-}
-
 // what is actually sent and returned from BE API
 export interface Result {
   score: number;
@@ -93,6 +76,11 @@ export interface UserSportStats {
   sport: string;
   stats: Stats;
   history: RoundHistory[];
+}
+
+// other fields that are missing compared to UserStats will be filled in by BE API upon conversion to Player, not Guest
+export interface GuestStats {
+  sports: UserSportStats[];
 }
 
 export interface RoundHistory extends Result {

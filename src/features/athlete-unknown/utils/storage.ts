@@ -10,6 +10,7 @@ export const STORAGE_KEYS = {
   GAME_SUBMITTED_PREFIX: "submitted_",
   PLAYER_INDEX_PREFIX: "playerIndex_",
   CURRENT_SESSION_PREFIX: "currentSession_",
+  GUEST_STATS_KEY: "guestStats",
 } as const;
 
 /**

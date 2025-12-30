@@ -34,7 +34,7 @@ import {
 import { athleteUnknownApiService } from "@/features";
 
 export function AthleteUnknown(): React.ReactElement {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
   const [userRoles, setUserRoles] = useState<string[]>([]);
   const { sport } = useParams();
 
@@ -102,7 +102,13 @@ export function AthleteUnknown(): React.ReactElement {
   // updates the following fields in state
   // isLoading, error, round
   // TODO: rename to useRoundData
-  useGameData({ activeSport, state, updateState, playDate: selectedPlayDate });
+  useGameData({
+    activeSport,
+    state,
+    updateState,
+    playDate: selectedPlayDate,
+    isGuest: !isAuthenticated,
+  });
 
   // Game logic
   // updates the following fields in state:

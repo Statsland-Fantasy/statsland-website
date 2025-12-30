@@ -13,4 +13,9 @@ export {
   normalize,
   extractRoundNumber,
 } from "./stringMatching";
+export {
+  loadGuestStats,
+  updateGuestStats,
+  clearGuestStats,
+} from "./guestStats";
 export { getCurrentDateString } from "./date";

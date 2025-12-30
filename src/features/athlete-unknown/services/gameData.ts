@@ -2,8 +2,8 @@ import { API_CONFIG } from "@/config";
 import { athleteUnknownApiService } from "./api";
 import { MockDataService } from "./mockData";
 import type {
-  GameResult,
   GameResultResponse,
+  Result,
   Round,
 } from "@/features/athlete-unknown/types";
 
@@ -50,7 +50,9 @@ class GameDataService {
    * Only submits if not in mock mode
    */
   async submitGameResults(
-    gameResult: GameResult
+    sport: string,
+    playDate: string,
+    gameResult: Result
   ): Promise<GameResultResponse | null> {
     if (this.useMockData) {
       console.log("[MOCK] Game results not submitted (mock mode):", gameResult);
@@ -63,7 +65,7 @@ class GameDataService {
     try {
       console.log("[API] Submitting game results:", gameResult);
       const response =
-        await athleteUnknownApiService.submitGameResults(gameResult);
+        await athleteUnknownApiService.submitGameResults(sport, playDate, gameResult);
       console.log("[API] Game results submitted successfully:", response);
       return response;
     } catch (error) {
