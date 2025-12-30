@@ -20,3 +20,4 @@ export {
   normalize,
   extractRoundNumber,
 } from "./stringMatching";
+export { getCurrentDateString } from "./date";

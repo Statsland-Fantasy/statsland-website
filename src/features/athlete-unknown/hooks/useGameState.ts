@@ -16,6 +16,7 @@ import {
   saveMidRoundProgress,
   clearMidRoundProgress,
   type MidRoundProgress,
+  getCurrentDateString,
 } from "@/features/athlete-unknown/utils";
 
 export interface GameState {
@@ -119,7 +120,7 @@ const progressToGameState = (progress: MidRoundProgress): Partial<GameState> => 
 export const useGameState = (activeSport: SportType, playDate?: string) => {
   // Key by sport + playDate to ensure each puzzle has its own state
   // If no playDate provided, use today's date so each day gets its own state
-  const effectivePlayDate = playDate || new Date().toISOString().split("T")[0];
+  const effectivePlayDate = playDate || getCurrentDateString();
   const stateKey = `${activeSport}_${effectivePlayDate}`;
 
   const [gameStates, setGameStates] = useState<Record<string, GameState>>({});
