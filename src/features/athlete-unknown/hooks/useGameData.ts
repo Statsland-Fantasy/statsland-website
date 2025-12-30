@@ -8,12 +8,10 @@ import type { SportType } from "@/features/athlete-unknown/config";
 import type { GameState } from "./useGameState";
 import { gameDataService } from "@/features/athlete-unknown/services";
 import { userStatsService } from "@/features/athlete-unknown/services";
-import type { GameResult } from "@/features/athlete-unknown/types";
+import type { Result } from "@/features/athlete-unknown/types";
 import {
-  getCurrentDateString,
   getGameSubmissionKey,
   updateGuestStats,
-  type GuestGameResult,
 } from "@/features/athlete-unknown/utils";
 import { TILE_NAMES } from "@/features/athlete-unknown/config";
 
@@ -84,23 +82,22 @@ export const useGameData = ({
       }
       const submissionKey = getGameSubmissionKey(activeSport, roundPlayDate);
       if (localStorage.getItem(submissionKey)) {
+        console.log(
+          "[Athlete Unknown] Skipping stats submission - results already submitted"
+        );
         return; // Already submitted
       }
       try {
-        const gameResult: GameResult = {
-          userId: "temp_user_123", // TODO: Replace with actual user ID from auth
-          sport: activeSport,
-          playDate: roundPlayDate,
-          playerName: state.round.player.name,
+        // Convert flippedTilesPattern to tile names array
+        const tilesFlipped = state.flippedTiles
+          .map((flipped, index) => (flipped ? TILE_NAMES[index] : null))
+          .filter((tile) => tile !== null) as string[];
+
+        const gameResult: Result = {
           score: state.score,
-          tilesFlipped: state.tilesFlippedCount,
+          isCorrect: state.score > 0,
+          tilesFlipped,
           incorrectGuesses: state.incorrectGuesses,
-          flippedTilesPattern: state.flippedTiles,
-          firstTileFlipped: state.firstTileFlipped || undefined,
-          lastTileFlipped: state.lastTileFlipped || undefined,
-          completed: true,
-          completedAt: getCurrentDateString(),
-          rank: state.finalRank,
         };
 
         // Update guest stats if user is not authenticated
@@ -109,23 +106,12 @@ export const useGameData = ({
             "[Athlete Unknown] Updating guest stats for",
             activeSport
           );
-          // Convert flippedTilesPattern to tile names array
-          const tilesFlipped = state.flippedTiles
-            .map((flipped, index) => (flipped ? TILE_NAMES[index] : null))
-            .filter((tile) => tile !== null) as string[];
 
-          const guestResult: GuestGameResult = {
-            sport: activeSport,
-            score: state.score,
-            isCorrect: true, // finalRank exists, so they got it correct
-            tilesFlipped,
-          };
-
-          updateGuestStats(guestResult);
+          updateGuestStats(activeSport, gameResult);
         }
 
         console.log("[Athlete Unknown] Submitting game results:", gameResult);
-        const response = await gameDataService.submitGameResults(gameResult);
+        const response = await gameDataService.submitGameResults(activeSport, roundPlayDate, gameResult);
         if (response?.success) {
           console.log("[Athlete Unknown] Results submitted successfully");
           localStorage.setItem(submissionKey, "true");

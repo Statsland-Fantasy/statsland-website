@@ -17,7 +17,5 @@ export {
   loadGuestStats,
   updateGuestStats,
   clearGuestStats,
-  type GuestSportStats,
-  type GuestGameResult,
 } from "./guestStats";
 export { getCurrentDateString } from "./date";

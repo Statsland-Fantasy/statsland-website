@@ -3,9 +3,10 @@ export type {
   PlayerData,
   RoundStats,
   TileTracker,
-  GameResult,
   GameResultResponse,
   UserStats,
   UserSportStats,
   RoundHistory,
+  Result,
+  GuestStats,
 } from "./api";
