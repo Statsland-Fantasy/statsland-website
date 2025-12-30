@@ -10,6 +10,7 @@ import { gameDataService } from "@/features/athlete-unknown/services";
 import { userStatsService } from "@/features/athlete-unknown/services";
 import type { GameResult } from "@/features/athlete-unknown/types";
 import {
+  getCurrentDateString,
   getGameSubmissionKey,
   updateGuestStats,
   type GuestGameResult,
@@ -98,7 +99,7 @@ export const useGameData = ({
           firstTileFlipped: state.firstTileFlipped || undefined,
           lastTileFlipped: state.lastTileFlipped || undefined,
           completed: true,
-          completedAt: new Date().toISOString(),
+          completedAt: getCurrentDateString(),
           rank: state.finalRank,
         };
 
