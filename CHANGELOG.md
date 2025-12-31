@@ -25,6 +25,84 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Create comprehensive deployment documentation
 - Add environment configuration examples (.env.dev.example, .env.prod.example)
 
+
+## [PR-40]
+
+### Fixed
+
+- Use UserStats model instead of new GuestStats model since the point of guest stats is that they will eventually be migrated to being a user anyways
+
+## [PR-39]
+
+### Added
+
+- LocalStorage statistics tracking for guest (non-authenticated) users
+  - Automatically saves comprehensive game statistics upon round completion
+  - Storage key: `guestStats`
+  - Tracks stats per sport: basketball, baseball, football
+  - Statistics tracked include:
+    - Total plays and percentage correct
+    - Highest score and average correct score
+    - Average number of tile flips
+    - Most/least common tiles flipped (first, last, and overall)
+    - Detailed tile flip trackers for all 9 tile types
+  - Mirrors backend statistics calculation logic
+  - Only updates stats for guest users (authenticated users use backend)
+  - Console logging for debugging stats updates
+
+### Changed
+
+- Enhanced `useGameData` hook to accept `isGuest` parameter
+- Updated `AthleteUnknown` component to detect authentication status
+- Passes `!isAuthenticated` as `isGuest` to useGameData hook
+
+### Technical Details
+
+- Created `guestStats.ts` utility module with:
+  - `GuestSportStats` interface matching backend stats model
+  - `TileTracker` interface for tracking tile flip counts
+  - `GuestGameResult` interface for game completion data
+  - `loadGuestStats()` - Load all guest stats from localStorage
+  - `updateGuestStats()` - Update stats with new game result
+  - `clearGuestStats()` - Clear all guest stats
+- Stats calculation includes:
+  - Running averages for scores and tile flips
+  - Percentage calculations
+  - Tile frequency tracking across three dimensions
+  - Most/least common tile determination
+
+### Impact
+
+- Guest users now have persistent statistics across sessions
+- Enables future features like guest leaderboards
+- Provides data for improving guest-to-authenticated conversion
+- Stats format matches backend for seamless migration when user signs up
+
+## [PR-38]
+
+### Added
+
+- LocalStorage persistence for mid-round game progress across all users
+  - Automatically saves game state after each action (tile flips, guesses, score updates)
+  - Restores in-progress games when user reopens tab or refreshes page
+  - Storage key format: `currentSession_<sport>_<playDate>`
+  - Saved data includes: score, tiles flipped, hints, guesses, messages, and all game state
+  - Automatically clears saved progress when round is completed or user gives up
+  - Console logging for debugging save/load/clear operations
+
+### Changed
+
+- Enhanced `useGameState` hook to automatically save and restore game progress
+- Added `MidRoundProgress` interface for type-safe localStorage operations
+- Extended storage utilities with new functions: `saveMidRoundProgress`, `loadMidRoundProgress`, `clearMidRoundProgress`
+
+### Impact
+
+- Users can now safely close/refresh the browser without losing their progress
+- Improves user experience by eliminating frustration from accidental tab closures
+- Works for both authenticated and guest users
+- No performance impact - saves are non-blocking and use efficient localStorage API
+
 ## [PR-37]
 
 ### Changed

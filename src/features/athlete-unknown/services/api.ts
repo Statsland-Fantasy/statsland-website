@@ -1,12 +1,12 @@
 import { HttpClient } from "@/services";
 import { API_CONFIG } from "@/config";
-import { TILE_NAMES } from "@/features/athlete-unknown/config";
 import type {
-  GameResult,
   GameResultResponse,
+  Result,
   Round,
   UserStats,
 } from "@/features/athlete-unknown/types";
+import { getCurrentDateString } from "@/features/athlete-unknown/utils";
 
 /**
  * Athlete Unknown API Service
@@ -40,15 +40,7 @@ class AthleteUnknownApiService {
    */
   async getRound(sport: string, date?: string): Promise<Round> {
     // Use browser's local timezone for date calculation
-    const dateParam =
-      date ||
-      (() => {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, "0");
-        const day = String(now.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      })();
+    const dateParam = date || getCurrentDateString();
     const endpoint = `/v1/round?sport=${sport}&playDate=${dateParam}`;
 
     try {
@@ -61,32 +53,17 @@ class AthleteUnknownApiService {
 
   /**
    * Submit game results
+   * @param sport
+   * @param playDate
    * @param gameResult - The game result data
    */
-  async submitGameResults(gameResult: GameResult): Promise<GameResultResponse> {
+  async submitGameResults(sport: string, playDate: string, gameResult: Result): Promise<GameResultResponse> {
     // Use browser's local timezone for date calculation
-    const dateParam =
-      gameResult.playDate ||
-      (() => {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, "0");
-        const day = String(now.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-      })();
-    const endpoint = `/v1/results?sport=${gameResult.sport}&playDate=${dateParam}`;
-
-    // Transform frontend format to backend format
-    const backendPayload = {
-      score: gameResult.score,
-      isCorrect: gameResult.completed,
-      tilesFlipped: gameResult.flippedTilesPattern
-        .map((flipped, index) => (flipped ? TILE_NAMES[index] : null))
-        .filter(Boolean),
-    };
+    const dateParam = playDate || getCurrentDateString();
+    const endpoint = `/v1/results?sport=${sport}&playDate=${dateParam}`;
 
     try {
-      const result = await this.httpClient.post<any>(endpoint, backendPayload);
+      const result = await this.httpClient.post<any>(endpoint, gameResult);
 
       return {
         success: true,
@@ -104,7 +81,7 @@ class AthleteUnknownApiService {
    * userId passed via bearer token
    */
   async getUserStats(): Promise<UserStats> {
-    const endpoint = `/v1/stats/user`;
+    const endpoint = "/v1/stats/user";
 
     try {
       return await this.httpClient.get<any>(endpoint);
