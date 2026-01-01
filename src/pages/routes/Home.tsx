@@ -1,3 +1,4 @@
+import { CharacterSheet } from "./CharacterSheet";
 import "./Home.css";
 
 export function Home() {
@@ -10,7 +11,7 @@ export function Home() {
         </section>
         <section className="content">
           <h2>News</h2>
-          <p> Upcoming: New "Athlete Unknown" trivia game</p>
+          <CharacterSheet />
         </section>
       </div>
 
