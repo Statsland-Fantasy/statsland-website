@@ -34,7 +34,7 @@ import {
 import { athleteUnknownApiService, migrateUserStats } from "@/features";
 
 export function AthleteUnknown(): React.ReactElement {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [userRoles, setUserRoles] = useState<string[]>([]);
   const [migrationAttempted, setMigrationAttempted] = useState(false);
   const { sport } = useParams();
@@ -78,13 +78,16 @@ export function AthleteUnknown(): React.ReactElement {
       setMigrationAttempted(true);
 
       try {
-        console.log("[AthleteUnknown] Attempting to migrate user stats");
-        const success = await migrateUserStats();
+        const success = await migrateUserStats(user?.sub, user?.nickname);
 
         if (success) {
-          console.log("[AthleteUnknown] Stats migration completed successfully");
+          console.log(
+            "[AthleteUnknown] Stats migration completed successfully"
+          );
         } else {
-          console.warn("[AthleteUnknown] Stats migration failed, will retry on next login");
+          console.warn(
+            "[AthleteUnknown] Stats migration failed, will retry on next login"
+          );
         }
       } catch (error) {
         console.error("[AthleteUnknown] Error during stats migration:", error);
@@ -92,7 +95,7 @@ export function AthleteUnknown(): React.ReactElement {
     };
 
     attemptMigration();
-  }, [isAuthenticated, migrationAttempted]);
+  }, [isAuthenticated, migrationAttempted, user?.sub, user?.nickname]);
 
   // Validate and set the active sport from URL params, falling back to DEFAULT_SPORT
   const getValidSport = (sportParam: string | undefined): SportType => {
@@ -179,7 +182,13 @@ export function AthleteUnknown(): React.ReactElement {
     ) {
       clearProgress();
     }
-  }, [state.showResultsModal, state.finalRank, state.gaveUp, state.round, clearProgress]);
+  }, [
+    state.showResultsModal,
+    state.finalRank,
+    state.gaveUp,
+    state.round,
+    clearProgress,
+  ]);
 
   // Show loading state
   if (state.isLoading) {

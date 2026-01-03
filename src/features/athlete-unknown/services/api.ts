@@ -57,7 +57,11 @@ class AthleteUnknownApiService {
    * @param playDate
    * @param gameResult - The game result data
    */
-  async submitGameResults(sport: string, playDate: string, gameResult: Result): Promise<GameResultResponse> {
+  async submitGameResults(
+    sport: string,
+    playDate: string,
+    gameResult: Result
+  ): Promise<GameResultResponse> {
     // Use browser's local timezone for date calculation
     const dateParam = playDate || getCurrentDateString();
     const endpoint = `/v1/results?sport=${sport}&playDate=${dateParam}`;
