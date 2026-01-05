@@ -1,5 +1,5 @@
 import { HttpClient } from "@/services";
-import { API_CONFIG } from "@/config";
+import { config } from "@/config";
 import type {
   GameResultResponse,
   Result,
@@ -16,7 +16,7 @@ class AthleteUnknownApiService {
   private httpClient: HttpClient;
 
   constructor() {
-    this.httpClient = new HttpClient(API_CONFIG.baseUrl, API_CONFIG.timeout);
+    this.httpClient = new HttpClient(config.api.baseUrl, config.api.timeout);
   }
 
   /**
@@ -57,7 +57,11 @@ class AthleteUnknownApiService {
    * @param playDate
    * @param gameResult - The game result data
    */
-  async submitGameResults(sport: string, playDate: string, gameResult: Result): Promise<GameResultResponse> {
+  async submitGameResults(
+    sport: string,
+    playDate: string,
+    gameResult: Result
+  ): Promise<GameResultResponse> {
     // Use browser's local timezone for date calculation
     const dateParam = playDate || getCurrentDateString();
     const endpoint = `/v1/results?sport=${sport}&playDate=${dateParam}`;

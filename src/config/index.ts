@@ -1,1 +1,1 @@
-export { API_CONFIG } from "./api";
+export { config } from "./env";
