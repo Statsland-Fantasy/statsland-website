@@ -35,7 +35,6 @@ export interface GameState {
   hint: string;
   isCompleted: boolean;
   incorrectGuesses: number;
-  showResultsModal: boolean;
   copiedText: string;
   lastSubmittedGuess: string;
   isLoading: boolean;
@@ -61,7 +60,6 @@ const createInitialState = (): GameState => ({
   hint: "",
   isCompleted: false,
   incorrectGuesses: 0,
-  showResultsModal: false,
   copiedText: "",
   lastSubmittedGuess: "",
   isLoading: true,
@@ -178,7 +176,7 @@ export const useGameState = (activeSport: SportType, playDate?: string) => {
 
         // Save progress to localStorage after state update
         // Only save if the game is in progress (not showing results and not completed)
-        if (!newState.showResultsModal) {
+        if (!newState.isCompleted) {
           const progress = gameStateToProgress(
             newState,
             activeSport,

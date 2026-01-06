@@ -25,8 +25,7 @@ import {
   ScoreDisplay,
   PlayerInput,
   TileGrid,
-  ResultsModal,
-  RoundStatsModal,
+  RoundResultsModal,
   RulesModal,
   SportsReferenceCredit,
   UserStatsModal,
@@ -82,7 +81,7 @@ export function AthleteUnknown(): React.ReactElement {
     getValidSport(sport)
   );
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
-  const [isRoundStatsModalOpen, setIsRoundStatsModalOpen] = useState(false);
+  const [isRoundResultsModalOpen, setIsRoundResultsModalOpen] = useState(false);
   const [isUserStatsModalOpen, setIsUserStatsModalOpen] = useState(false);
   const [selectedPlayDate, setSelectedPlayDate] = useState<string | undefined>(
     undefined
@@ -112,7 +111,7 @@ export function AthleteUnknown(): React.ReactElement {
 
   // Game logic
   // updates the following fields in state:
-  // message, messageType, previousCloseGuess, isCompleted, hint, showResultsModal, lastSubmittedGuess
+  // message, messageType, previousCloseGuess, isCompleted, hint, lastSubmittedGuess
   // TODO: rename to useUserSubmission
   const { handleNameSubmit, handleCompleteRound } = useGameLogic({
     state,
@@ -144,10 +143,16 @@ export function AthleteUnknown(): React.ReactElement {
 
   // Clear localStorage when round is completed
   useEffect(() => {
-    if (state.showResultsModal && state.isCompleted && state.round) {
+    if (state.isCompleted && state.round) {
+      setIsRoundResultsModalOpen(true);
       clearProgress();
     }
-  }, [state.showResultsModal, state.isCompleted, state.round, clearProgress]);
+  }, [
+    state.isCompleted,
+    state.round,
+    clearProgress,
+    setIsRoundResultsModalOpen,
+  ]);
 
   // Show loading state
   if (state.isLoading) {
@@ -216,7 +221,7 @@ export function AthleteUnknown(): React.ReactElement {
         roundNumber={roundNumber}
         playDate={playDate}
         theme={state.round.theme}
-        onRoundStatsClick={() => setIsRoundStatsModalOpen(true)}
+        onRoundResultsClick={() => setIsRoundResultsModalOpen(true)}
         onRulesClick={() => setIsRulesModalOpen(true)}
         isPlaytester={isPlaytester}
         showDatePicker={showDatePicker}
@@ -237,12 +242,10 @@ export function AthleteUnknown(): React.ReactElement {
 
       <PlayerInput
         playerName={state.playerName}
-        score={state.score}
         isCompleted={state.isCompleted}
         onPlayerNameChange={(name) => updateState({ playerName: name })}
         onSubmit={handleNameSubmit}
         onGiveUp={handleCompleteRound}
-        onViewResults={() => updateState({ showResultsModal: true })}
       />
 
       <TileGrid
@@ -253,15 +256,16 @@ export function AthleteUnknown(): React.ReactElement {
         onTileClick={handleTileClick}
       />
 
-      <ResultsModal
-        isOpen={state.showResultsModal}
+      <RoundResultsModal
+        isOpen={isRoundResultsModalOpen}
         score={state.score}
         flippedTiles={state.flippedTiles}
         copiedText={state.copiedText}
         roundStats={state.round.stats}
         playerData={state.round.player}
-        onClose={() => updateState({ showResultsModal: false })}
+        onClose={() => setIsRoundResultsModalOpen(false)}
         onShare={handleShare}
+        isCompleted={state.isCompleted}
       />
 
       <SportsReferenceCredit />
@@ -270,19 +274,6 @@ export function AthleteUnknown(): React.ReactElement {
         isOpen={isRulesModalOpen}
         onClose={() => setIsRulesModalOpen(false)}
       />
-
-      {state.round.stats && (
-        <RoundStatsModal
-          isOpen={isRoundStatsModalOpen}
-          onClose={() => setIsRoundStatsModalOpen(false)}
-          roundStats={{
-            ...state.round.stats,
-            name: state.isCompleted
-              ? state.round.player?.name || "Unknown Player"
-              : "???",
-          }}
-        />
-      )}
 
       {isUserStatsModalOpen && (
         <div

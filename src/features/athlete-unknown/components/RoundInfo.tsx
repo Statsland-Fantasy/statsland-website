@@ -5,7 +5,7 @@ interface RoundInfoProps {
   roundNumber: number;
   playDate?: string;
   theme?: string;
-  onRoundStatsClick: () => void;
+  onRoundResultsClick: () => void;
   onRulesClick: () => void;
   isPlaytester?: boolean;
   showDatePicker?: boolean;
@@ -18,7 +18,7 @@ export function RoundInfo({
   roundNumber,
   playDate,
   theme,
-  onRoundStatsClick,
+  onRoundResultsClick,
   onRulesClick,
   isPlaytester = false,
   showDatePicker = false,
@@ -52,7 +52,7 @@ export function RoundInfo({
         </>
       )}
       <span className="separator">•</span>
-      <button className="round-stats-link" onClick={onRoundStatsClick}>
+      <button className="round-stats-link" onClick={onRoundResultsClick}>
         Today's Stats
       </button>
       <span className="separator">•</span>

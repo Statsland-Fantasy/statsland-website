@@ -32,14 +32,6 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
       normalizedAnswer
     );
 
-    // If game is already won, only allow reopening modal with correct answer
-    if (state.isCompleted) {
-      if (normalizedGuess === normalizedAnswer) {
-        updateState({ showResultsModal: true });
-      }
-      return;
-    }
-
     // Prevent submitting the same incorrect guess consecutively
     if (
       normalizedGuess !== normalizedAnswer &&
@@ -57,7 +49,6 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
         previousCloseGuess: "",
         isCompleted: true,
         hint: "",
-        showResultsModal: true,
         lastSubmittedGuess: normalizedGuess,
       });
       return;
@@ -86,7 +77,6 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
           hint: newHint,
           lastSubmittedGuess: normalizedGuess,
           isCompleted: true,
-          showResultsModal: true,
         });
       } else {
         // First close guess
@@ -116,7 +106,6 @@ export const useGameLogic = ({ state, updateState }: UseGameLogicProps) => {
   const handleCompleteRound = useCallback(() => {
     updateState({
       isCompleted: true,
-      showResultsModal: true,
     });
   }, [updateState]);
 
