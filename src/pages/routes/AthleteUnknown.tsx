@@ -22,7 +22,7 @@ import {
   RulesModal,
   SportsReferenceCredit,
   UserStatsModal,
-  // HintTiles,
+  HintTiles,
 } from "@/features/athlete-unknown/components";
 import { athleteUnknownApiService } from "@/features";
 import { getValidSport } from "@/features/athlete-unknown/utils/stringMatching";
@@ -222,19 +222,18 @@ export function AthleteUnknown(): React.ReactElement {
         incorrectGuesses={state.incorrectGuesses}
       />
 
-      {/* TODO: delete this gracefully
-      <HintTiles
-        playerData={state.round.player}
-        hintsUsed={state.hintsUsed}
-        onHintClick={handleHintClick}
-      /> */}
-
       <PlayerInput
         playerName={state.playerName}
         isCompleted={state.isCompleted}
         onPlayerNameChange={(name) => updateState({ playerName: name })}
         onSubmit={handleNameSubmit}
         onGiveUp={handleGiveUp}
+      />
+
+      <HintTiles
+        flippedTiles={state.flippedTiles}
+        playerData={state.round.player}
+        onTileClick={handleTileClick}
       />
 
       <TileGrid

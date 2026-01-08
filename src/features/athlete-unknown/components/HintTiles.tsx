@@ -1,44 +1,35 @@
-// import React from "react";
-// import { HINT_KEYS, HINTS, HintType } from "../config";
-// import { PlayerData } from "../types";
+import React from "react";
+import type { TileType } from "../config";
+import { TOP_TILES } from "../config";
+import { PlayerData } from "../types";
+import { Tile } from "./Tile";
 
-// interface HintTilesProps {
-//   playerData: PlayerData;
-//   hintsUsed: HintType[];
-//   onHintClick: (hintKey: HintType) => void;
-// }
+interface HintTilesProps {
+  flippedTiles: TileType[];
+  playerData: PlayerData;
+  onTileClick: (tileName: TileType) => void;
+}
 
-// export function HintTiles({
-//   playerData,
-//   hintsUsed,
-//   onHintClick,
-// }: HintTilesProps): React.ReactElement {
-//   return (
-//     <>
-//       {HINT_KEYS.map((hintKey) => {
-//         const playerDataValue = playerData?.[hintKey];
-//         if (!playerDataValue) {
-//           return null; // just a placeholder until re-design. See below comment
-//         }
-//         const isFlipped = hintsUsed.includes(hintKey);
-//         return (
-//           <div
-//             className="tile"
-//             onClick={() => onHintClick(hintKey)}
-//             key={hintKey}
-//             // make button disabled instead of return null
-//           >
-//             <div className={`tile-inner ${isFlipped ? "flipped" : ""}`}>
-//               <div className="tile-front">{HINTS[hintKey].label}</div>
-//               <div className="tile-back">
-//                 <div>{playerDataValue}</div>
-//               </div>
-//             </div>
-//           </div>
-//         );
-//       })}
-//     </>
-//   );
-// }
-
-export {};
+export function HintTiles({
+  flippedTiles,
+  playerData,
+  onTileClick,
+}: HintTilesProps): React.ReactElement {
+  return (
+    <div className="grid">
+      <div />
+      {TOP_TILES.map((tileName: TileType, index: number) => (
+        <Tile
+          key={index}
+          tileName={tileName}
+          index={index}
+          isFlipped={flippedTiles.includes(tileName)}
+          photoRevealed={false}
+          returningFromPhoto={false}
+          playerData={playerData}
+          onClick={() => onTileClick(tileName)}
+        />
+      ))}
+    </div>
+  );
+}

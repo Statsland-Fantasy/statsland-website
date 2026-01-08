@@ -115,6 +115,11 @@ export const TILES = {
 
 export type TileType = keyof typeof TILES;
 
+export const TOP_TILES = [
+  TILE_NAMES.INITIALS as TileType,
+  TILE_NAMES.NICKNAMES as TileType,
+] as const;
+
 // Tiles in the 3x3 grid. Order matters for grid arrangement
 export const GRID_TILES = [
   TILE_NAMES.BIO as TileType,
@@ -129,11 +134,7 @@ export const GRID_TILES = [
 ] as const;
 
 // All tiles available for clues. Order matters for share text
-export const ALL_TILES = [
-  TILE_NAMES.INITIALS as TileType,
-  TILE_NAMES.NICKNAMES as TileType,
-  ...GRID_TILES,
-] as const;
+export const ALL_TILES = [...TOP_TILES, ...GRID_TILES] as const;
 
 // ============================================================================
 // EXTERNAL REFERENCE URLS
