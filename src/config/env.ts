@@ -3,6 +3,51 @@
  * All environment variables are loaded and validated here
  */
 
+import {
+  SPORT_BASEBALL,
+  SPORT_BASKETBALL,
+  SPORT_FOOTBALL,
+  SportType,
+} from "@/features";
+
+const FALLBACK_SPORTS_LIST = [
+  SPORT_FOOTBALL as SportType,
+  SPORT_BASKETBALL as SportType,
+  SPORT_BASEBALL as SportType,
+];
+
+/**
+ * Validates and parses the sports list from environment variable
+ * If any sport is invalid, returns null (triggers fallback)
+ * Otherwise returns typed array of valid sports
+ */
+function parseSportsListFromEnv(
+  envValue: string | undefined
+): SportType[] | null {
+  if (!envValue) {
+    return null;
+  }
+
+  const rawSports = envValue.split(",").map((s) => s.trim());
+
+  const validSports = rawSports.every((sport) =>
+    [SPORT_BASEBALL, SPORT_BASKETBALL, SPORT_FOOTBALL].includes(sport)
+  );
+
+  if (!validSports) {
+    console.warn(
+      "[Config] Invalid sport in REACT_APP_AU_SPORTS_LIST. Using fallback.",
+      {
+        provided: rawSports,
+        valid: FALLBACK_SPORTS_LIST,
+      }
+    );
+    return null;
+  }
+
+  return rawSports as SportType[];
+}
+
 interface AppConfig {
   api: {
     baseUrl: string;
@@ -14,6 +59,9 @@ interface AppConfig {
     clientId: string;
     audience: string;
   };
+  athleteUnknown: {
+    sportsList: SportType[];
+  };
 }
 
 /**
@@ -23,30 +71,35 @@ interface AppConfig {
 function loadConfig(): AppConfig {
   // Define required environment variables
   const requiredVars = [
-    'REACT_APP_AUTH0_DOMAIN',
-    'REACT_APP_AUTH0_CLIENT_ID',
-    'REACT_APP_AUTH0_AUDIENCE',
+    "REACT_APP_AUTH0_DOMAIN",
+    "REACT_APP_AUTH0_CLIENT_ID",
+    "REACT_APP_AUTH0_AUDIENCE",
   ];
 
   // Check for missing required variables
   const missing = requiredVars.filter((varName) => !process.env[varName]);
   if (missing.length > 0) {
     throw new Error(
-      `Missing required environment variables: ${missing.join(', ')}\n` +
-      'Please check your .env file and ensure all required variables are set.'
+      `Missing required environment variables: ${missing.join(", ")}\n` +
+        "Please check your .env file and ensure all required variables are set."
     );
   }
 
   return {
     api: {
-      baseUrl: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080',
+      baseUrl: process.env.REACT_APP_API_BASE_URL || "http://localhost:8080",
       timeout: 10000, // 10 second timeout
-      useMockData: process.env.REACT_APP_USE_MOCK_DATA === 'true',
+      useMockData: process.env.REACT_APP_USE_MOCK_DATA === "true",
     },
     auth0: {
       domain: process.env.REACT_APP_AUTH0_DOMAIN!,
       clientId: process.env.REACT_APP_AUTH0_CLIENT_ID!,
       audience: process.env.REACT_APP_AUTH0_AUDIENCE!,
+    },
+    athleteUnknown: {
+      sportsList:
+        parseSportsListFromEnv(process.env.REACT_APP_AU_SPORTS_LIST) ||
+        FALLBACK_SPORTS_LIST,
     },
   };
 }

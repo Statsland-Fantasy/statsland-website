@@ -9,23 +9,14 @@
 // SPORT CONFIGURATION
 // ============================================================================
 
-export type SportType = "baseball" | "basketball" | "football";
+export const SPORT_BASEBALL = "baseball";
+export const SPORT_BASKETBALL = "basketball";
+export const SPORT_FOOTBALL = "football";
 
-export const SPORTS = {
-  BASEBALL: "baseball" as SportType,
-  BASKETBALL: "basketball" as SportType,
-  FOOTBALL: "football" as SportType,
-} as const;
-
-// TODO make environment variable. Order matters
-export const SPORT_LIST: SportType[] = [
-  SPORTS.BASEBALL,
-  SPORTS.BASKETBALL,
-  SPORTS.FOOTBALL,
-];
-
-// TODO default sport is first in SPORT_LIST
-export const DEFAULT_SPORT: SportType = SPORTS.BASEBALL;
+export type SportType =
+  | typeof SPORT_BASEBALL
+  | typeof SPORT_BASKETBALL
+  | typeof SPORT_FOOTBALL;
 
 // ============================================================================
 // SCORING & TILES CONFIGURATION

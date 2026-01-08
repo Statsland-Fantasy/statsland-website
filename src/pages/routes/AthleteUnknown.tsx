@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router";
 import "./AthleteUnknown.css";
-import {
-  type SportType,
-  DEFAULT_SPORT,
-  SPORTS,
-} from "@/features/athlete-unknown/config";
+import type { SportType } from "@/features/athlete-unknown/config";
 import { STORAGE_KEYS } from "@/features/athlete-unknown/utils";
 import {
   useGameState,
@@ -29,6 +25,8 @@ import {
   // HintTiles,
 } from "@/features/athlete-unknown/components";
 import { athleteUnknownApiService } from "@/features";
+import { getValidSport } from "@/features/athlete-unknown/utils/stringMatching";
+import { config } from "@/config";
 
 export function AthleteUnknown(): React.ReactElement {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
@@ -63,20 +61,8 @@ export function AthleteUnknown(): React.ReactElement {
     athleteUnknownApiService.setGetAccessToken(getAccessTokenSilently);
   }, [getAccessTokenSilently]);
 
-  // Validate and set the active sport from URL params, falling back to DEFAULT_SPORT
-  const getValidSport = (sportParam: string | undefined): SportType => {
-    if (
-      sportParam === SPORTS.BASEBALL ||
-      sportParam === SPORTS.BASKETBALL ||
-      sportParam === SPORTS.FOOTBALL
-    ) {
-      return sportParam as SportType;
-    }
-    return DEFAULT_SPORT;
-  };
-
   const [activeSport, setActiveSport] = useState<SportType>(
-    getValidSport(sport)
+    getValidSport(sport, config.athleteUnknown.sportsList[0])
   );
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isRoundResultsModalOpen, setIsRoundResultsModalOpen] = useState(false);

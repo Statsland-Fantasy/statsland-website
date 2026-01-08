@@ -1,3 +1,10 @@
+import {
+  SPORT_BASEBALL,
+  SPORT_BASKETBALL,
+  SPORT_FOOTBALL,
+  SportType,
+} from "../config";
+
 /**
  * String matching utilities for game logic
  * Includes Levenshtein distance calculation and string normalization
@@ -36,3 +43,30 @@ export const calculateLevenshteinDistance = (a: string, b: string): number => {
  */
 export const normalize = (str = ""): string =>
   str.toLowerCase().replace(/\s/g, "");
+
+/**
+ * Type guard to check if a value is a valid SportType
+ */
+export const isValidSportType = (value: unknown): value is SportType => {
+  return (
+    value === SPORT_BASEBALL ||
+    value === SPORT_BASKETBALL ||
+    value === SPORT_FOOTBALL
+  );
+};
+
+/**
+ * Validates sport parameter and returns valid SportType or uses provided fallback
+ * @param sportParam string from URL param
+ * @param fallback fallback SportType (defaults to SPORT_BASEBALL if not provided)
+ * @returns validated SportType
+ */
+export const getValidSport = (
+  sportParam: string | undefined,
+  fallback: SportType = SPORT_BASEBALL
+): SportType => {
+  if (isValidSportType(sportParam)) {
+    return sportParam;
+  }
+  return fallback;
+};
