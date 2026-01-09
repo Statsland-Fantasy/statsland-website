@@ -46,7 +46,6 @@ export interface MidRoundProgress {
   message: string;
   messageType: string;
   playerName: string;
-  playerName_saved: string;
   previousCloseGuess: string;
   score: number;
 }
