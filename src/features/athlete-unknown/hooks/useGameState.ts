@@ -17,6 +17,7 @@ import {
   clearMidRoundProgress,
   type MidRoundProgress,
   getCurrentDateString,
+  clearMockDataPlayerIndex,
 } from "@/features/athlete-unknown/utils";
 
 export interface GameState {
@@ -190,11 +191,19 @@ export const useGameState = (activeSport: SportType, playDate?: string) => {
     );
   }, [activeSport, effectivePlayDate]);
 
+  const clearMockData = useCallback(() => {
+    clearMockDataPlayerIndex(activeSport);
+    console.log(
+      `[useGameState] Cleared saved mock data player index for ${activeSport}`
+    );
+  }, [activeSport]);
+
   return {
     state: currentState,
     updateState,
     resetState,
     clearProgress,
+    clearMockData,
     allStates: gameStates,
   };
 };

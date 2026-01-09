@@ -3,7 +3,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router";
 import "./AthleteUnknown.css";
 import type { SportType } from "@/features/athlete-unknown/config";
-import { STORAGE_KEYS } from "@/features/athlete-unknown/utils";
 import {
   useGameState,
   useGuessSubmission,
@@ -109,7 +108,7 @@ export function AthleteUnknown(): React.ReactElement {
   const isPlaytester = userRoles.includes("Playtester");
 
   // Core state management - pass selectedPlayDate to ensure each puzzle has its own state
-  const { state, updateState, clearProgress } = useGameState(
+  const { state, updateState, clearProgress, clearMockData } = useGameState(
     activeSport,
     selectedPlayDate
   );
@@ -148,16 +147,6 @@ export function AthleteUnknown(): React.ReactElement {
   // copiedText
   const { handleShare } = useShareResults({ state, updateState });
 
-  // TODO are the following 2 blocks needed???
-  // Save active sport to localStorage when it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.ACTIVE_SPORT, activeSport);
-    } catch (error) {
-      console.error("Failed to save active sport:", error);
-    }
-  }, [activeSport]);
-
   useEffect(() => {
     setActiveSport(getValidSport(sport));
   }, [sport, setActiveSport]);
@@ -167,11 +156,13 @@ export function AthleteUnknown(): React.ReactElement {
     if (state.isCompleted && state.round) {
       setIsRoundResultsModalOpen(true);
       clearProgress();
+      clearMockData();
     }
   }, [
     state.isCompleted,
     state.round,
     clearProgress,
+    clearMockData,
     setIsRoundResultsModalOpen,
   ]);
 
