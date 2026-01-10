@@ -8,8 +8,15 @@ import type { SportType } from "@/features/athlete-unknown/config";
 import type { GameState } from "./useGameState";
 import { gameDataService } from "@/features/athlete-unknown/services";
 import { userStatsService } from "@/features/athlete-unknown/services";
-import type { Result } from "@/features/athlete-unknown/types";
-import { updateGuestStats } from "@/features/athlete-unknown/utils";
+import type {
+  Result,
+  RoundHistory,
+  UserSportStats,
+} from "@/features/athlete-unknown/types";
+import {
+  getCurrentDateString,
+  updateGuestStats,
+} from "@/features/athlete-unknown/utils";
 
 interface UseGameDataProps {
   activeSport: SportType;
@@ -37,12 +44,37 @@ export const useGameData = ({
           userStatsService.getUserStats(),
         ]);
 
-        updateState({
-          round: roundData,
-          userStats: userStatsData,
-          isLoading: false,
-          error: null,
-        });
+        // playDate is undefined if current date. BE normally handles default missing case
+        const actualPlayDate = playDate ?? getCurrentDateString();
+
+        const userSportStats: UserSportStats = userStatsData.sports.find(
+          (s: UserSportStats) => s.sport === activeSport
+        );
+        const userHistory = userSportStats?.history ?? [];
+        const foundHistoricalRound = userHistory.find(
+          (h: RoundHistory) => h.playDate === actualPlayDate
+        );
+        if (foundHistoricalRound) {
+          // User has completed this round before - restore state
+          updateState({
+            round: roundData,
+            userStats: userStatsData,
+            isLoading: false,
+            error: null,
+            score: foundHistoricalRound.score,
+            flippedTiles: foundHistoricalRound.flippedTiles,
+            flippedTilesUponCompletion: foundHistoricalRound.flippedTiles,
+            incorrectGuesses: foundHistoricalRound.incorrectGuesses,
+            isCompleted: true,
+          });
+        } else {
+          updateState({
+            round: roundData,
+            userStats: userStatsData,
+            isLoading: false,
+            error: null,
+          });
+        }
       } catch (error) {
         console.error("Error loading game data:", error);
         updateState({

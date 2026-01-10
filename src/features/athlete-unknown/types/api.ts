@@ -1,5 +1,7 @@
 // Athlete Unknown API Types
 
+import { TileType } from "../config";
+
 export interface Round {
   roundId: string;
   sport: string;
@@ -39,7 +41,7 @@ export interface PlayerData {
 export interface Result {
   score: number;
   isCorrect: boolean;
-  flippedTiles: string[];
+  flippedTiles: TileType[];
   incorrectGuesses: number;
 }
 
