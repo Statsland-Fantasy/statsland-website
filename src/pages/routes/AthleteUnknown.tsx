@@ -3,13 +3,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router";
 import "./AthleteUnknown.css";
 import type { SportType } from "@/features/athlete-unknown/config";
-import { STORAGE_KEYS } from "@/features/athlete-unknown/utils";
 import {
   useGameState,
   useGuessSubmission,
   useTileFlip,
   useGameData,
   useShareResults,
+  useRoundHistory,
+  useUserStats,
 } from "@/features/athlete-unknown/hooks";
 import {
   SportsReferenceAttribution,
@@ -23,8 +24,13 @@ import {
   SportsReferenceCredit,
   UserStatsModal,
   HintTiles,
+  RoundHistoryModal,
 } from "@/features/athlete-unknown/components";
-import { athleteUnknownApiService, migrateUserStats } from "@/features";
+import {
+  athleteUnknownApiService,
+  migrateUserStats,
+  UserSportStats,
+} from "@/features";
 import { getValidSport } from "@/features/athlete-unknown/utils/stringMatching";
 import { config } from "@/config";
 
@@ -98,16 +104,16 @@ export function AthleteUnknown(): React.ReactElement {
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false);
   const [isRoundResultsModalOpen, setIsRoundResultsModalOpen] = useState(false);
   const [isUserStatsModalOpen, setIsUserStatsModalOpen] = useState(false);
+  const [isRoundHistoryModalOpen, setIsRoundHistoryModalOpen] = useState(false);
   const [selectedPlayDate, setSelectedPlayDate] = useState<string | undefined>(
     undefined
   );
-  const [showDatePicker, setShowDatePicker] = useState(false);
 
   // Check if user is a playtester
   const isPlaytester = userRoles.includes("Playtester");
 
   // Core state management - pass selectedPlayDate to ensure each puzzle has its own state
-  const { state, updateState, clearProgress } = useGameState(
+  const { state, updateState, clearProgress, clearMockData } = useGameState(
     activeSport,
     selectedPlayDate
   );
@@ -136,19 +142,20 @@ export function AthleteUnknown(): React.ReactElement {
   // photoRevealed, returningFromPhoto, flippedTiles, score
   const { handleTileClick } = useTileFlip({ state, updateState });
 
+  // User Stats
+  // updates the following fields in state:
+  // userStats
+  const { handleFetchUserStats } = useUserStats({ updateState });
+
+  // Round History
+  // updates the following fields in state
+  // roundHistory
+  const { handleFetchRoundHistory } = useRoundHistory({ updateState });
+
   // Share functionality
   // updates the following fields in state:
   // copiedText
   const { handleShare } = useShareResults({ state, updateState });
-
-  // Save active sport to localStorage when it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEYS.ACTIVE_SPORT, activeSport);
-    } catch (error) {
-      console.error("Failed to save active sport:", error);
-    }
-  }, [activeSport]);
 
   useEffect(() => {
     setActiveSport(getValidSport(sport));
@@ -159,13 +166,34 @@ export function AthleteUnknown(): React.ReactElement {
     if (state.isCompleted && state.round) {
       setIsRoundResultsModalOpen(true);
       clearProgress();
+      clearMockData();
     }
   }, [
     state.isCompleted,
     state.round,
     clearProgress,
+    clearMockData,
     setIsRoundResultsModalOpen,
   ]);
+
+  // Fetch roundHistory when the modal is opened
+  useEffect(() => {
+    if (isRoundHistoryModalOpen) {
+      handleFetchRoundHistory(activeSport, isPlaytester);
+    }
+  }, [
+    activeSport,
+    isPlaytester,
+    isRoundHistoryModalOpen,
+    handleFetchRoundHistory,
+  ]);
+
+  // Fetch user stats when the modal is opened
+  useEffect(() => {
+    if (isUserStatsModalOpen) {
+      handleFetchUserStats();
+    }
+  }, [isUserStatsModalOpen, handleFetchUserStats]);
 
   // Show loading state
   if (state.isLoading) {
@@ -197,28 +225,15 @@ export function AthleteUnknown(): React.ReactElement {
     );
   }
 
+  //TODO memoize these
   const playDate = state.round?.playDate as string | undefined;
   const [, roundNumber] = state.round.roundId.split("#");
 
-  // Handler for date selection in playtesting mode
-  const handleDateSelect = (date: string) => {
-    setSelectedPlayDate(date);
-    setShowDatePicker(false);
-  };
-
-  // Handler for toggling date picker
-  const handleTitleClick = () => {
-    console.log("[AthleteUnknown] Title clicked! isPlaytester:", isPlaytester);
-    if (isPlaytester) {
-      console.log(
-        "[AthleteUnknown] Toggling date picker. Current state:",
-        showDatePicker
-      );
-      setShowDatePicker(!showDatePicker);
-    } else {
-      console.log("[AthleteUnknown] User is not a playtester, ignoring click");
+  const userRoundHistoryArray = state.userStats?.sports.filter(
+    (userSport: UserSportStats) => {
+      return userSport.sport === activeSport;
     }
-  };
+  );
 
   // console.log("STATE AU", state);
 
@@ -238,11 +253,7 @@ export function AthleteUnknown(): React.ReactElement {
         theme={state.round.theme}
         onRoundResultsClick={() => setIsRoundResultsModalOpen(true)}
         onRulesClick={() => setIsRulesModalOpen(true)}
-        isPlaytester={isPlaytester}
-        showDatePicker={showDatePicker}
-        selectedPlayDate={selectedPlayDate}
-        onTitleClick={handleTitleClick}
-        onDateSelect={handleDateSelect}
+        onRoundHistoryClick={() => setIsRoundHistoryModalOpen(true)}
       />
 
       <ScoreDisplay
@@ -302,6 +313,18 @@ export function AthleteUnknown(): React.ReactElement {
         isOpen={isUserStatsModalOpen}
         onClose={() => setIsUserStatsModalOpen(false)}
         userStats={state.userStats}
+        isLoading={state.isLoading}
+        error={state.error}
+      />
+
+      <RoundHistoryModal
+        isOpen={isRoundHistoryModalOpen}
+        onClose={() => setIsRoundHistoryModalOpen(false)}
+        isLoading={state.isLoading}
+        error={state.error}
+        roundHistory={state.roundHistory}
+        userRoundHistory={userRoundHistoryArray?.[0]?.history ?? []}
+        onRoundSelect={(playDate) => setSelectedPlayDate(playDate)}
       />
     </div>
   );

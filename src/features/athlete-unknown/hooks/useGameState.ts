@@ -5,8 +5,8 @@
 
 import { useState, useCallback, useEffect } from "react";
 import type {
-  PlayerData,
   Round,
+  RoundSummary,
   UserStats,
 } from "@/features/athlete-unknown/types";
 import type { SportType, TileType } from "@/features/athlete-unknown/config";
@@ -17,10 +17,10 @@ import {
   clearMidRoundProgress,
   type MidRoundProgress,
   getCurrentDateString,
+  clearMockDataPlayerIndex,
 } from "@/features/athlete-unknown/utils";
 
 export interface GameState {
-  playersList: PlayerData[] | null;
   round: Round | null;
   userStats: UserStats | null;
   playerName: string;
@@ -39,10 +39,10 @@ export interface GameState {
   isLoading: boolean;
   error: string | null;
   currentPlayerIndex?: number;
+  roundHistory: RoundSummary[];
 }
 
 const createInitialState = (): GameState => ({
-  playersList: null,
   round: null,
   userStats: null,
   playerName: "",
@@ -60,6 +60,7 @@ const createInitialState = (): GameState => ({
   lastSubmittedGuess: "",
   isLoading: true,
   error: null,
+  roundHistory: [],
 });
 
 /**
@@ -79,7 +80,6 @@ const gameStateToProgress = (
   message: state.message,
   messageType: state.messageType,
   playerName: state.playerName,
-  playerName_saved: state.round?.player?.name || "",
   previousCloseGuess: state.previousCloseGuess,
   score: state.score,
 });
@@ -191,11 +191,19 @@ export const useGameState = (activeSport: SportType, playDate?: string) => {
     );
   }, [activeSport, effectivePlayDate]);
 
+  const clearMockData = useCallback(() => {
+    clearMockDataPlayerIndex(activeSport);
+    console.log(
+      `[useGameState] Cleared saved mock data player index for ${activeSport}`
+    );
+  }, [activeSport]);
+
   return {
     state: currentState,
     updateState,
     resetState,
     clearProgress,
+    clearMockData,
     allStates: gameStates,
   };
 };

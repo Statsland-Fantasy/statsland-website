@@ -8,9 +8,13 @@ import type { SportType } from "@/features/athlete-unknown/config";
 import type { GameState } from "./useGameState";
 import { gameDataService } from "@/features/athlete-unknown/services";
 import { userStatsService } from "@/features/athlete-unknown/services";
-import type { Result } from "@/features/athlete-unknown/types";
+import type {
+  Result,
+  RoundHistory,
+  UserSportStats,
+} from "@/features/athlete-unknown/types";
 import {
-  getGameSubmissionKey,
+  getCurrentDateString,
   updateGuestStats,
 } from "@/features/athlete-unknown/utils";
 
@@ -40,12 +44,37 @@ export const useGameData = ({
           userStatsService.getUserStats(),
         ]);
 
-        updateState({
-          round: roundData,
-          userStats: userStatsData,
-          isLoading: false,
-          error: null,
-        });
+        // playDate is undefined if current date. BE normally handles default missing case
+        const actualPlayDate = playDate ?? getCurrentDateString();
+
+        const userSportStats: UserSportStats = userStatsData.sports.find(
+          (s: UserSportStats) => s.sport === activeSport
+        );
+        const userHistory = userSportStats?.history ?? [];
+        const foundHistoricalRound = userHistory.find(
+          (h: RoundHistory) => h.playDate === actualPlayDate
+        );
+        if (foundHistoricalRound) {
+          // User has completed this round before - restore state
+          updateState({
+            round: roundData,
+            userStats: userStatsData,
+            isLoading: false,
+            error: null,
+            score: foundHistoricalRound.score,
+            flippedTiles: foundHistoricalRound.flippedTiles,
+            flippedTilesUponCompletion: foundHistoricalRound.flippedTiles,
+            incorrectGuesses: foundHistoricalRound.incorrectGuesses,
+            isCompleted: true,
+          });
+        } else {
+          updateState({
+            round: roundData,
+            userStats: userStatsData,
+            isLoading: false,
+            error: null,
+          });
+        }
       } catch (error) {
         console.error("Error loading game data:", error);
         updateState({
@@ -68,23 +97,14 @@ export const useGameData = ({
         return;
       }
       // Get current date in local timezone
-      const now = new Date();
-      const currentDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+      const currentDate = getCurrentDateString();
       const roundPlayDate = state.round.playDate || currentDate;
-      // Only submit stats if current date matches the round's playDate
-      // This prevents stat submission for playtesting future rounds
-      if (currentDate !== roundPlayDate) {
+      // Prevent stat submission for playtesting future rounds
+      if (roundPlayDate > currentDate) {
         console.log(
           "[Athlete Unknown] Skipping stats submission - playtesting future round"
         );
         return;
-      }
-      const submissionKey = getGameSubmissionKey(activeSport, roundPlayDate);
-      if (localStorage.getItem(submissionKey)) {
-        console.log(
-          "[Athlete Unknown] Skipping stats submission - results already submitted"
-        );
-        return; // Already submitted
       }
       try {
         const gameResult: Result = {
@@ -102,7 +122,7 @@ export const useGameData = ({
             activeSport
           );
 
-          updateGuestStats(activeSport, gameResult);
+          updateGuestStats(activeSport, roundPlayDate, gameResult);
         } else {
           console.log(
             "[Athlete Unknown] Skipping guest stats update - user is authenticated"
@@ -115,10 +135,10 @@ export const useGameData = ({
           roundPlayDate,
           gameResult
         );
-        if (response?.success) {
-          console.log("[Athlete Unknown] Results submitted successfully");
-          localStorage.setItem(submissionKey, "true");
-        }
+        console.log(
+          "[Athlete Unknown] Successfully submitted results: ",
+          response
+        );
       } catch (error) {
         console.error("[Athlete Unknown] Failed to submit results:", error);
         // Don't block the user experience if submission fails
