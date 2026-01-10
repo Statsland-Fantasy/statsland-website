@@ -10,6 +10,7 @@ import {
   useGameData,
   useShareResults,
   useRoundHistory,
+  useUserStats,
 } from "@/features/athlete-unknown/hooks";
 import {
   SportsReferenceAttribution,
@@ -141,6 +142,11 @@ export function AthleteUnknown(): React.ReactElement {
   // photoRevealed, returningFromPhoto, flippedTiles, score
   const { handleTileClick } = useTileFlip({ state, updateState });
 
+  // User Stats
+  // updates the following fields in state:
+  // userStats
+  const { handleFetchUserStats } = useUserStats({ updateState });
+
   // Round History
   // updates the following fields in state
   // roundHistory
@@ -181,6 +187,13 @@ export function AthleteUnknown(): React.ReactElement {
     isRoundHistoryModalOpen,
     handleFetchRoundHistory,
   ]);
+
+  // Fetch user stats when the modal is opened
+  useEffect(() => {
+    if (isUserStatsModalOpen) {
+      handleFetchUserStats();
+    }
+  }, [isUserStatsModalOpen, handleFetchUserStats]);
 
   // Show loading state
   if (state.isLoading) {
@@ -300,6 +313,8 @@ export function AthleteUnknown(): React.ReactElement {
         isOpen={isUserStatsModalOpen}
         onClose={() => setIsUserStatsModalOpen(false)}
         userStats={state.userStats}
+        isLoading={state.isLoading}
+        error={state.error}
       />
 
       <RoundHistoryModal
