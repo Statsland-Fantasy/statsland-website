@@ -18,15 +18,12 @@ export function PreviousGuesses({
     return null;
   }
 
-  // Reverse to show most recent at top
-  const reversedGuesses = [...guesses].reverse();
-  const useMultiColumn = guesses.length > 4;
+  // Only show the last 4 guesses
+  const displayedGuesses = guesses.slice(-2);
 
   return (
-    <div
-      className={`previous-guesses ${useMultiColumn ? "previous-guesses--multi-column" : ""}`}
-    >
-      {reversedGuesses.map((guess, index) => {
+    <div className="au-previous-guesses">
+      {displayedGuesses.map((guess, index) => {
         const distance = calculateLevenshteinDistance(
           normalize(guess),
           normalize(correctName)
@@ -36,7 +33,7 @@ export function PreviousGuesses({
         return (
           <div
             key={index}
-            className={`previous-guess ${isClose ? "previous-guess--close" : ""}`}
+            className={`au-previous-guess ${isClose ? "au-previous-guess--close" : ""}`}
             data-tooltip={
               isClose
                 ? `Spelling is off by ${distance} letter${distance !== 1 ? "s" : ""}!`

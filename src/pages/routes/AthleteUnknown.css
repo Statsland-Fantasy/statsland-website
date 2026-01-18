@@ -4,13 +4,14 @@
   flex-direction: column;
   font-family: Arial, sans-serif;
   background-color: #452d85;
+  min-height: 100vh;
 }
 
 .au-header-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 4rem;
+  height: 3rem;
   width: 100%;
 }
 
@@ -28,6 +29,14 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+
+.au-scoring-buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 .au-tile-grid-container {
@@ -53,29 +62,28 @@
 }
 
 .au-user-identity-container {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .au-user-identity-button img {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 /* GameHeader */
 .au-sports-section {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .au-sports-navbar {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  border-bottom: 0.25rem solid white;
 }
 
 .au-nav-tab {
-  padding: 0.25rem;
+  padding: 0.1rem;
   cursor: pointer;
   color: white;
   border-bottom: 3px solid transparent;
@@ -95,7 +103,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   /* font-family: "Bodoni Moda", serif;
   font-optical-sizing: auto;
   font-weight: 900;
@@ -127,7 +135,7 @@
   font-family: "Bodoni Moda", serif;
   font-optical-sizing: auto;
   font-weight: 800;
-  font-size: 1.75rem;
+  font-size: 1.15rem;
   font-style: italic;
   color: white;
 }
@@ -144,7 +152,7 @@
   font-family: "Bodoni Moda", serif;
   font-optical-sizing: auto;
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: 0.85rem;
   font-style: normal;
   color: white;
   text-decoration: underline;
@@ -198,7 +206,7 @@
   order: 2;
   text-align: center;
   font-family: "Special Elite";
-  font-size: 0.875rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #333;
   margin-top: 0.5rem;
@@ -210,8 +218,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 5rem;
+  height: 5rem;
   background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 40%, #1f1f1f 100%);
   border-radius: 1px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
@@ -219,12 +227,13 @@
 
 .au-score-box > p {
   font-family: "Special Elite";
-  font-size: 1rem;
+  font-size: 2.75rem;
+  text-align: center;
   font-weight: 800;
   color: white;
+  transform: rotate(3deg);
 }
 
-/* We have Lamar Jackson */
 .au-bulletin-board {
   background-image: url("../../features/athlete-unknown/assets/corkboard-background-vert.jpg");
   background-size: 100%;
@@ -243,14 +252,14 @@
   background-color: #fffef7;
   background-image: repeating-linear-gradient(
     transparent,
-    transparent 3.5rem,
-    #e0ddd5 3.5rem,
-    #e0ddd5 3.8rem
+    transparent 1.5rem,
+    #edece8 1.5rem,
+    #edece8 1.8rem
   );
   padding: 0rem 0rem;
   margin: 0rem auto;
   width: 100%;
-  min-height: 12rem;
+  min-height: 4rem;
 }
 
 /* Torn paper edge effect */
@@ -275,42 +284,44 @@
 .au-paper-container::after {
   content: "";
   position: relative;
-  z-index: 98;
+  z-index: 2;
   top: 0;
-  left: -90%;
+  left: -95%;
   bottom: 0;
   width: 0.25rem;
   background-color: #ff6b6b;
-  opacity: 0.6;
+  opacity: 0.3;
 }
 
 .au-player-guess-container {
   display: flex;
-  flex-direction: column;
-  width: 70%;
-  min-height: 3.5rem; /* same as au-paper-container linear gradient */
+  flex-direction: row;
+  width: 100%;
 }
 
 .au-player-input {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
+  width: 70%;
 }
 
 .au-player-input input {
   font-family: "Caveat", cursive;
-  font-size: 2.25rem;
+  font-size: 2rem;
   font-weight: 700;
-  padding-top: 1rem;
   border: none;
   background: transparent;
   outline: none;
   transition: border-color 0.3s ease;
-  text-align: center;
+  text-align: start;
   color: black;
   box-sizing: border-box;
+  z-index: 3;
+  padding-left: 1.5rem;
+  width: 100%;
 }
 
 .au-player-input input:focus {
@@ -348,23 +359,22 @@
 .au-hint-tile-container-nicknames {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: auto;
 }
 
 .au-hint-tile-label {
   font-family: "Caveat", cursive;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 800;
   text-decoration: underline;
   color: #1a1a1a;
+  text-align: center;
   min-width: 5rem;
 }
 
 .au-hint-tile-size {
   width: 7rem;
-  min-height: 2.25rem;
 }
 
 .au-hint-tile-wrapper {
@@ -377,7 +387,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: #1a1a1a;
   cursor: pointer;
   display: flex;
@@ -394,7 +404,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   color: #1a1a1a;
   background: linear-gradient(135deg, #ffe066 0%, #ffd633 100%);
   box-shadow:
@@ -409,7 +419,6 @@
   transition:
     transform 0.5s ease-out,
     opacity 0.4s ease-out 0.1s;
-  background-color: purple;
 }
 
 /* Peel-off animation when flipped */
@@ -617,7 +626,7 @@
   transition: all 0.3s ease-out;
   font-family: "Special Elite", "Courier New", monospace;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 400;
   color: #fffef7;
   border-radius: 2px;
   /* Inset shadow to look like an indentation/empty spot */
@@ -965,7 +974,7 @@
 .au-btn--disabled,
 .au-btn:disabled {
   cursor: not-allowed;
-  opacity: 0.95;
+  opacity: 0.7;
   pointer-events: none;
   filter: grayscale(50%);
 }
@@ -997,53 +1006,37 @@
 /* ----------------------------------------
    Previous Guesses
    ---------------------------------------- */
-.previous-guesses {
+.au-previous-guesses {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  font-family: "Caveat", cursive;
-  font-size: 1.75rem;
+  gap: 0.5rem;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 1.25rem;
   color: #1a1a1a;
+  padding: 0.5rem 0.25rem;
 }
 
-.previous-guess {
+.au-previous-guess {
   text-decoration: line-through;
   opacity: 0.9;
 }
 
-/* Multi-column layout when more than 4 guesses */
-.previous-guesses--multi-column {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  column-gap: 1.5rem;
-  row-gap: 0.125rem;
-  font-size: 1.5rem;
-}
-
-.previous-guesses--multi-column .previous-guess {
-  width: calc(50% - 0.75rem);
-  text-align: center;
-}
-
 /* Close guess - spelling almost correct */
-.previous-guess--close {
+.au-previous-guess--close {
   text-decoration: none;
   color: #f4c90d;
   opacity: 1;
-  font-weight: 600;
   position: static;
   cursor: help;
 }
 
 /* Tooltip for close guesses */
-.previous-guess--close[data-tooltip]:not([data-tooltip=""])::after {
+.au-previous-guess--close[data-tooltip]:not([data-tooltip=""])::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: calc(90%);
-  left: 33%;
-  transform: translateX(-50%);
+  top: 90%;
+  right: 0%;
   background-color: #f4c90d;
   color: white;
   padding: 0.5rem;
@@ -1056,14 +1049,16 @@
   pointer-events: none;
   transition: opacity 0.15s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
-.previous-guess--close[data-tooltip]:not([data-tooltip=""]):hover::after {
+.au-previous-guess--close[data-tooltip]:not([data-tooltip=""]):hover::after {
   opacity: 1;
+  cursor: pointer;
 }
 
 /* Tooltip arrow */
-.previous-guess--close[data-tooltip]:not([data-tooltip=""])::before {
+.au-previous-guess--close[data-tooltip]:not([data-tooltip=""])::before {
   content: "";
   position: absolute;
   bottom: calc(100% + 0px);
@@ -1077,7 +1072,7 @@
   transition: opacity 0.15s ease;
 }
 
-.previous-guess--close[data-tooltip]:not([data-tooltip=""]):hover::before {
+.au-previous-guess--close[data-tooltip]:not([data-tooltip=""]):hover::before {
   opacity: 1;
 }
 
@@ -1740,4 +1735,54 @@
   font-weight: 600;
   color: #ffd60a;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Typewriter Component */
+.au-typewriter {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.au-typewriter-image {
+  width: 130%;
+  left: 5px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.au-typewriter-paper {
+  position: absolute;
+  height: 50%;
+  bottom: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.au-typewriter-paper .au-player-input {
+  width: 100%;
+}
+
+.au-typewriter-paper .au-player-input input {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.au-typewriter-paper .au-player-input input::placeholder {
+  font-family: "Special Elite", "Courier New", monospace;
+  color: #666;
+  opacity: 0.7;
 }

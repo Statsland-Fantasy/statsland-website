@@ -275,27 +275,49 @@ export function AthleteUnknown(): React.ReactElement {
             onRoundHistoryClick={() => setIsRoundHistoryModalOpen(true)}
           />
         </div>
+        <div className="au-paper-container">
+          <div className="au-player-guess-container">
+            <PlayerInput
+              playerName={state.playerName}
+              isCompleted={state.isCompleted}
+              onPlayerNameChange={(name) => updateState({ playerName: name })}
+            />
+            <PreviousGuesses
+              guesses={state.previousGuesses}
+              correctName={state.round.player.name}
+            />
+          </div>
+        </div>
         <div className="au-game-container au-bulletin-board">
           <div className="au-scoring-container">
-            <Button
-              onClick={handleNameSubmit}
-              size="lg"
-              variant={state.isCompleted ? "ghost" : "primary"}
-              disabled={state.isCompleted || state.playerName === ""}
-            >
-              Submit
-            </Button>
+            <div className="au-scoring-buttons-container">
+              <Button
+                onClick={handleNameSubmit}
+                size="lg"
+                variant={state.isCompleted ? "ghost" : "primary"}
+                disabled={state.isCompleted || state.playerName === ""}
+              >
+                Submit
+              </Button>
+              <Button
+                onClick={handleGiveUp}
+                size="lg"
+                variant={state.isCompleted ? "ghost" : "danger"}
+                disabled={state.isCompleted}
+              >
+                Give Up
+              </Button>
+            </div>
             <ScoreDisplay score={state.score} />
-            <Button
-              onClick={handleGiveUp}
-              size="lg"
-              variant={state.isCompleted ? "ghost" : "danger"}
-              disabled={state.isCompleted}
-            >
-              Give Up
-            </Button>
+            <div className="au-hints-container">
+              <HintTiles
+                flippedTiles={state.flippedTiles}
+                playerData={state.round.player}
+                onHintTileClick={handleHintTileClick}
+              />
+            </div>
           </div>
-          <div className="au-paper-container">
+          {/* <div className="au-paper-container">
             <div className="au-player-guess-container flex-column">
               <PlayerInput
                 playerName={state.playerName}
@@ -314,7 +336,7 @@ export function AthleteUnknown(): React.ReactElement {
                 onHintTileClick={handleHintTileClick}
               />
             </div>
-          </div>
+          </div> */}
           <div className="au-tile-grid-container">
             <TileGrid
               flippedTiles={state.flippedTiles}
@@ -325,6 +347,13 @@ export function AthleteUnknown(): React.ReactElement {
             />
           </div>
         </div>
+        {/* <Typewriter
+          playerName={state.playerName}
+          isCompleted={state.isCompleted}
+          onPlayerNameChange={(name) => updateState({ playerName: name })}
+          guesses={state.previousGuesses}
+          correctName={state.round.player.name}
+        /> */}
       </div>
       <div className="au-footer-container">
         <SportsReferenceAttribution activeSport={activeSport} />

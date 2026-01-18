@@ -30,7 +30,7 @@ export function HintTile({
       <div className="au-hint-tile-size au-hint-tile-wrapper">
         <div
           className="au-hint-tile-flipped"
-          style={{ fontSize: tileContentCount > 1 ? "1.5rem" : "1.75rem" }}
+          style={{ fontSize: tileContentCount > 1 ? "1.25rem" : "1.5rem" }}
         >
           {tileContent}
         </div>

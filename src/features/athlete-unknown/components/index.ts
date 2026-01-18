@@ -19,3 +19,4 @@ export { HintTiles } from "./HintTiles";
 export { RoundHistoryModal } from "./RoundHistoryModal";
 export { UserAndSettings } from "./UserAndSettings";
 export { PreviousGuesses } from "./PreviousGuesses";
+export { Typewriter } from "./Typewriter";
