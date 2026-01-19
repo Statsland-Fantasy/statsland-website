@@ -3,6 +3,7 @@ import { ALL_TILES, TILES } from "@/features/athlete-unknown/config";
 import type { TileType } from "@/features/athlete-unknown/config";
 import type { RoundStats, PlayerData } from "@/features/athlete-unknown/types";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
+import { Button } from "./Button";
 
 const WIN_OR_LOSE = "winOrLose";
 
@@ -47,156 +48,197 @@ export function RoundResultsModal({
 
   return (
     <div className="au-results-modal" onClick={onClose}>
-      <div
-        className="au-results-modal-content"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button className="au-close-results" onClick={onClose}>
-          ✕
-        </button>
-        <div>
-          <h2 className="au-results-title">
-            {isCompleted ? "Case Closed" : "Case Open"}
-            {/* {`Your score is ${score}!`} */}
-          </h2>
+      <div className="au-open-folder">
+        <button
+          className="au-folder-tab"
+          style={{ "--tab-index": 0 } as React.CSSProperties}
+          onClick={(e) => e.stopPropagation()}
+          aria-label="Folder tab"
+          disabled
+        />
+        <div
+          className="au-results-modal-content"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button className="au-close-results" onClick={onClose}>
+            ✕
+          </button>
+          <div className="au-results-title-container">
+            <h2 className="au-results-title">
+              {isCompleted ? "Case Closed" : "Case Open"}
+            </h2>
+          </div>
 
-          <div className="au-player-info-section">
-            {isCompleted ? (
-              <a
-                href={playerData.sportsReferenceURL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="au-player-name-link"
-              >
-                {playerData.name}
-              </a>
-            ) : (
-              <p className="au-player-name-link">?????</p>
-            )}
+          <div className="au-player-results-container">
+            <div className="au-player-container">
+              {isCompleted && playerData.photo ? (
+                <img
+                  src={playerData.photo}
+                  alt={playerData.name}
+                  className="au-player-photo"
+                />
+              ) : (
+                <img
+                  src={TestUnknownPerson}
+                  alt="unknown-player"
+                  className="au-player-photo"
+                />
+              )}
+            </div>
 
-            {isCompleted && playerData.photo ? (
-              <img
-                src={playerData.photo}
-                alt={playerData.name}
-                className="au-player-photo"
-              />
-            ) : (
-              <img
-                src={TestUnknownPerson}
-                alt="unknown-player"
-                className="au-player-photo"
-              />
-            )}
+            <div className="au-player-results-info-container">
+              <div className="au-report-field">
+                <span className="au-report-label">Name:</span>
+                <span className="au-report-value">
+                  {isCompleted ? (
+                    <a
+                      href={playerData.sportsReferenceURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="au-player-name-link"
+                    >
+                      {playerData.name}
+                    </a>
+                  ) : (
+                    <p className="au-player-name">?????</p>
+                  )}
+                </span>
+                <div className="au-report-underline"></div>
+              </div>
+              <div className="au-report-field">
+                <span className="au-report-label">Score:</span>
+                <span className="au-report-value">{score}</span>
+                <div className="au-report-underline"></div>
+              </div>
+              <div className="au-report-field">
+                <span className="au-report-label">P.I. :</span>
+                <span className="au-report-value">Test_UserName123</span>
+                <div className="au-report-underline"></div>
+              </div>
+            </div>
           </div>
 
           {isCompleted && (
             <>
-              <h2 className="au-results-title">{`Your Score: ${score}`}</h2>
-
-              <div className="au-results-grid">
-                {allTilesResults.map(
-                  (tileName: typeof WIN_OR_LOSE | TileType, index: number) => {
-                    let emoji;
-                    if (tileName === WIN_OR_LOSE) {
-                      emoji = score > 0 ? "✅" : "❌";
-                    } else {
-                      const tile = TILES[tileName];
-                      const isFlipped = flippedTiles.includes(tileName);
-                      emoji = isFlipped ? tile.flippedEmoji : "🟦";
+              <div className="au-results-modal-section-separator" />
+              <div className="au-results-grid-container">
+                <div className="au-results-grid">
+                  {allTilesResults.map(
+                    (
+                      tileName: typeof WIN_OR_LOSE | TileType,
+                      index: number
+                    ) => {
+                      let emoji;
+                      if (tileName === WIN_OR_LOSE) {
+                        emoji = score > 0 ? "✅" : "❌";
+                      } else {
+                        const tile = TILES[tileName];
+                        const isFlipped = flippedTiles.includes(tileName);
+                        emoji = isFlipped ? tile.flippedEmoji : "🟦";
+                      }
+                      return <div key={index}>{emoji}</div>;
                     }
-                    return <div key={index}>{emoji}</div>;
-                  }
+                  )}
+                </div>
+                <Button onClick={onShare} size="md" variant="primary">
+                  Share Results
+                </Button>
+                {copiedText && (
+                  <div className="au-copied-message">
+                    <p>Copied results to clipboard</p>
+                  </div>
                 )}
               </div>
+            </>
+          )}
 
-              <button className="au-share-button" onClick={onShare}>
-                Share
-              </button>
-
-              {copiedText && (
-                <div className="au-copied-message">
-                  <pre>{copiedText}</pre>
-                  <p>has been copied</p>
+          {roundStats && (
+            <>
+              <div className="au-results-modal-section-separator" />
+              <h3 className="au-results-round-stats-title">Case Stats</h3>
+              <div className="au-results-round-stats">
+                <div className="au-results-round-stats-row">
+                  <div className="au-report-field">
+                    <span className="au-report-label">Total Plays:</span>
+                    <span className="au-report-value">
+                      {roundStats.totalPlays}
+                    </span>
+                  </div>
+                  <div className="au-report-field">
+                    <span className="au-report-label">Solve Rate:</span>
+                    <span className="au-report-value">
+                      {`${roundStats.percentageCorrect}%`}
+                    </span>
+                  </div>
                 </div>
-              )}
+                <div className="au-results-round-stats-row">
+                  <div className="au-report-field">
+                    <span className="au-report-label">High Score:</span>
+                    <span className="au-report-value">
+                      {roundStats.highestScore}
+                    </span>
+                  </div>
+                  <div className="au-report-field">
+                    <span className="au-report-label">Avg Solve Score:</span>
+                    <span className="au-report-value">
+                      {roundStats.averageCorrectScore}
+                    </span>
+                  </div>
+                </div>
+                <div className="au-results-round-stats-row">
+                  <div className="au-report-field">
+                    <span className="au-report-label">Avg Clues Used:</span>
+                    <span className="au-report-value">
+                      {roundStats.averageNumberOfTileFlips}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="au-results-modal-section-separator" />
+
+              <h3 className="au-results-round-stats-title">Clue Tendencies</h3>
+              <div className="au-results-tile-tracker-stats">
+                <div className="au-results-tile-tracker-stamp-row">
+                  <div className="au-stamp-field">
+                    <span className="au-stamp-label">Most Common</span>
+                    <div className="au-stamp-box">
+                      <span className="au-stamp-overlay">
+                        {formatTileName(roundStats.mostCommonTileFlipped)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="au-stamp-field">
+                    <span className="au-stamp-label">Least Common</span>
+                    <div className="au-stamp-box">
+                      <span className="au-stamp-overlay">
+                        {formatTileName(roundStats.leastCommonTileFlipped)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="au-results-tile-tracker-stamp-row">
+                  <div className="au-stamp-field">
+                    <span className="au-stamp-label">Most Common First</span>
+                    <div className="au-stamp-box">
+                      <span className="au-stamp-overlay">
+                        {formatTileName(roundStats.mostCommonFirstTileFlipped)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="au-stamp-field">
+                    <span className="au-stamp-label">Most Common Last</span>
+                    <div className="au-stamp-box">
+                      <span className="au-stamp-overlay">
+                        {formatTileName(roundStats.mostCommonLastTileFlipped)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </>
           )}
         </div>
-
-        {roundStats && (
-          <div className="au-round-stats-section">
-            <h3>Today's Round Stats</h3>
-            <div className="au-round-stats-grid">
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">Games Played</div>
-                <div className="au-round-stat-value">
-                  {roundStats.totalPlays}
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">Win Rate</div>
-                <div className="au-round-stat-value">
-                  {roundStats.percentageCorrect}%
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">Average Score</div>
-                <div className="au-round-stat-value">
-                  {roundStats.averageCorrectScore}
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">High Score</div>
-                <div className="au-round-stat-value">
-                  {roundStats.highestScore}%
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">
-                  Average # of Tiles Flipped
-                </div>
-                <div className="au-round-stat-value">
-                  {roundStats.averageNumberOfTileFlips}
-                </div>
-              </div>
-            </div>
-            <h4>Tile Statistics</h4>
-            <div className="au-round-stats-grid">
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">
-                  Most Common First Tile Flipped
-                </div>
-                <div className="au-round-stat-value">
-                  {formatTileName(roundStats.mostCommonFirstTileFlipped)}
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">
-                  Most Common Last Tile Flipped
-                </div>
-                <div className="au-round-stat-value">
-                  {formatTileName(roundStats.mostCommonLastTileFlipped)}
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">
-                  Most Common Tile Flipped
-                </div>
-                <div className="au-round-stat-value">
-                  {formatTileName(roundStats.mostCommonTileFlipped)}
-                </div>
-              </div>
-              <div className="au-round-stat-item">
-                <div className="au-round-stat-label">
-                  Least Common Tile Flipped
-                </div>
-                <div className="au-round-stat-value">
-                  {formatTileName(roundStats.leastCommonTileFlipped)}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

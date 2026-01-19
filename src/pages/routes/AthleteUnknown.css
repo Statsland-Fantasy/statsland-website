@@ -701,7 +701,7 @@
     0 3px 6px rgba(0, 0, 0, 0.4),
     inset -2px -2px 4px rgba(0, 0, 0, 0.3),
     inset 2px 2px 4px rgba(255, 255, 255, 0.3);
-  z-index: 10;
+  z-index: 5;
   opacity: 1;
   transition: opacity 0.25s ease-out 0.25s;
 }
@@ -1022,6 +1022,15 @@
   opacity: 0.9;
 }
 
+/* Correct guess */
+.au-previous-guess--correct {
+  text-decoration: none;
+  color: #22c55e;
+  font-weight: bold;
+  opacity: 1;
+  text-transform: uppercase;
+}
+
 /* Close guess - spelling almost correct */
 .au-previous-guess--close {
   text-decoration: none;
@@ -1044,7 +1053,7 @@
   font-size: 1rem;
   font-family: Arial, sans-serif;
   white-space: nowrap;
-  z-index: 100;
+  z-index: 10;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
@@ -1066,7 +1075,7 @@
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: #b8860b;
-  z-index: 100;
+  z-index: 10;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
@@ -1115,25 +1124,174 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 200;
+}
+
+/* Open Folder Container */
+.au-open-folder {
+  position: relative;
+  padding: 0.5rem;
+  background: linear-gradient(
+    180deg,
+    #c9a86c 0%,
+    #d4b07a 10%,
+    #d9b882 50%,
+    #c9a86c 100%
+  );
+  border-radius: 4px 4px 6px 6px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+  filter: drop-shadow(8px 12px 20px rgba(0, 0, 0, 0.5));
+  width: 93%;
+}
+
+/* Folder tab */
+.au-folder-tab {
+  position: absolute;
+  top: calc((var(--tab-index, 0) * 10rem));
+  right: -2rem;
+  width: 2.5rem;
+  height: 9rem;
+  background: linear-gradient(90deg, #c9a86c 0%, #d9b882 100%);
+  border-radius: 0 1rem 1rem 0;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    inset -2px 0 4px rgba(255, 255, 255, 0.3),
+    2px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 2000;
+}
+
+.au-folder-tab:hover {
+  background: linear-gradient(90deg, #d4b07a 0%, #e5c992 100%);
+  box-shadow:
+    inset -2px 0 4px rgba(255, 255, 255, 0.4),
+    3px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.au-folder-tab:active {
+  background: linear-gradient(90deg, #b8975a 0%, #c9a86c 100%);
+}
+
+.au-folder-tab-text {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  font-style: normal;
+  rotate: calc(90deg);
+  opacity: 0.7;
+}
+
+.au-folder-tab--selected,
+.au-folder-tab--selected:hover,
+.au-folder-tab--selected:active {
+  background: linear-gradient(to bottom, #d4d0c8 0%, #c0bbb0 100%);
+  border-right: 0.5rem solid #c9a86c;
+  border-top: 0.5rem solid #c9a86c;
+  border-bottom: 0.5rem solid #c9a86c;
+}
+
+.au-folder-tab--selected .au-folder-tab-text {
+  opacity: 1;
+}
+
+/* Folder back flap (held open) */
+.au-open-folder::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 15%;
+  height: 100%;
+  background: linear-gradient(180deg, #9a7d4a 0%, #ab8a55 50%, #9a7d4a 100%);
+  border-radius: 4px;
+  transform: rotate(-0.5deg);
+  transform-origin: bottom left;
+  z-index: -1;
+  box-shadow:
+    -2px -2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .au-results-modal-content {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, transparent 50%),
+    linear-gradient(to bottom, #d4d0c8 0%, #c0bbb0 100%);
+  padding: 1rem;
+  max-width: 100%;
+  max-height: 100%;
   position: relative;
-  max-width: 400px;
-  width: 90%;
-  max-height: 85vh;
-  overflow-y: auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Paper clip outer */
+.au-results-modal-content::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 1.5rem;
+  width: 0.875rem;
+  height: 3.5rem;
+  border: 2px solid transparent;
+  border-radius: 0 0 1rem 1rem;
+  border-top: none;
+  background: linear-gradient(
+      90deg,
+      #a0a0a0,
+      #d8d8d8 40%,
+      #f0f0f0 50%,
+      #d8d8d8 60%,
+      #a0a0a0
+    )
+    border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 10;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+  rotate: calc(-5deg);
+}
+
+/* Paper clip inner */
+.au-results-modal-content::after {
+  content: "";
+  position: absolute;
+  top: -0.95rem;
+  left: 1.6rem;
+  width: 0.625rem;
+  height: 2rem;
+  border: 2px solid transparent;
+  border-radius: 1rem 1rem 0 0;
+  border-bottom: none;
+  background: linear-gradient(
+      90deg,
+      #a0a0a0,
+      #d8d8d8 40%,
+      #f0f0f0 50%,
+      #d8d8d8 60%,
+      #a0a0a0
+    )
+    border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 11;
+  rotate: calc(-5deg);
 }
 
 .au-close-results {
@@ -1152,12 +1310,353 @@
   color: #000;
 }
 
+.au-results-title-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .au-results-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #0077b6;
-  margin: 0 0 15px 0;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   text-align: center;
+  color: black;
+  font-size: 3rem;
+  padding: 0;
+  margin: 0;
+}
+
+.au-player-results-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.au-results-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.au-player-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.au-player-name-link {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: underline;
+}
+
+.au-player-name {
+  font-family: "Bodoni Moda", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 1rem;
+}
+
+.au-player-photo {
+  max-width: 125px;
+  max-height: 125px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  align-self: center;
+}
+
+.au-player-results-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  height: 100%;
+}
+
+.au-results-modal-section-separator {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #1a1a1a 5%,
+    #1a1a1a 95%,
+    transparent 100%
+  );
+  margin: 1rem 0;
+  opacity: 0.8;
+}
+
+/* Detective Noir Report Form Fields */
+.au-report-field {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.au-report-label {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.au-report-value {
+  font-family: "Caveat", cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2a2a5a;
+  position: relative;
+  padding: 0 0.25rem;
+}
+
+.au-report-value::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    #1a1a1a 0px,
+    #1a1a1a 4px,
+    transparent 4px,
+    transparent 6px
+  );
+  opacity: 0.6;
+  width: calc(100% + 0.5rem);
+}
+
+.au-report-underline {
+  display: none;
+}
+
+.au-results-grid-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.au-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 2rem);
+  grid-gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.au-results-tile {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.au-share-button:hover {
+  background-color: #0096c7;
+}
+
+.au-copied-message {
+  position: absolute;
+  z-index: 210;
+  padding: 0.5rem 1rem;
+  right: 2%;
+  bottom: 57%;
+  background: #fffef7;
+  border: 4px solid #2a5a2a;
+  border-radius: 2px;
+  text-align: center;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.85rem;
+  color: #2a5a2a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow:
+    2px 2px 0 rgba(0, 0, 0, 0.2),
+    inset 0 0 10px rgba(42, 90, 42, 0.1);
+  transform: rotate(-1deg);
+}
+
+.au-copied-message p {
+  margin: 0;
+  font-weight: bold;
+  color: black;
+}
+
+/* Round Stats in Results Modal */
+.au-results-round-stats-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  color: black;
+  font-size: 1.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.au-results-round-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.au-results-round-stats-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+/* Tile Tracker Stats */
+.au-results-tile-tracker-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Tile Tracker Table */
+.au-tile-tracker-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.85rem;
+  background: #fffef7;
+  border: 2px solid #1a1a1a;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.au-tile-tracker-table thead {
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+.au-tile-tracker-table th {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 500;
+  color: #fffef7;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.au-tile-tracker-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+}
+
+.au-tile-tracker-table tbody tr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.au-tile-tracker-table tbody tr:hover {
+  background: rgba(201, 168, 108, 0.2);
+}
+
+.au-tile-tracker-name {
+  font-weight: 600;
+  color: #2a2a5a;
+}
+
+.au-results-tile-tracker-stamp-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.au-stamp-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.au-stamp-label {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.au-stamp-box {
+  position: relative;
+  border: 0px solid #1a1a1a80;
+  margin-top: 0.25rem;
+  width: 8rem;
+  height: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.au-stamp-overlay {
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #8b0000;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.5rem;
+  border: 4px solid #8b0000;
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(-5deg);
+  position: absolute;
+  top: -5%;
+  left: 50%;
+}
+
+.au-stamp-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(139, 0, 0, 0.05) 2px,
+    rgba(139, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+.au-round-stats-section {
+  border-top: 2px solid #e0e0e0;
 }
 
 .au-average-score {
@@ -1167,98 +1666,11 @@
   text-align: center;
 }
 
-.au-results-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 60px);
-  grid-gap: 8px;
-  justify-content: center;
-  margin: 0 auto 25px auto;
-}
-
-.au-results-tile {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.au-results-tile.flipped {
-  background-color: #ffd60a;
-  color: #333;
-}
-
-.au-results-tile.unflipped {
-  background-color: #0077b6;
-  color: white;
-}
-
-.au-share-button {
-  display: block;
-  width: 100%;
-  padding: 14px 20px;
-  background-color: #0077b6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.au-share-button:hover {
-  background-color: #0096c7;
-}
-
-.au-copied-message {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.au-copied-message pre {
-  margin: 0 0 10px 0;
-  padding: 10px;
-  background-color: white;
-  border-radius: 6px;
-  font-family: monospace;
-  font-size: 0.95rem;
-  white-space: pre-wrap;
-  color: #333;
-}
-
-.au-copied-message p {
-  margin: 0;
-  font-weight: bold;
-  color: #155724;
-}
-
-/* Round Stats in Results Modal */
-.au-round-stats-section {
-  margin-top: 30px;
-  padding-top: 30px;
-  border-top: 2px solid #e0e0e0;
-}
-
 .au-round-stats-section h3 {
   margin: 0 0 20px 0;
   font-size: 1.3rem;
   color: #0077b6;
   text-align: center;
-}
-
-.au-player-photo {
-  max-width: 200px;
-  max-height: 200px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .au-round-stats-grid {
@@ -1462,7 +1874,7 @@
   white-space: normal;
   width: max-content;
   max-width: 300px;
-  z-index: 1000;
+  z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 180, 216, 0.5);
   font-weight: 400;
@@ -1785,4 +2197,322 @@
   font-family: "Special Elite", "Courier New", monospace;
   color: #666;
   opacity: 0.7;
+}
+
+/* ========================================
+   File Cabinet Drawer - Round History
+   ======================================== */
+
+/* Container with perspective */
+.au-file-cabinet-modal {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 90vh;
+  perspective: 1000px;
+  overflow: visible;
+}
+
+/* The drawer - pulled out toward viewer */
+.au-file-cabinet-drawer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    #5a5a5a 0%,
+    #4a4a4a 2%,
+    #3d3d3d 98%,
+    #2a2a2a 100%
+  );
+  border-left: 6px solid #2a2a2a;
+  border-right: 6px solid #2a2a2a;
+  border-bottom: 8px solid #1a1a1a;
+  transform: rotateX(15deg);
+  transform-origin: top center;
+  box-shadow:
+    inset 0 0 30px rgba(0, 0, 0, 0.4),
+    inset 2px 0 0 rgba(255, 255, 255, 0.05),
+    inset -2px 0 0 rgba(255, 255, 255, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+/* Drawer front face - the part facing you */
+.au-drawer-front {
+  position: absolute;
+  bottom: 8%;
+  width: 100%;
+  height: 18%;
+  background: linear-gradient(
+    180deg,
+    #8a8a8a 0%,
+    #7a7a7a 10%,
+    #6a6a6a 50%,
+    #5a5a5a 90%,
+    #4a4a4a 100%
+  );
+  border-top: 2px solid #999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  z-index: 9999;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Drawer nameplate */
+.au-drawer-nameplate {
+  background: linear-gradient(180deg, #c9a227 0%, #a67c00 100%);
+  border: 2px solid #8b6914;
+  border-radius: 3px;
+  padding: 0.3rem 1.25rem;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* Drawer handle */
+.au-drawer-handle {
+  width: 150px;
+  height: 16px;
+  background: linear-gradient(180deg, #888 0%, #666 30%, #444 70%, #333 100%);
+  border: 2px solid #222;
+  border-radius: 4px;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Interior of drawer - where folders will sit */
+.au-drawer-interior {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  /* background: linear-gradient(180deg, #1a1a1a 0%, #252525 50%, #1f1f1f 100%); */
+  border: 4px solid #151515;
+  border-bottom: none;
+  box-shadow:
+    inset 0 10px 30px rgba(0, 0, 0, 0.6),
+    inset 4px 0 10px rgba(0, 0, 0, 0.3),
+    inset -4px 0 10px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 75%;
+  width: 100%;
+}
+
+/* Metal rails on sides of drawer */
+.au-drawer-interior::before,
+.au-drawer-interior::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.au-drawer-interior::before {
+  left: 0;
+}
+
+.au-drawer-interior::after {
+  right: 0;
+}
+
+/* Close button for file cabinet */
+.au-file-cabinet-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid #555;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ccc;
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.au-file-cabinet-close:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: #00b4d8;
+  color: #00b4d8;
+}
+
+/* Loading and error states */
+.au-drawer-message {
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+  font-family: "Special Elite", "Courier New", monospace;
+  color: #888;
+  font-size: 1rem;
+}
+
+.au-drawer-error {
+  color: #ff6b6b;
+}
+
+/* Manila folders in drawer */
+.au-folders-container {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0rem;
+  padding: 0 0.5rem;
+  align-content: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.au-file-cabinet-folder {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  margin-top: -0.9rem;
+}
+
+.au-folder:hover {
+  transform: translateY(-10px);
+  z-index: 10;
+}
+
+/* Folder body - manila look */
+.au-file-cabinet-folder-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 85%;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    #e8d9a0 0%,
+    #dcc880 30%,
+    #d4bc70 70%,
+    #c8a850 100%
+  );
+  border: 1px solid #a08040;
+  border-radius: 2px 2px 4px 4px;
+  box-shadow:
+    2px 0 3px rgba(0, 0, 0, 0.15),
+    -1px 0 2px rgba(0, 0, 0, 0.1),
+    0 3px 6px rgba(0, 0, 0, 0.2);
+  z-index: 30;
+}
+
+/* Folder tab - sticks up from top */
+.au-file-cabinet-folder-tab {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #f5ecc8 0%, #e8d9a0 100%);
+  border: 1px solid #a08040;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  padding: 0.25rem 0.5rem;
+  width: 5.5rem;
+  height: 2rem;
+  text-align: center;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #4a3a20;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.au-folder-date {
+  margin-bottom: 3px;
+}
+
+.au-folder-score {
+  position: absolute;
+  font-family: "Special Elite", "Courier New", monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #8b0000;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.35rem;
+  border: 2px solid #8b0000;
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(-1deg);
+  top: 10%;
+  background: rgba(255, 255, 240, 0.9);
+  white-space: nowrap;
+}
+
+.au-folder-score::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(139, 0, 0, 0.05) 2px,
+    rgba(139, 0, 0, 0.05) 4px
+  );
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+/* Solved variant - green stamp */
+.au-folder-score--solved {
+  color: #2a5a2a;
+  border-color: #2a5a2a;
+}
+
+.au-folder-score--solved::before {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(42, 90, 42, 0.05) 2px,
+    rgba(42, 90, 42, 0.05) 4px
+  );
+}
+
+/* Hover effects */
+.au-folder:hover .au-folder-body {
+  box-shadow:
+    2px 0 3px rgba(0, 0, 0, 0.15),
+    -1px 0 2px rgba(0, 0, 0, 0.1),
+    0 6px 12px rgba(0, 180, 216, 0.25);
+}
+
+.au-folder:hover .au-folder-tab {
+  background: linear-gradient(180deg, #fff8d8 0%, #f0e4b0 100%);
 }

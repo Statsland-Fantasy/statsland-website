@@ -254,9 +254,7 @@ export function AthleteUnknown(): React.ReactElement {
           className="au-placeholder-logo"
         />
         <div>
-          <UserAndSettings
-            onStatsClick={() => setIsUserStatsModalOpen(false)}
-          />
+          <UserAndSettings onStatsClick={() => setIsUserStatsModalOpen(true)} />
         </div>
       </div>
       <div className="au-body-container">
@@ -317,26 +315,6 @@ export function AthleteUnknown(): React.ReactElement {
               />
             </div>
           </div>
-          {/* <div className="au-paper-container">
-            <div className="au-player-guess-container flex-column">
-              <PlayerInput
-                playerName={state.playerName}
-                isCompleted={state.isCompleted}
-                onPlayerNameChange={(name) => updateState({ playerName: name })}
-              />
-              <PreviousGuesses
-                guesses={state.previousGuesses}
-                correctName={state.round.player.name}
-              />
-            </div>
-            <div className="au-hints-container">
-              <HintTiles
-                flippedTiles={state.flippedTiles}
-                playerData={state.round.player}
-                onHintTileClick={handleHintTileClick}
-              />
-            </div>
-          </div> */}
           <div className="au-tile-grid-container">
             <TileGrid
               flippedTiles={state.flippedTiles}

@@ -28,12 +28,13 @@ export function PreviousGuesses({
           normalize(guess),
           normalize(correctName)
         );
+        const isCorrect = distance === 0;
         const isClose = distance <= GUESS_ACCURACY.VERY_CLOSE_DISTANCE;
 
         return (
           <div
             key={index}
-            className={`au-previous-guess ${isClose ? "au-previous-guess--close" : ""}`}
+            className={`au-previous-guess ${isCorrect ? "au-previous-guess--correct" : isClose ? "au-previous-guess--close" : ""}`}
             data-tooltip={
               isClose
                 ? `Spelling is off by ${distance} letter${distance !== 1 ? "s" : ""}!`
