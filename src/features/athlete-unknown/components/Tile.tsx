@@ -76,12 +76,10 @@ export function Tile({
         }`}
       >
         <div className="tile-front evidence-tag">
-          <div className="evidence-tag-hole" />
-          <div className="evidence-tag-string" />
-          <div className="evidence-tag-content">
-            {TILES[tileName].label}
-          </div>
+          <div className="reinforcement-ring"></div>
+          <p className="evidence-tag-text">{TILES[tileName].label}</p>
         </div>
+
         <div
           className={`tile-back ${photoRevealed ? "photo-segment" : ""}`}
           style={photoRevealed ? photoSegmentStyle : {}}

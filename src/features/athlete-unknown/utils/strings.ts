@@ -39,10 +39,16 @@ export const calculateLevenshteinDistance = (a: string, b: string): number => {
 };
 
 /**
- * Normalize string for comparison (lowercase, remove whitespace)
+ * Normalize string for comparison
+ * lowercase, remove whitespace, apostrophes, hyphens, and periods
  */
 export const normalize = (str = ""): string =>
-  str.toLowerCase().replace(/\s/g, "");
+  str
+    .toLowerCase()
+    .replace(/\s/g, "")
+    .replaceAll("'", "")
+    .replaceAll("-", "")
+    .replaceAll(".", "");
 
 /**
  * Type guard to check if a value is a valid SportType

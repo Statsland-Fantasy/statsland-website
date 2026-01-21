@@ -25,11 +25,11 @@ export function RoundInfo({
   return (
     <div className="au-round-info-container">
       <div
-        className="au-round-info-container-top flex-row"
+        className="au-round-info-container-top"
         style={{ width: theme ? "100%" : "75%" }}
       >
         <span className="au-round-number">
-          <p>{`Case #${roundNumber}${getSportEmoji(sport)}`}</p>
+          <p>{`Case #${getSportEmoji(sport)}${roundNumber}`}</p>
           <p>{theme && ` - ${theme}`}</p>
         </span>
         <span className="au-separator">•</span>
@@ -37,7 +37,7 @@ export function RoundInfo({
           <p>{formatDate(playDate)}</p>
         </span>
       </div>
-      <div className="au-round-info-container-bottom flex-row width-100">
+      <div className="au-round-info-container-bottom">
         <button className="au-round-stats-link" onClick={onRoundResultsClick}>
           <p>Case Stats</p>
         </button>

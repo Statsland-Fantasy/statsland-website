@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router";
 import "./AthleteUnknown.css";
@@ -368,11 +374,13 @@ export function AthleteUnknown(): React.ReactElement {
             : state.flippedTiles
         }
         copiedText={state.copiedText}
-        roundStats={state.round.stats}
-        playerData={state.round.player}
+        round={state.round}
         onClose={() => setIsRoundResultsModalOpen(false)}
         onShare={handleShare}
         isCompleted={state.isCompleted}
+        sport={activeSport}
+        roundNumber={roundNumber}
+        playDate={playDate}
       />
 
       <RulesModal

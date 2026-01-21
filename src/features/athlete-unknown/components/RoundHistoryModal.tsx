@@ -35,7 +35,7 @@ function RoundHistoryModal({
   };
 
   return (
-    <div className="au-rules-modal-overlay" onClick={onClose}>
+    <div className="au-round-history-modal" onClick={onClose}>
       <div
         className="au-file-cabinet-modal"
         onClick={(e) => e.stopPropagation()}

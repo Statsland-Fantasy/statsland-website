@@ -2,7 +2,6 @@ import React from "react";
 import type { TileType } from "@/features/athlete-unknown/config";
 import { TOP_TILES } from "@/features/athlete-unknown/config";
 import { PlayerData } from "@/features/athlete-unknown/types";
-import { Tile } from "./Tile";
 import { HintTile } from "./HintTile";
 
 interface HintTilesProps {

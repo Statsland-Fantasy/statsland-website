@@ -31,6 +31,15 @@ export function UserAndSettings({
     }
   }, [audioRef, volume]);
 
+  // Play the next track when currentTrackIndex changes (after user interaction)
+  useEffect(() => {
+    console.log("HANDLE TRACK END!!!!!!!!!!!!!!! - Use effect");
+    if (hasInteracted && audioRef.current) {
+      console.log("HANDLE TRACK END!!!!!!!!!!!!!!! - Use effect - PLAY NOW");
+      audioRef.current.play().catch(() => {});
+    }
+  }, [currentTrackIndex, audioRef, hasInteracted]);
+
   const handleVolumeClick = () => {
     if (!hasInteracted && audioRef.current) {
       audioRef.current.play().catch(() => {});
@@ -40,8 +49,10 @@ export function UserAndSettings({
   };
 
   const handleTrackEnd = () => {
+    console.log("HANDLE TRACK END!!!!!!!!!!!!!!!");
     const nextIndex =
       currentTrackIndex < PLAYLIST.length - 1 ? currentTrackIndex + 1 : 0;
+    console.log("WHAT TRACK IS NEXT", nextIndex);
     setCurrentTrackIndex(nextIndex);
   };
 
@@ -60,7 +71,7 @@ export function UserAndSettings({
           ref={audioRef}
           src={currentTrack?.url}
           onEnded={handleTrackEnd}
-          loop
+          loop={false}
         />
         <button className="au-volume-button" onClick={handleVolumeClick}>
           <FontAwesomeIcon icon={icon} className="au-settings-icon" />

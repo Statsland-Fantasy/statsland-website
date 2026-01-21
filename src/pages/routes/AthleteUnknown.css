@@ -3,8 +3,10 @@
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
-  background-color: #452d85;
+  background-color: #282729;
+  /* background-color: #452d85; */
   min-height: 100vh;
+  width: 100vw;
 }
 
 .au-header-container {
@@ -13,6 +15,7 @@
   justify-content: space-between;
   height: 3rem;
   width: 100%;
+  background-color: white;
 }
 
 .au-information-container {
@@ -132,16 +135,16 @@
 }
 
 .au-round-info-container-top p {
-  font-family: "Bodoni Moda", serif;
-  font-optical-sizing: auto;
-  font-weight: 800;
-  font-size: 1.15rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
   font-style: italic;
+  font-size: 1.75rem;
   color: white;
 }
 
 .au-round-info-container-bottom {
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .au-separator {
@@ -183,17 +186,18 @@
 .au-score::before {
   content: "";
   position: absolute;
-  top: -0.4rem;
+  top: -0.2rem;
   left: 50%;
   transform: translateX(-50%);
   width: 0.75rem;
   height: 0.75rem;
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle at 30% 30%,
     #ff6b6b 0%,
     #cc4444 50%,
     #992222 100%
-  );
+  ); */
+  background-color: red;
   border-radius: 50%;
   box-shadow:
     0 2px 3px rgba(0, 0, 0, 0.4),
@@ -264,7 +268,7 @@
 
 /* Torn paper edge effect */
 .au-paper-container::before {
-  content: "";
+  /* content: "";
   position: absolute;
   bottom: -0.3rem;
   width: 100%;
@@ -277,7 +281,7 @@
   );
   height: 0.4rem;
   background-size: 0.4rem 0.4rem;
-  background-position: 0 0;
+  background-position: 0 0; */
 }
 
 /* Red margin line */
@@ -353,6 +357,200 @@
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  padding: 0.5rem;
+
+  /* Heavily aged paper background */
+  background:
+    /* Deep crinkle/fold lines */
+    linear-gradient(
+      158deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(101, 78, 55, 0.15) 35.5%,
+      rgba(101, 78, 55, 0.08) 37%,
+      transparent 38%,
+      transparent 100%
+    ),
+    linear-gradient(
+      -12deg,
+      transparent 0%,
+      transparent 55%,
+      rgba(101, 78, 55, 0.12) 55.5%,
+      rgba(101, 78, 55, 0.06) 57%,
+      transparent 58%,
+      transparent 100%
+    ),
+    linear-gradient(
+      95deg,
+      transparent 0%,
+      transparent 70%,
+      rgba(101, 78, 55, 0.1) 70.5%,
+      rgba(101, 78, 55, 0.05) 72%,
+      transparent 73%,
+      transparent 100%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 25%,
+      rgba(139, 119, 101, 0.08) 25.5%,
+      transparent 27%,
+      transparent 100%
+    ),
+    /* Water damage / heavy staining */
+    radial-gradient(
+        ellipse at 85% 20%,
+        rgba(139, 100, 60, 0.12) 0%,
+        rgba(139, 100, 60, 0.06) 30%,
+        transparent 60%
+      ),
+    radial-gradient(
+      ellipse at 10% 80%,
+      rgba(120, 90, 50, 0.1) 0%,
+      rgba(120, 90, 50, 0.05) 40%,
+      transparent 70%
+    ),
+    /* Base heavily aged paper color */
+    linear-gradient(
+        180deg,
+        #ebe4cc 0%,
+        #e2d8b8 20%,
+        #d9cca8 50%,
+        #d0c098 80%,
+        #c8b890 100%
+      );
+
+  /* Heavily torn/rough edges */
+  /* clip-path: polygon(
+    0% 4%,
+    8% 20%,
+    26% 5%,
+    46% 10%,
+    70% 16%,
+    74% 5%,
+    78% 0%,
+    82% 3%,
+    86% 0%,
+    90% 4%,
+    94% 1%,
+    97% 3%,
+    100% 0%,
+    100% 96%,
+    97% 100%,
+    94% 96%,
+    90% 100%,
+    86% 97%,
+    82% 100%,
+    78% 95%,
+    74% 100%,
+    70% 97%,
+    66% 100%,
+    62% 96%,
+    58% 100%,
+    54% 97%,
+    50% 100%,
+    46% 95%,
+    42% 100%,
+    38% 97%,
+    34% 100%,
+    30% 96%,
+    26% 100%,
+    22% 97%,
+    18% 100%,
+    14% 95%,
+    10% 100%,
+    6% 97%,
+    3% 100%,
+    0% 96%
+  ); */
+  clip-path: polygon(
+    /* Top edge - left to right */ 0% 6%,
+    3% 0%,
+    7% 5%,
+    11% 2%,
+    15% 6%,
+    20% 0%,
+    24% 4%,
+    28% 1%,
+    33% 6%,
+    38% 0%,
+    43% 4%,
+    48% 0%,
+    53% 4%,
+    58% 2%,
+    63% 1%,
+    68% 0%,
+    73% 5%,
+    78% 1%,
+    83% 6%,
+    88% 0%,
+    93% 4%,
+    97% 0%,
+    100% 2%,
+    /* Right edge - top to bottom */ 93% 10%,
+    100% 15%,
+    98% 20%,
+    100% 26%,
+    95% 32%,
+    100% 38%,
+    96% 44%,
+    100% 50%,
+    98% 56%,
+    100% 62%,
+    97% 68%,
+    100% 74%,
+    99% 80%,
+    100% 86%,
+    96% 92%,
+    100% 95%,
+    /* Bottom edge - right to left */ 97% 100%,
+    93% 95%,
+    88% 100%,
+    83% 97%,
+    78% 100%,
+    73% 96%,
+    68% 100%,
+    63% 99%,
+    58% 100%,
+    53% 96%,
+    48% 99%,
+    43% 94%,
+    38% 100%,
+    33% 97%,
+    28% 100%,
+    23% 95%,
+    18% 99%,
+    13% 94%,
+    8% 99%,
+    3% 95%,
+    0% 100%,
+    /* Left edge - bottom to top */ 7% 94%,
+    0% 88%,
+    6% 82%,
+    0% 76%,
+    5% 70%,
+    0% 64%,
+    7% 58%,
+    0% 52%,
+    6% 46%,
+    0% 40%,
+    5% 34%,
+    0% 28%,
+    7% 22%,
+    0% 16%,
+    6% 10%,
+    0% 6%
+  );
+
+  /* Heavy paper shadow and texture */
+  box-shadow:
+    inset 0 0 30px rgba(101, 78, 55, 0.25),
+    inset 0 0 60px rgba(101, 78, 55, 0.15),
+    inset 0 0 100px rgba(101, 78, 55, 0.1),
+    inset 3px 3px 15px rgba(0, 0, 0, 0.1),
+    inset -3px -3px 15px rgba(0, 0, 0, 0.05),
+    3px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* HintTile */
@@ -373,10 +571,10 @@
 .au-hint-tile-label {
   font-family: "Caveat", cursive;
   font-size: 1.5rem;
-  font-weight: 800;
-  text-decoration: underline;
+  font-weight: 600;
   color: #1a1a1a;
   text-align: center;
+  text-decoration: underline;
   min-width: 5rem;
 }
 
@@ -391,11 +589,16 @@
 .au-hint-tile-flipped {
   width: 100%;
   height: 100%;
-  font-family: "Bebas Neue", sans-serif;
+  /* font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 1.5rem;
+  color: #1a1a1a; */
+  font-family: "Caveat", cursive;
+  font-size: 1.5rem;
+  font-weight: 800;
   color: #1a1a1a;
+  text-align: center;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -413,6 +616,11 @@
   font-style: normal;
   font-size: 1.25rem;
   color: #1a1a1a;
+  /* font-family: "Caveat", cursive;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a1a; */
+  text-align: center;
   background: linear-gradient(135deg, #ffe066 0%, #ffd633 100%);
   box-shadow:
     1px 1px 2px rgba(0, 0, 0, 0.15),
@@ -565,6 +773,9 @@
   cursor: pointer;
   border-radius: 2px;
   transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Allow overflow for pinned effect */
@@ -602,8 +813,8 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   transition:
-    opacity 0.15s ease-out,
-    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity 0.15s ease-out 0.2s,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
 }
 
 /* Flip animation for photo reveal */
@@ -628,25 +839,7 @@
 
 .tile-front {
   /* Empty spot shadow - where post-it will go */
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 2;
   transition: all 0.3s ease-out;
-  font-family: "Special Elite", "Courier New", monospace;
-  font-size: 1rem;
-  font-weight: 400;
-  color: #fffef7;
-  border-radius: 2px;
-  /* Inset shadow to look like an indentation/empty spot */
-  box-shadow:
-    inset 2px 2px 8px rgba(0, 0, 0, 0.4),
-    inset -1px -1px 4px rgba(0, 0, 0, 0.2),
-    inset 0 0 15px rgba(0, 0, 0, 0.15);
-  border: 2px solid #ffd633;
-  /* Text backing for readability */
-  text-shadow:
-    1px 1px 2px rgba(0, 0, 0, 0.8),
-    -1px -1px 2px rgba(0, 0, 0, 0.5),
-    0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 /* Hover effect for unflipped tiles */
@@ -689,7 +882,7 @@
   transition: opacity 0.15s ease-out;
 }
 
-/* Pushpin for flipped tiles */
+/* Pushpin for flipped tiles - appears after post-it slides in */
 .tile-inner.flipped:not(.photo-reveal) .tile-back::before {
   position: absolute;
   top: -8px;
@@ -697,12 +890,13 @@
   transform: translateX(-50%);
   width: 16px;
   height: 16px;
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle at 30% 30%,
     #ff6b6b 0%,
     #cc4444 50%,
     #992222 100%
-  );
+  ); */
+  background-color: red;
   border-radius: 50%;
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.4),
@@ -710,7 +904,7 @@
     inset 2px 2px 4px rgba(255, 255, 255, 0.3);
   z-index: 5;
   opacity: 1;
-  transition: opacity 0.25s ease-out 0.25s;
+  transition: opacity 0.15s ease-out 0.45s;
 }
 
 /* Pin needle/shaft */
@@ -724,7 +918,7 @@
   background: linear-gradient(180deg, #666 0%, #444 100%);
   border-radius: 0 0 1px 1px;
   opacity: 1;
-  transition: opacity 0.25s ease-out 0.25s;
+  transition: opacity 0.15s ease-out 0.45s;
   z-index: 9;
 }
 
@@ -1199,6 +1393,7 @@
   font-style: normal;
   rotate: calc(90deg);
   opacity: 0.7;
+  white-space: nowrap;
 }
 
 .au-folder-tab--selected,
@@ -2209,15 +2404,29 @@
 /* ========================================
    File Cabinet Drawer - Round History
    ======================================== */
+.au-round-history-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 200;
+}
 
 /* Container with perspective */
 .au-file-cabinet-modal {
   position: relative;
-  width: 100%;
+  width: 95vw;
   max-width: 100%;
-  height: 90vh;
+  height: 85vh;
   perspective: 1000px;
   overflow: visible;
+  background-color: green;
 }
 
 /* The drawer - pulled out toward viewer */
@@ -2242,14 +2451,17 @@
     inset 2px 0 0 rgba(255, 255, 255, 0.05),
     inset -2px 0 0 rgba(255, 255, 255, 0.05),
     0 20px 60px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Drawer front face - the part facing you */
 .au-drawer-front {
   position: absolute;
-  bottom: 8%;
+  bottom: 0%;
   width: 100%;
-  height: 18%;
+  height: 25%;
   background: linear-gradient(
     180deg,
     #8a8a8a 0%,
@@ -2524,62 +2736,195 @@
   background: linear-gradient(180deg, #fff8d8 0%, #f0e4b0 100%);
 }
 
-/* Evidence Tag Styling */
-.tile-front.evidence-tag {
-  background: linear-gradient(145deg, #d4c4a8 0%, #c9b896 50%, #bfae84 100%);
-  border: 1px solid #8b7355;
+/* Evidence Tag Styling - rectangular with notched corners */
+.evidence-tag {
+  position: static;
+  width: 75%;
+  background: linear-gradient(135deg, #f4e4a6 0%, #f0dc8e 100%);
   box-shadow:
-    2px 2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 0 20px rgba(255, 255, 255, 0.1);
-  position: relative;
-  flex-direction: column;
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  clip-path: polygon(
+    20px 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px),
+    0 20px
+  );
+  white-space: pre-line;
 }
 
-.evidence-tag-hole {
+/* Pseudo-random rotations for evidence tags */
+.tile:nth-child(1) .evidence-tag {
+  rotate: 2.5deg;
+}
+.tile:nth-child(2) .evidence-tag {
+  rotate: -1.5deg;
+}
+.tile:nth-child(3) .evidence-tag {
+  rotate: 0deg;
+}
+.tile:nth-child(4) .evidence-tag {
+  rotate: -2deg;
+}
+.tile:nth-child(5) .evidence-tag {
+  rotate: 1deg;
+}
+.tile:nth-child(6) .evidence-tag {
+  rotate: -2deg;
+}
+.tile:nth-child(7) .evidence-tag {
+  rotate: 0deg;
+}
+.tile:nth-child(8) .evidence-tag {
+  rotate: -1.5deg;
+}
+.tile:nth-child(9) .evidence-tag {
+  rotate: -2.5deg;
+}
+
+/* Pushpin */
+.evidence-tag::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.75rem;
+  height: 0.75rem;
+  /* background: radial-gradient(
+    circle at 30% 30%,
+    #ff6b6b 0%,
+    #cc4444 50%,
+    #992222 100%
+  ); */
+  background-color: red;
+  border-radius: 50%;
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.4),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
+
+/* Pin needle/shaft */
+.evidence-tag::after {
+  content: "";
   position: absolute;
   top: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(circle, #4a4a4a 0%, #2a2a2a 100%);
-  border-radius: 50%;
-  border: 2px solid #8b7355;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  width: 3px;
+  height: 8px;
+  background: linear-gradient(180deg, #666 0%, #444 100%);
+  border-radius: 0 0 1px 1px;
+  opacity: 1;
+  transition: opacity 0.15s ease-out 0.45s;
+  z-index: 1;
 }
 
-.evidence-tag-string {
+.evidence-tag-text {
+  /* font-family: "Special Elite", monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: black; */
+  padding-top: 0.5rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  font-style: normal;
+  color: black;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.reinforcement-ring {
   position: absolute;
-  top: -15px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 2px;
-  height: 20px;
-  background: linear-gradient(to bottom, #8b4513, #a0522d, #8b4513);
-  border-radius: 1px;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: radial-gradient(circle, #a0522d 0%, #6b3410 100%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.4),
+    0 2px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
-.evidence-tag-string::before {
+.reinforcement-ring::before {
   content: "";
   position: absolute;
-  top: -8px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 10px;
-  border: 2px solid #8b4513;
-  border-bottom: none;
-  border-radius: 10px 10px 0 0;
-  background: transparent;
+  transform: translate(-50%, -50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  background: linear-gradient(135deg, #f4e4a6 0%, #f0dc8e 100%);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  z-index: 100;
 }
 
-.evidence-tag-content {
-  color: #2c2416;
-  font-family: "Courier New", monospace;
-  font-weight: bold;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  text-align: center;
-  line-height: 1.2;
+/* ============================================
+   Evidence Tag Flip Animation Sequence
+   1. Pushpin pops out (0-0.15s)
+   2. Tag falls away (0.1s-0.35s)
+   3. Post-it slides in (0.2s+)
+   ============================================ */
+
+/* Pushpin pop-out animation */
+@keyframes pushpin-pop-out {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-15px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-30px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Tag fall animation */
+@keyframes tag-fall-away {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(50px) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+/* When flipped: animate the pushpin popping out */
+.tile-inner.flipped:not(.photo-reveal) .evidence-tag::before {
+  animation: pushpin-pop-out 0.2s ease-out forwards;
+}
+
+/* When flipped: animate the reinforcement ring falling with the tag */
+.tile-inner.flipped:not(.photo-reveal) .reinforcement-ring {
+  animation: tag-fall-away 0.25s ease-in 0.1s forwards;
+}
+
+/* When flipped: animate the evidence tag falling away */
+.tile-inner.flipped:not(.photo-reveal) .tile-front.evidence-tag {
+  animation: tag-fall-away 0.25s ease-in 0.1s forwards;
+  pointer-events: none;
+}
+
+/* Hide text immediately when flipped */
+.tile-inner.flipped:not(.photo-reveal) .evidence-tag-text {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
 }

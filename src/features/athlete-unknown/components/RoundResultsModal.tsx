@@ -1,9 +1,10 @@
 import React from "react";
 import { ALL_TILES, TILES } from "@/features/athlete-unknown/config";
-import type { TileType } from "@/features/athlete-unknown/config";
-import type { RoundStats, PlayerData } from "@/features/athlete-unknown/types";
+import type { SportType, TileType } from "@/features/athlete-unknown/config";
+import type { Round } from "@/features/athlete-unknown/types";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { Button } from "./Button";
+import { getSportEmoji } from "../utils/strings";
 
 const WIN_OR_LOSE = "winOrLose";
 
@@ -22,11 +23,13 @@ interface ResultsModalProps {
   score: number;
   flippedTiles: TileType[];
   copiedText: string;
-  roundStats: RoundStats | null;
-  playerData: PlayerData;
+  round: Round;
   onClose: () => void;
   onShare: () => void;
   isCompleted: boolean;
+  sport: SportType;
+  roundNumber: string;
+  playDate: string;
 }
 
 export function RoundResultsModal({
@@ -34,17 +37,20 @@ export function RoundResultsModal({
   score,
   flippedTiles,
   copiedText,
-  roundStats,
-  playerData,
+  round,
   onClose,
   onShare,
   isCompleted,
+  sport,
+  roundNumber,
+  playDate,
 }: ResultsModalProps): React.ReactElement | null {
   if (!isOpen) {
     return null;
   }
 
   const allTilesResults = [WIN_OR_LOSE as typeof WIN_OR_LOSE, ...ALL_TILES];
+  const { stats: roundStats, player: playerData } = round;
 
   return (
     <div className="au-results-modal" onClick={onClose}>
@@ -54,8 +60,9 @@ export function RoundResultsModal({
           style={{ "--tab-index": 0 } as React.CSSProperties}
           onClick={(e) => e.stopPropagation()}
           aria-label="Folder tab"
-          disabled
-        />
+        >
+          <p className="au-folder-tab-text">{`Case #${getSportEmoji(sport)}${roundNumber}`}</p>
+        </button>
         <div
           className="au-results-modal-content"
           onClick={(e) => e.stopPropagation()}
@@ -103,6 +110,11 @@ export function RoundResultsModal({
                     <p className="au-player-name">?????</p>
                   )}
                 </span>
+                <div className="au-report-underline"></div>
+              </div>
+              <div className="au-report-field">
+                <span className="au-report-label">Date:</span>
+                <span className="au-report-value">{playDate}</span>
                 <div className="au-report-underline"></div>
               </div>
               <div className="au-report-field">
