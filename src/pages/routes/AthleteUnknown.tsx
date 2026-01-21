@@ -33,6 +33,7 @@ import {
   UserAndSettings,
   Button,
   PreviousGuesses,
+  GiveUpConfirmationModal,
 } from "@/features/athlete-unknown/components";
 import {
   athleteUnknownApiService,
@@ -115,6 +116,8 @@ export function AthleteUnknown(): React.ReactElement {
   const [isRoundResultsModalOpen, setIsRoundResultsModalOpen] = useState(false);
   const [isUserStatsModalOpen, setIsUserStatsModalOpen] = useState(false);
   const [isRoundHistoryModalOpen, setIsRoundHistoryModalOpen] = useState(false);
+  const [isGiveUpConfirmationModalOpen, setIsGiveUpConfirmationModalOpen] =
+    useState(false);
   const [selectedPlayDate, setSelectedPlayDate] = useState<string | undefined>(
     undefined
   );
@@ -325,7 +328,7 @@ export function AthleteUnknown(): React.ReactElement {
                 Submit
               </Button>
               <Button
-                onClick={handleGiveUp}
+                onClick={() => setIsGiveUpConfirmationModalOpen(true)}
                 size="lg"
                 variant={state.isCompleted ? "ghost" : "danger"}
                 disabled={state.isCompleted}
@@ -352,6 +355,7 @@ export function AthleteUnknown(): React.ReactElement {
             />
           </div>
         </div>
+
         {/* <Typewriter
           playerName={state.playerName}
           isCompleted={state.isCompleted}
@@ -404,6 +408,12 @@ export function AthleteUnknown(): React.ReactElement {
         roundHistory={state.roundHistory}
         userRoundHistory={userRoundHistoryArray?.[0]?.history ?? []}
         onRoundSelect={(playDate) => setSelectedPlayDate(playDate)}
+      />
+
+      <GiveUpConfirmationModal
+        isOpen={isGiveUpConfirmationModalOpen}
+        onConfirm={handleGiveUp}
+        onCancel={() => setIsGiveUpConfirmationModalOpen(false)}
       />
     </div>
   );
