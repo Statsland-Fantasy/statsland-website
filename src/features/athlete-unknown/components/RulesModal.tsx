@@ -123,7 +123,10 @@ function RulesModal({
           <div className="au-page-indicator">
             {currentPage + 1} / {PROLOGUE_PAGES.length}
           </div>
-          <button className="au-prologue-nav-button" onClick={handleNextPage}>
+          <button
+            className={`au-prologue-nav-button ${isLastPage ? "au-prologue-nav-button--hidden" : ""}`}
+            onClick={handleNextPage}
+          >
             {isPageComplete ? "Next" : "Skip"}
           </button>
         </div>

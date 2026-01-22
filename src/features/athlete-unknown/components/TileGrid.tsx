@@ -88,7 +88,6 @@ export function TileGrid({
   const activeStrings = stringConnections.filter(
     ([from, to]) => flippedTiles.includes(from) && flippedTiles.includes(to)
   );
-  console.log("AVTVE", stringConnections);
 
   return (
     <div className="grid">
@@ -107,7 +106,7 @@ export function TileGrid({
           onClick={() => onTileClick(tileName)}
         />
       ))}
-      {stringConnections.length > 0 && (
+      {stringConnections.length > 0 && !photoRevealed && (
         <svg className="red-string-svg">
           {stringConnections.map(([from, to], i) => {
             const {
