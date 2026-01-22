@@ -213,7 +213,7 @@ export function RoundResultsModal({
               <div className="au-results-tile-tracker-stats">
                 <div className="au-results-tile-tracker-stamp-row">
                   <div className="au-stamp-field">
-                    <span className="au-stamp-label">Most Common</span>
+                    <span className="au-stamp-label">Most Used</span>
                     <div className="au-stamp-box">
                       <span className="au-stamp-overlay">
                         {formatTileName(roundStats.mostCommonTileFlipped)}
@@ -221,7 +221,7 @@ export function RoundResultsModal({
                     </div>
                   </div>
                   <div className="au-stamp-field">
-                    <span className="au-stamp-label">Least Common</span>
+                    <span className="au-stamp-label">Least Used</span>
                     <div className="au-stamp-box">
                       <span className="au-stamp-overlay">
                         {formatTileName(roundStats.leastCommonTileFlipped)}
@@ -231,7 +231,7 @@ export function RoundResultsModal({
                 </div>
                 <div className="au-results-tile-tracker-stamp-row">
                   <div className="au-stamp-field">
-                    <span className="au-stamp-label">Most Common First</span>
+                    <span className="au-stamp-label">Most First Used</span>
                     <div className="au-stamp-box">
                       <span className="au-stamp-overlay">
                         {formatTileName(roundStats.mostCommonFirstTileFlipped)}
@@ -239,7 +239,7 @@ export function RoundResultsModal({
                     </div>
                   </div>
                   <div className="au-stamp-field">
-                    <span className="au-stamp-label">Most Common Last</span>
+                    <span className="au-stamp-label">Most Last Used</span>
                     <div className="au-stamp-box">
                       <span className="au-stamp-overlay">
                         {formatTileName(roundStats.mostCommonLastTileFlipped)}

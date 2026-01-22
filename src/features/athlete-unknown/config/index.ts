@@ -5,6 +5,8 @@
  * without hunting through the codebase.
  */
 
+import { SPORT_BASEBALL, SPORT_BASKETBALL, SPORT_FOOTBALL } from "@/config";
+
 // ============================================================================
 // SPORT CONFIGURATION
 // ============================================================================
@@ -141,9 +143,10 @@ export const ALL_TILES = [...TOP_TILES, ...GRID_TILES] as const;
 // ============================================================================
 
 export const REFERENCE_URLS = {
-  BASEBALL_WAR: "https://www.baseball-reference.com/about/war_explained.shtml",
-  BASKETBALL_BPM: "https://www.basketball-reference.com/about/bpm2.html",
-  FOOTBALL_AV:
+  [SPORT_BASEBALL]:
+    "https://www.baseball-reference.com/about/war_explained.shtml",
+  [SPORT_BASKETBALL]: "https://www.basketball-reference.com/about/bpm2.html",
+  [SPORT_FOOTBALL]:
     "https://www.pro-football-reference.com/about/approximate_value.htm",
 } as const;
 

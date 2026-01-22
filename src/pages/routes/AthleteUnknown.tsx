@@ -227,6 +227,22 @@ export function AthleteUnknown(): React.ReactElement {
     }
   }, [isUserStatsModalOpen, handleFetchUserStats]);
 
+  const playDate = useMemo(() => {
+    return state?.round?.playDate ?? "";
+  }, [state.round]);
+
+  const roundNumber = useMemo(() => {
+    const roundId = state?.round?.roundId ?? "";
+    const [, rNum] = roundId.split("#");
+    return rNum;
+  }, [state.round]);
+
+  const userRoundHistoryArray = useMemo(() => {
+    return state.userStats?.sports.filter((userSport: UserSportStats) => {
+      return userSport.sport === activeSport;
+    });
+  }, [state.userStats, activeSport]);
+
   // Show loading state
   if (state.isLoading) {
     return (
@@ -256,16 +272,6 @@ export function AthleteUnknown(): React.ReactElement {
       </div>
     );
   }
-
-  //TODO memoize these
-  const playDate = state.round.playDate;
-  const [, roundNumber] = state.round.roundId.split("#");
-
-  const userRoundHistoryArray = state.userStats?.sports.filter(
-    (userSport: UserSportStats) => {
-      return userSport.sport === activeSport;
-    }
-  );
 
   // console.log("STATE AU", state);
 

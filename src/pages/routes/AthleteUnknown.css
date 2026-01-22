@@ -304,41 +304,11 @@
   min-height: 4rem;
 }
 
-/* Torn paper edge effect */
-.au-paper-container::before {
-  /* content: "";
-  position: absolute;
-  bottom: -0.3rem;
-  width: 100%;
-  background: linear-gradient(
-    45deg,
-    transparent 33.33%,
-    #fffef7 33.33%,
-    #fffef7 66.66%,
-    transparent 66.66%
-  );
-  height: 0.4rem;
-  background-size: 0.4rem 0.4rem;
-  background-position: 0 0; */
-}
-
-/* Red margin line */
-.au-paper-container::after {
-  /* content: "";
-  position: relative;
-  z-index: 2;
-  top: 0;
-  left: -95%;
-  bottom: 0;
-  width: 0.25rem;
-  background-color: #ff6b6b;
-  opacity: 0.3; */
-}
-
 .au-player-guess-container {
   display: flex;
   flex-direction: row;
   width: 100%;
+  gap: 0.75rem;
 }
 
 .au-player-input {
@@ -348,6 +318,21 @@
   align-items: flex-start;
   position: relative;
   width: 70%;
+}
+
+.au-player-input::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 105%;
+  height: 110%;
+  transform: translate(-55%, -50%) rotate(-2deg);
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("../../features/athlete-unknown/assets/hand-drawn-circle.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .au-player-input input {
@@ -365,7 +350,7 @@
   color: black;
   box-sizing: border-box;
   z-index: 3;
-  padding-left: 1.5rem;
+  padding-left: 0.5rem;
   width: 100%;
 }
 
@@ -435,19 +420,6 @@
       rgba(139, 119, 101, 0.08) 25.5%,
       transparent 27%,
       transparent 100%
-    ),
-    /* Water damage / heavy staining */
-    radial-gradient(
-        ellipse at 85% 20%,
-        rgba(139, 100, 60, 0.12) 0%,
-        rgba(139, 100, 60, 0.06) 30%,
-        transparent 60%
-      ),
-    radial-gradient(
-      ellipse at 10% 80%,
-      rgba(120, 90, 50, 0.1) 0%,
-      rgba(120, 90, 50, 0.05) 40%,
-      transparent 70%
     ),
     /* Base heavily aged paper color */
     linear-gradient(
@@ -711,6 +683,7 @@
 
 /* Custom tooltip - base styles */
 .tile[data-tooltip]:not([data-tooltip=""])::after {
+  display: none; /* enable for desktop */
   content: attr(data-tooltip);
   position: absolute;
   background-color: #0077b6;
@@ -887,6 +860,9 @@
     inset -1px -1px 5px rgba(0, 0, 0, 0.25),
     inset 0 0 20px rgba(0, 0, 0, 0.2);
   border-color: rgba(0, 0, 0, 0.3);
+  cursor:
+    url("../../features/athlete-unknown/assets/magnifying-glass.svg") 12 12,
+    pointer;
 }
 
 .tile-back {
@@ -982,6 +958,13 @@
   padding: 0;
 }
 
+.tile-mini-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
 .flip-back-arrow {
   position: absolute;
   top: 8px;
@@ -999,6 +982,19 @@
   pointer-events: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
+.tile-info-link {
+  font-size: 0.6em;
+  color: gray;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  vertical-align: super;
+  margin-left: 0.2em;
+}
+
+/* .tile-info-link:hover {
+  opacity: 1;
+} */
 
 .tile-back img {
   width: 100%;
@@ -1251,7 +1247,7 @@
   align-items: center;
   gap: 0.5rem;
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #1a1a1a;
   padding: 0.5rem;
 }
@@ -1692,13 +1688,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .au-results-grid {
   display: grid;
-  grid-template-columns: repeat(3, 2rem);
-  grid-gap: 0.25rem;
+  grid-template-columns: repeat(3, 1.5rem);
+  grid-gap: 0rem;
   justify-content: center;
   align-items: center;
   margin: 0;
@@ -1968,7 +1964,7 @@
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.5),
     inset 0 0 60px rgba(139, 90, 43, 0.1);
-  transform: rotate(-3deg);
+  transform: rotate(-1deg);
   border: none;
   display: flex;
   flex-direction: column;
@@ -1999,7 +1995,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background: url("../../features/athlete-unknown/assets/paper-noise.svg");
   opacity: 0.04;
   pointer-events: none;
 }
@@ -2039,7 +2035,7 @@
   color: #8b0000;
   text-decoration: underline;
   text-decoration-style: wavy;
-  text-underline-offset: 4px;
+  text-underline-offset: 6px;
 }
 
 .au-giveup-btn-quit:hover {
@@ -2050,7 +2046,7 @@
 .au-giveup-btn-retry {
   color: #2d4a3e;
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: 6px;
 }
 
 .au-giveup-btn-retry:hover {
@@ -2065,7 +2061,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2076,28 +2076,54 @@
 
 .au-rules-modal-content {
   position: relative;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border-radius: 16px;
+  border-radius: 4px;
   max-width: 900px;
   width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(0, 180, 216, 0.3);
-  padding: 2.5rem;
-  color: white;
+  height: 60vh;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border: none;
+  border-left: 0.75rem solid #8b4513;
+  color: #2a2520;
+  background-color: #f5f0e1;
+}
+
+.au-rules-notebook-paper {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      transparent,
+      transparent 1.55rem,
+      rgba(100, 140, 180, 0.15) 1.55rem,
+      rgba(100, 140, 180, 0.15) 1.64rem
+    ),
+    linear-gradient(90deg, #f5f0e1 0%, #faf6eb 3%, #faf6eb 97%, #f5f0e1 100%);
+  background-color: #faf6eb;
+  padding: 1.5rem 2.5rem;
+  min-height: 100%;
+}
+
+.au-rules-notebook-paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  bottom: 0;
+  width: 2px;
+  background: rgba(200, 80, 80, 0.4);
+  pointer-events: none;
 }
 
 .au-close-rules-button {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  top: 1rem;
+  right: 1rem;
+  background: rgba(139, 69, 19, 0.1);
+  border: 2px solid rgba(139, 69, 19, 0.3);
   font-size: 2rem;
   cursor: pointer;
-  color: #fff;
-  z-index: 1;
+  color: #5a3d2b;
+  z-index: 2;
   width: 40px;
   height: 40px;
   display: flex;
@@ -2108,17 +2134,92 @@
 }
 
 .au-close-rules-button:hover {
-  background-color: rgba(0, 180, 216, 0.3);
-  border-color: #00b4d8;
+  background-color: rgba(139, 69, 19, 0.2);
+  border-color: #8b4513;
   transform: scale(1.1);
+}
+
+.au-rules-prologue-container {
+  position: relative;
+}
+
+.au-rules-prologue {
+  white-space: pre-wrap;
+  font-family: "Caveat", cursive;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.32;
+}
+
+.au-rules-prologue-invisible {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.au-rules-prologue-visible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.au-how-to-play {
+  white-space: pre-wrap;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.27rem;
+  line-height: 1.32;
+}
+
+.au-prologue-nav-button {
+  font-family: "Caveat", cursive;
+  font-size: 1.2rem;
+  color: black;
+  background: transparent;
+  border: 0.15rem solid #5a3d2b;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+  padding: 0.25rem 0.75rem;
+}
+
+.au-prologue-nav-button:hover {
+  color: #8b4513;
+}
+
+.au-prologue-nav-button--hidden {
+  visibility: hidden;
+}
+
+.au-notebook-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(250, 246, 235, 0.95);
+  border-top: 1px dashed rgba(139, 69, 19, 0.3);
+}
+
+.au-page-indicator {
+  font-family: "Caveat", cursive;
+  font-size: 1rem;
+  color: #8b7355;
 }
 
 .au-rules-title {
   font-size: 2.2rem;
   margin: 0 0 1.5rem 0;
-  color: #00b4d8;
+  color: #2a2520;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .au-rules-body {
@@ -2129,34 +2230,42 @@
   font-size: 1.1rem;
   text-align: center;
   margin-bottom: 2rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #3d352e;
 }
 
 .au-rules-section {
   margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border-left: 4px solid #00b4d8;
+  background: transparent;
+  padding: 1rem 1.5rem;
+  border-radius: 0;
+  border-left: none;
+  border-bottom: 1px dashed rgba(139, 69, 19, 0.3);
+}
+
+.au-rules-section:last-of-type {
+  border-bottom: none;
 }
 
 .au-rules-section h3 {
   font-size: 1.5rem;
   margin: 0 0 1rem 0;
-  color: #ffd60a;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  color: #8b4513;
+  text-shadow: none;
+  font-family: "Caveat", cursive;
+  font-weight: 700;
 }
 
 .au-rules-section h4 {
   font-size: 1.3rem;
   margin: 1rem 0 0.75rem 0;
-  color: #00b4d8;
+  color: #5a3d2b;
+  font-family: "Caveat", cursive;
 }
 
 .au-rules-section h5 {
   font-size: 1.1rem;
   margin: 0.75rem 0 0.5rem 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: #3d352e;
   font-weight: 600;
 }
 
@@ -2168,21 +2277,21 @@
 
 .au-rules-section li {
   padding: 0.4rem 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: #3d352e;
 }
 
 .au-rules-section li strong {
-  color: #ffd60a;
+  color: #8b4513;
 }
 
 .au-tiles-intro {
   margin-bottom: 0.75rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #3d352e;
 }
 
 .au-tiles-list {
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
+  color: #3d352e;
 }
 
 .au-sport-stats {
@@ -2198,7 +2307,7 @@
 .au-position-group {
   margin-bottom: 1rem;
   padding-left: 1rem;
-  border-left: 2px solid rgba(0, 180, 216, 0.3);
+  border-left: 2px solid rgba(139, 69, 19, 0.3);
 }
 
 .au-position-group ul {
@@ -2209,14 +2318,14 @@
 .au-acronym-hover {
   position: relative;
   cursor: help;
-  color: #00b4d8;
+  color: #8b4513;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .au-tile-name-hover:hover,
 .au-acronym-hover:hover {
-  color: #ffd60a;
+  color: #5a3d2b;
 }
 
 .au-tooltip {
@@ -2224,17 +2333,17 @@
   bottom: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.95);
-  color: white;
+  background-color: #f5f0e1;
+  color: #2a2520;
   padding: 0.75rem 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 0.9rem;
   white-space: normal;
   width: max-content;
   max-width: 300px;
   z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 180, 216, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(139, 69, 19, 0.4);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -2246,25 +2355,26 @@
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.95);
+  border-top-color: #f5f0e1;
 }
 
 .au-tooltip-link {
-  color: #00b4d8;
+  color: #8b4513;
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .au-tooltip-link:hover {
-  color: #ffd60a;
+  color: #5a3d2b;
 }
 
 .au-rules-footer {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   margin-top: 2rem;
-  color: #ffd60a;
-  font-weight: 600;
+  color: #8b4513;
+  font-weight: 700;
+  font-family: "Caveat", cursive;
 }
 
 /* Scrollbar Styling */
@@ -2273,17 +2383,17 @@
 }
 
 .au-rules-modal-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(139, 69, 19, 0.1);
   border-radius: 10px;
 }
 
 .au-rules-modal-content::-webkit-scrollbar-thumb {
-  background: rgba(0, 180, 216, 0.5);
+  background: rgba(139, 69, 19, 0.4);
   border-radius: 10px;
 }
 
 .au-rules-modal-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 180, 216, 0.7);
+  background: rgba(139, 69, 19, 0.6);
 }
 
 /* UserStatsModal */

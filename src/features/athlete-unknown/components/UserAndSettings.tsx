@@ -74,7 +74,7 @@ export function UserAndSettings({
           loop={false}
         />
         <button className="au-volume-button" onClick={handleVolumeClick}>
-          <FontAwesomeIcon icon={icon} className="au-settings-icon" />
+          <FontAwesomeIcon icon={icon} size="xl" className="au-settings-icon" />
         </button>
       </div>
     </div>
