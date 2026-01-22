@@ -30,7 +30,7 @@ export function RoundInfo({
       >
         <span className="au-round-number">
           <p>{`Case #${getSportEmoji(sport)}${roundNumber}`}</p>
-          <p>{theme && ` - ${theme}`}</p>
+          {/* <p>{theme && ` - ${theme}`}</p> */}
         </span>
         <span className="au-separator">•</span>
         <span className="au-round-date">
@@ -38,6 +38,9 @@ export function RoundInfo({
         </span>
       </div>
       <div className="au-round-info-container-bottom">
+        <p>{theme}</p>
+      </div>
+      {/* <div className="au-round-info-container-bottom">
         <button className="au-round-stats-link" onClick={onRoundResultsClick}>
           <p>Case Stats</p>
         </button>
@@ -49,7 +52,7 @@ export function RoundInfo({
         <button className="au-history-link" onClick={onRoundHistoryClick}>
           <p>Case History</p>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

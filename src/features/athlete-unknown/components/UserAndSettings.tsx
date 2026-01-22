@@ -1,6 +1,12 @@
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBookOpen,
+  faBriefcase,
+  faChartLine,
+  faVolumeHigh,
+  faVolumeXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
 interface UserAndSettingsProps {
@@ -8,6 +14,9 @@ interface UserAndSettingsProps {
   audioRef: React.RefObject<HTMLAudioElement | null>;
   onVolumeClick: () => void;
   volume: number;
+  onRoundResultsClick: () => void;
+  onRulesClick: () => void;
+  onRoundHistoryClick: () => void;
 }
 
 const PLAYLIST = [
@@ -21,6 +30,9 @@ export function UserAndSettings({
   audioRef,
   onVolumeClick,
   volume,
+  onRoundHistoryClick,
+  onRulesClick,
+  onRoundResultsClick,
 }: UserAndSettingsProps): React.ReactElement {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -33,9 +45,7 @@ export function UserAndSettings({
 
   // Play the next track when currentTrackIndex changes (after user interaction)
   useEffect(() => {
-    console.log("HANDLE TRACK END!!!!!!!!!!!!!!! - Use effect");
     if (hasInteracted && audioRef.current) {
-      console.log("HANDLE TRACK END!!!!!!!!!!!!!!! - Use effect - PLAY NOW");
       audioRef.current.play().catch(() => {});
     }
   }, [currentTrackIndex, audioRef, hasInteracted]);
@@ -49,10 +59,8 @@ export function UserAndSettings({
   };
 
   const handleTrackEnd = () => {
-    console.log("HANDLE TRACK END!!!!!!!!!!!!!!!");
     const nextIndex =
       currentTrackIndex < PLAYLIST.length - 1 ? currentTrackIndex + 1 : 0;
-    console.log("WHAT TRACK IS NEXT", nextIndex);
     setCurrentTrackIndex(nextIndex);
   };
 
@@ -60,7 +68,18 @@ export function UserAndSettings({
 
   const icon = volume === 0 ? faVolumeXmark : faVolumeHigh;
   return (
-    <div className="au-user-settings-container flex-row">
+    <div className="au-user-settings-container">
+      <FontAwesomeIcon icon={faBookOpen} size="lg" onClick={onRulesClick} />
+      <FontAwesomeIcon
+        icon={faChartLine}
+        size="lg"
+        onClick={onRoundResultsClick}
+      />
+      <FontAwesomeIcon
+        icon={faBriefcase}
+        size="lg"
+        onClick={onRoundHistoryClick}
+      />
       <div className="au-user-identity-container">
         <button className="au-user-identity-button" onClick={onStatsClick}>
           <img src={TestUnknownPerson} alt="profile-image" />
@@ -74,7 +93,7 @@ export function UserAndSettings({
           loop={false}
         />
         <button className="au-volume-button" onClick={handleVolumeClick}>
-          <FontAwesomeIcon icon={icon} size="xl" className="au-settings-icon" />
+          <FontAwesomeIcon icon={icon} size="lg" className="au-settings-icon" />
         </button>
       </div>
     </div>

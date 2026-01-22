@@ -278,20 +278,23 @@ export function AthleteUnknown(): React.ReactElement {
   return (
     <div className="au-container">
       <div className="au-header-container">
-        <Navbar />
-        <img
-          src={PlaceholderLogo}
-          alt="Athlete Unknown Logo"
-          className="au-placeholder-logo"
-        />
-        <div>
-          <UserAndSettings
-            onStatsClick={() => setIsUserStatsModalOpen(true)}
-            audioRef={audioRef}
-            onVolumeClick={onHandleVolumeClick}
-            volume={volume}
+        <div className="au-left-header-container">
+          <Navbar />
+          <img
+            src={PlaceholderLogo}
+            alt="Athlete Unknown Logo"
+            className="au-placeholder-logo"
           />
         </div>
+        <UserAndSettings
+          onStatsClick={() => setIsUserStatsModalOpen(true)}
+          audioRef={audioRef}
+          onVolumeClick={onHandleVolumeClick}
+          volume={volume}
+          onRoundResultsClick={() => setIsRoundResultsModalOpen(true)}
+          onRulesClick={() => setIsRulesModalOpen(true)}
+          onRoundHistoryClick={() => setIsRoundHistoryModalOpen(true)}
+        />
       </div>
       <div className="au-body-container">
         <div className="au-information-container">

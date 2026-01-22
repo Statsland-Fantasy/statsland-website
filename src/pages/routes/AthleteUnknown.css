@@ -18,6 +18,12 @@
   background-color: white;
 }
 
+.au-left-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .au-body-container {
   padding-top: 0.5rem;
 }
@@ -65,17 +71,21 @@
 .au-user-settings-container {
   display: flex;
   flex-direction: row;
-  background-color: gray;
+  align-items: center;
+  background-color: white;
+  color: #282729;
+  gap: 0.5rem;
+  padding: 0 0.25rem;
 }
 
 .au-user-identity-container {
-  width: 3rem;
-  height: 3rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .au-user-identity-button img {
-  width: 3rem;
-  height: 3rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 /* GameHeader */
@@ -126,6 +136,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .au-round-info-container > div {
@@ -143,7 +154,6 @@
 .au-round-info-container-top p {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
-  font-style: italic;
   font-size: 1.75rem;
   color: white;
 }
@@ -158,13 +168,11 @@
 }
 
 .au-round-info-container-bottom p {
-  font-family: "Bodoni Moda", serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-size: 0.85rem;
-  font-style: normal;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.2rem;
   color: white;
-  text-decoration: underline;
 }
 
 /* ScoreDisplay - Polaroid Style */
@@ -254,7 +262,7 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 0.5rem;
-  border: 0.5rem solid transparent;
+  border: 0.75rem solid transparent;
   border-image: linear-gradient(
       to bottom,
       #5a2e1a 0%,
