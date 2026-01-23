@@ -8,7 +8,10 @@ export function RootLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
+    if (
+      process.env.NODE_ENV === "production" ||
+      process.env.REACT_APP_GA_DEBUG === "true"
+    ) {
       logPageView(location.pathname + location.search);
     }
   }, [location]);
