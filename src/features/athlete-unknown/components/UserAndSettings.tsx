@@ -1,4 +1,3 @@
-import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpen,

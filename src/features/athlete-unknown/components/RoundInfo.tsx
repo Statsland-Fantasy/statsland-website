@@ -16,11 +16,11 @@ interface RoundInfoProps {
 export function RoundInfo({
   roundNumber,
   playDate,
-  theme = "Playoff Heroes",
+  theme,
   sport,
-  onRoundResultsClick,
-  onRulesClick,
-  onRoundHistoryClick,
+  // onRoundResultsClick,
+  // onRulesClick,
+  // onRoundHistoryClick,
 }: RoundInfoProps): React.ReactElement {
   return (
     <div className="au-round-info-container">

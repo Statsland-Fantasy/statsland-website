@@ -333,7 +333,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 105%;
+  width: 100%;
   height: 110%;
   transform: translate(-55%, -50%) rotate(-2deg);
   pointer-events: none;
