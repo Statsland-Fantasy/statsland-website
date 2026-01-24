@@ -5,7 +5,7 @@
 
 export { Button } from "./Button";
 export { SportsReferenceAttribution } from "./SportsReferenceAttribution";
-export { GameHeader } from "./GameHeader";
+export { SportSelectorHeader } from "./SportSelectorHeader";
 export { ScoreDisplay } from "./ScoreDisplay";
 export { PlayerInput } from "./PlayerInput";
 export { Tile } from "./Tile";

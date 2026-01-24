@@ -101,14 +101,11 @@ function RulesModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="au-rules-notebook-paper">
-          <div className="au-rules-prologue-container">
+          <div className="au-rules-prologue-container" onClick={handleNextPage}>
             {currentPage === 3 ? (
               <div className="au-case-file-paper">
                 <div className="au-paperclip"></div>
                 <div className="au-fingerprint-smudge"></div>
-                {/* <div className="au-case-file-header"> */}
-                {/* <div className="au-case-stamp">CASE BRIEFING</div> */}
-                {/* </div> */}
 
                 <div className="au-case-file-text-container">
                   <p

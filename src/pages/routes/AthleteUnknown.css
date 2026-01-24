@@ -88,7 +88,7 @@
   height: 1.5rem;
 }
 
-/* GameHeader */
+/* SportSelectorHeader */
 .au-sports-section {
   margin-bottom: 0.25rem;
 }
@@ -2178,7 +2178,7 @@
 .au-how-to-play {
   white-space: pre-wrap;
   font-family: "Special Elite", "Courier New", monospace;
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
   font-size: 1.25rem;
   line-height: 1.6;
@@ -2193,6 +2193,7 @@
 /* Case File Paper - Separate document effect */
 .au-case-file-paper {
   position: relative;
+  top: -1.75rem;
   width: 90%;
   height: 90%;
   background:
@@ -2205,21 +2206,21 @@
     ),
     /* Coffee stain 2 - bottom left */
     radial-gradient(
-      circle 50px at 20% 85%,
-      rgba(101, 67, 33, 0.1),
-      rgba(101, 67, 33, 0.04) 50%,
-      transparent 75%
-    ),
+        circle 50px at 20% 85%,
+        rgba(101, 67, 33, 0.1),
+        rgba(101, 67, 33, 0.04) 50%,
+        transparent 75%
+      ),
     /* Aged paper gradient */
     linear-gradient(135deg, #f7f3e8 0%, #f0ead6 50%, #e8e3d0 100%),
     /* Paper noise texture */
     repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.01) 2px,
-      rgba(0, 0, 0, 0.01) 4px
-    );
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.01) 2px,
+        rgba(0, 0, 0, 0.01) 4px
+      );
   padding: 2rem 2.5rem;
   margin: 1rem auto;
   max-width: 85%;
@@ -2330,7 +2331,7 @@
     0.1% 5%,
     0% 2%
   );
-  transform: rotate(-0.5deg);
+  transform: rotate(-1.5deg);
   transition: transform 0.3s ease;
 }
 
@@ -2534,7 +2535,7 @@
   }
 
   .au-how-to-play {
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1.5;
   }
 

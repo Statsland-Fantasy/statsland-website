@@ -20,7 +20,7 @@ import {
 } from "@/features/athlete-unknown/hooks";
 import {
   SportsReferenceAttribution,
-  GameHeader,
+  SportSelectorHeader,
   RoundInfo,
   ScoreDisplay,
   PlayerInput,
@@ -263,6 +263,14 @@ export function AthleteUnknown(): React.ReactElement {
     });
   }, [state.userStats, activeSport]);
 
+  const handleSportAndDateChange = useCallback(
+    (sport: SportType) => {
+      setActiveSport(sport);
+      setSelectedPlayDate(undefined); // undefined will fallback to current day
+    },
+    [setActiveSport, setSelectedPlayDate]
+  );
+
   // // Show loading state
   // if (state.isLoading) {
   //   return (
@@ -318,9 +326,9 @@ export function AthleteUnknown(): React.ReactElement {
       </div>
       <div className="au-body-container">
         <div className="au-information-container">
-          <GameHeader
+          <SportSelectorHeader
             activeSport={activeSport}
-            onSportChange={setActiveSport}
+            onSportChange={handleSportAndDateChange}
           />
           <RoundInfo
             roundNumber={roundNumber}
@@ -350,7 +358,7 @@ export function AthleteUnknown(): React.ReactElement {
             <div className="au-scoring-buttons-container">
               <Button
                 onClick={handleNameSubmit}
-                size="lg"
+                size="md"
                 variant={state.isCompleted ? "ghost" : "primary"}
                 disabled={state.isCompleted || state.playerName === ""}
               >
@@ -358,7 +366,7 @@ export function AthleteUnknown(): React.ReactElement {
               </Button>
               <Button
                 onClick={() => setIsGiveUpConfirmationModalOpen(true)}
-                size="lg"
+                size="md"
                 variant={state.isCompleted ? "ghost" : "danger"}
                 disabled={state.isCompleted}
               >

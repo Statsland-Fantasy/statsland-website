@@ -3,15 +3,15 @@ import { useNavigate } from "react-router";
 import type { SportType } from "@/features/athlete-unknown/config";
 import { config } from "@/config";
 
-interface GameHeaderProps {
+interface SportSelectorHeaderProps {
   activeSport: SportType;
   onSportChange: (sport: SportType) => void;
 }
 //TODO: rename to sport selector header
-export function GameHeader({
+export function SportSelectorHeader({
   activeSport,
   onSportChange,
-}: GameHeaderProps): React.ReactElement {
+}: SportSelectorHeaderProps): React.ReactElement {
   const navigate = useNavigate();
 
   const handleSportClick = (sport: SportType) => {
