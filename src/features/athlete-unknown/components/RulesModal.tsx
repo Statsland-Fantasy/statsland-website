@@ -15,13 +15,10 @@ const PROLOGUE_PAGES = [
     'Rain pounded the glass of my office window when there was a knock at the door. "BANG, BANG!"',
     '"What brings you here, Commissioner? Woj bomb?", I chuckled as he entered.',
     "He ignored my quip. \"The Tanking Syndicate stole our signs and hacked the Hall of Records. Wiped athlete identities clean. Now half of Statsland can't remember who their favorite players are anymore. It's chaos.\"",
-  ],
-  [
     '"Looks like you\'re on the brink of an epic collapse, Commish," I responded.',
-    "The Commissioner and I go back to our days as partners on the Ref Squad, enforcing Statsland's rules. But one scuffle in the locker room later, and the golden boy was promoted while I was shipped out of town.",
-    '"I know! I\'m desperate!" He took a deep breath. "Off-the-field issues aside," he said, glancing at my bottle of whiskey. "Your talent is off the charts. Frankly, you know the game better than anyone in my front office."',
   ],
   [
+    '"Off-the-field issues aside," he said, glancing at my bottle of whiskey. "Your talent is off the charts. Frankly, you know the game better than anyone in my front office."',
     "He dropped a stack of case files on my desk as thick as an NFL playbook. I filpped through the files. I looked at the clock.",
     '"Statsland\'s running out of time," I said. And it looks like you\'re all out of timeouts. Good thing comebacks are my calling card."',
   ],
@@ -102,7 +99,7 @@ function RulesModal({
       >
         <div className="au-rules-notebook-paper">
           <div className="au-rules-prologue-container" onClick={handleNextPage}>
-            {currentPage === 3 ? (
+            {isLastPage ? (
               <div className="au-case-file-paper">
                 <div className="au-paperclip"></div>
                 <div className="au-fingerprint-smudge"></div>

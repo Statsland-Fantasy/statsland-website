@@ -2335,10 +2335,6 @@
   transition: transform 0.3s ease;
 }
 
-.au-case-file-paper:hover {
-  transform: rotate(0deg);
-}
-
 /* Coffee ring stain */
 .au-case-file-paper::before {
   content: "";
