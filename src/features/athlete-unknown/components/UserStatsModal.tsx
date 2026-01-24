@@ -21,8 +21,8 @@ function UserStatsModal({
   isOpen,
   onClose,
   userStats,
-  isLoading,
-  error,
+  isLoading: _isLoading,
+  error: _errors,
 }: UserStatsModalProps): React.ReactElement | null {
   const { sport } = useParams();
   const [selectedSport, setSelectedSport] = useState<string>(sport ?? "");

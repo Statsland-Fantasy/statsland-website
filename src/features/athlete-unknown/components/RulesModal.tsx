@@ -9,6 +9,7 @@ interface RulesModalProps {
   onClose: () => void;
 }
 
+/* eslint-disable */
 // Split prologue into pages (each page is an array of paragraphs)
 const PROLOGUE_PAGES = [
   [
@@ -29,6 +30,7 @@ const PROLOGUE_PAGES = [
     "Play each day, build up your stats, and share with your friends! Good luck!",
   ],
 ];
+/* eslint-enable */
 
 function RulesModal({
   isOpen,
