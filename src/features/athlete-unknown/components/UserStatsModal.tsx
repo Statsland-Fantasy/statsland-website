@@ -4,15 +4,24 @@ import {
   UserSportStats,
   UserStats,
 } from "@/features/athlete-unknown/types";
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { getDateString } from "../utils/date";
 import { config, SportType } from "@/config";
+import { Button } from "./Button";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getCurrentPath } from "@/utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface UserStatsModalProps {
   isOpen: boolean;
   onClose: () => void;
   userStats: UserStats | null;
+  username: string;
+  editedUsername: string;
+  onEditUsername: (editedUsername: string) => void;
+  onSaveEditedUsername: () => void;
   isLoading: boolean;
   error: string | null;
 }
@@ -21,18 +30,41 @@ function UserStatsModal({
   isOpen,
   onClose,
   userStats,
+  username,
+  editedUsername,
+  onEditUsername,
+  onSaveEditedUsername,
   isLoading,
   error,
 }: UserStatsModalProps): React.ReactElement | null {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { sport } = useParams();
+  const location = useLocation();
   const [selectedSport, setSelectedSport] = useState<string>(sport ?? "");
   const [selectedSportStats, setSelectedSportStats] =
     useState<UserSportStats | null>();
+  const [isEditingUsername, setIsEditingUsername] = useState(false);
 
   const formatTileName = (name: string): string => {
     return name
       .replace(/([A-Z])/g, " $1")
       .replace(/^./, (str) => str.toUpperCase());
+  };
+
+  const handleEditUsername = () => {
+    setIsEditingUsername(true);
+  };
+
+  const handleSaveUsername = () => {
+    // TODO: Add API call to update username in backend
+    console.log("Saving username:", editedUsername);
+    onSaveEditedUsername();
+    setIsEditingUsername(false);
+  };
+
+  const handleCancelEdit = () => {
+    onEditUsername(username);
+    setIsEditingUsername(false);
   };
 
   useEffect(() => {
@@ -42,9 +74,15 @@ function UserStatsModal({
     setSelectedSportStats(stats?.[0] ?? null);
   }, [userStats, selectedSport]);
 
+  useEffect(() => {
+    onEditUsername(username);
+  }, [username, onEditUsername]);
+
   if (!isOpen || !userStats || !selectedSportStats) {
     return null;
   }
+
+  console.log("usm user");
 
   return (
     <div className="au-results-modal" onClick={onClose}>
@@ -88,9 +126,72 @@ function UserStatsModal({
             <div className="au-player-results-info-container">
               <div className="au-report-field">
                 <span className="au-report-label">Name:</span>
-                <span className="au-report-value">TestUser123</span>
+                {!isAuthenticated ? (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() =>
+                      loginWithRedirect({
+                        appState: {
+                          returnTo: getCurrentPath(location),
+                        },
+                      })
+                    }
+                  >
+                    Login/Sign Up
+                  </Button>
+                ) : isEditingUsername ? (
+                  <>
+                    <input
+                      type="text"
+                      value={editedUsername}
+                      onChange={(e) => onEditUsername(e.target.value)}
+                      className="au-report-value au-username-input"
+                      autoFocus
+                    />
+                    <button
+                      onClick={handleSaveUsername}
+                      className="au-username-action-btn"
+                      title="Save"
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      className="au-username-action-btn"
+                      title="Cancel"
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span className="au-report-value">{username}</span>
+                    <button
+                      onClick={handleEditUsername}
+                      className="au-username-action-btn"
+                      title="Edit username"
+                    >
+                      <FontAwesomeIcon icon={faPencil} />
+                    </button>
+                  </>
+                )}
                 <div className="au-report-underline"></div>
               </div>
+              {isAuthenticated && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() =>
+                    logout({
+                      logoutParams: { returnTo: window.location.origin },
+                    })
+                  }
+                >
+                  Log Out
+                </Button>
+              )}
+
               <div className="au-report-field">
                 <span className="au-report-label">
                   Solving

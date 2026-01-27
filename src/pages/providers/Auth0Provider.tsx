@@ -1,12 +1,24 @@
 import React from "react";
-import { Auth0Provider as Auth0ProviderBase } from "@auth0/auth0-react";
+import {
+  AppState,
+  Auth0Provider as Auth0ProviderBase,
+} from "@auth0/auth0-react";
 import { config } from "@/config/env";
+import { router } from "./RouterProvider";
 
 interface Auth0ProviderProps {
   children: React.ReactNode;
 }
 
-export function Auth0Provider({ children }: Auth0ProviderProps): React.ReactElement {
+export function Auth0Provider({
+  children,
+}: Auth0ProviderProps): React.ReactElement {
+  const onRedirectCallback = (appState?: AppState) => {
+    router.navigate(appState?.returnTo || "/", {
+      replace: true,
+    });
+  };
+
   return (
     <Auth0ProviderBase
       domain={config.auth0.domain}
@@ -15,6 +27,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps): React.ReactElem
         redirect_uri: window.location.origin,
         audience: config.auth0.audience,
       }}
+      onRedirectCallback={onRedirectCallback}
       cacheLocation="localstorage"
       useRefreshTokens={true}
     >

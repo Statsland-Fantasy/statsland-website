@@ -45,6 +45,8 @@ export interface GameState {
   error: string | null;
   currentPlayerIndex?: number;
   roundHistory: RoundSummary[];
+  username: string;
+  editedUsername: string;
 }
 
 const createInitialState = (): GameState => ({
@@ -67,6 +69,8 @@ const createInitialState = (): GameState => ({
   isLoading: true,
   error: null,
   roundHistory: [],
+  username: "",
+  editedUsername: "",
 });
 
 /**

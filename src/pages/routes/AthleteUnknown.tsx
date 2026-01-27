@@ -45,17 +45,19 @@ import { hasAnyGameData } from "@/features/athlete-unknown/utils";
 import { config } from "@/config";
 import { Navbar } from "@/components";
 import PlaceholderLogo from "@/features/athlete-unknown/assets/placeholder-logo.png";
+import { getCurrentFullUrl } from "@/utils";
 
 export function AthleteUnknown(): React.ReactElement {
   const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
   const [userRoles, setUserRoles] = useState<string[]>([]);
   const [migrationAttempted, setMigrationAttempted] = useState(false);
+  const [username, setUsername] = useState("");
   const { sport } = useParams();
   const location = useLocation();
 
   // Extract roles from access token
   useEffect(() => {
-    const extractRoles = async () => {
+    const extractUserInformation = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
 
@@ -65,16 +67,22 @@ export function AthleteUnknown(): React.ReactElement {
         const payload = JSON.parse(window.atob(base64));
 
         const roles = payload["https://statslandfantasy.com/roles"] || [];
+        const username =
+          payload["https://statslandfantasy.com/username"] ||
+          user?.user_metadata?.display_username;
+        console.log("[AthleteUnknown] Access Token username:", username);
         console.log("[AthleteUnknown] Access Token roles:", roles);
         setUserRoles(roles);
+        setUsername(username);
       } catch (error) {
         console.error("[AthleteUnknown] Error extracting roles:", error);
         setUserRoles([]);
+        setUsername("");
       }
     };
 
-    extractRoles();
-  }, [getAccessTokenSilently]);
+    extractUserInformation();
+  }, [getAccessTokenSilently, user]);
 
   // Set up Auth0 token for API calls
   useEffect(() => {
@@ -89,10 +97,12 @@ export function AthleteUnknown(): React.ReactElement {
         return;
       }
 
+      console.log("[API] ATTEMPT MIGRATION-------------------");
+
       setMigrationAttempted(true);
 
       try {
-        const success = await migrateUserStats(user?.sub, user?.nickname);
+        const success = await migrateUserStats(user?.sub, username);
 
         if (success) {
           console.log(
@@ -109,7 +119,7 @@ export function AthleteUnknown(): React.ReactElement {
     };
 
     attemptMigration();
-  }, [isAuthenticated, migrationAttempted, user?.sub, user?.nickname]);
+  }, [isAuthenticated, migrationAttempted, user?.sub, username]);
 
   const [activeSport, setActiveSport] = useState<SportType>(
     getValidSport(sport, config.athleteUnknown.sportsList[0])
@@ -141,12 +151,7 @@ export function AthleteUnknown(): React.ReactElement {
   }, [setVolume, volume]);
 
   const shareUrl = useMemo(() => {
-    return (
-      window.location.origin +
-      location.pathname +
-      location.search +
-      location.hash
-    );
+    return getCurrentFullUrl(location);
   }, [location]);
 
   // Check if user is a playtester
@@ -189,8 +194,12 @@ export function AthleteUnknown(): React.ReactElement {
 
   // User Stats
   // updates the following fields in state:
-  // userStats
-  const { handleFetchUserStats } = useUserStats({ updateState });
+  // userStats, editedUsername, username
+  const { handleFetchUserStats, handleEditUsername, handleSaveEditedUsername } =
+    useUserStats({
+      state,
+      updateState,
+    });
 
   // Round History
   // updates the following fields in state
@@ -433,6 +442,10 @@ export function AthleteUnknown(): React.ReactElement {
         isOpen={isUserStatsModalOpen}
         onClose={() => setIsUserStatsModalOpen(false)}
         userStats={state.userStats}
+        username={state.username || username} // prioritize state.username in case username was edited in-game
+        editedUsername={state.editedUsername}
+        onEditUsername={handleEditUsername}
+        onSaveEditedUsername={handleSaveEditedUsername}
         isLoading={state.isLoading}
         error={state.error}
       />

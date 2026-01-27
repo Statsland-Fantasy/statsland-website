@@ -36,9 +36,14 @@ class UserStatsService {
       return await athleteUnknownApiService.getUserStats();
     } catch (error: any) {
       // Handle 401 (unauthorized) gracefully - user is not logged in
+      // Handle 404 not found gracefully, user is logged in, but there are no stats yet
       console.log("ERROR", error);
-      if (error?.status === 401) {
-        console.log("[API] User not authenticated, returning empty stats");
+      if (error?.status === 401 || error?.status === 404) {
+        const errorMessage =
+          error?.status === 401
+            ? "[API] User not authenticated, fallback to guestStats"
+            : "[API] No data found for user, fallback to guestStats";
+        console.log(errorMessage);
         // load guestStats as user stats if availble
         if (hasGuestStats()) {
           return loadGuestStats();
