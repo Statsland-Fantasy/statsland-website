@@ -4,15 +4,17 @@ import {
   UserSportStats,
   UserStats,
 } from "@/features/athlete-unknown/types";
-import { useParams, useLocation } from "react-router";
+import { useParams } from "react-router";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { getDateString } from "../utils/date";
+import { clearAllGameData } from "../utils/storage";
 import { config, SportType } from "@/config";
 import { Button } from "./Button";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getCurrentPath } from "@/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { LoadingIndicator } from "./LoadingIndicator";
+import { ErrorDisplay } from "./ErrorDisplay";
 
 interface UserStatsModalProps {
   isOpen: boolean;
@@ -22,6 +24,7 @@ interface UserStatsModalProps {
   editedUsername: string;
   onEditUsername: (editedUsername: string) => void;
   onSaveEditedUsername: () => void;
+  onLogin: () => void;
   isLoading: boolean;
   error: string | null;
 }
@@ -34,12 +37,12 @@ function UserStatsModal({
   editedUsername,
   onEditUsername,
   onSaveEditedUsername,
+  onLogin,
   isLoading,
   error,
 }: UserStatsModalProps): React.ReactElement | null {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, logout } = useAuth0();
   const { sport } = useParams();
-  const location = useLocation();
   const [selectedSport, setSelectedSport] = useState<string>(sport ?? "");
   const [selectedSportStats, setSelectedSportStats] =
     useState<UserSportStats | null>();
@@ -58,6 +61,7 @@ function UserStatsModal({
   const handleSaveUsername = () => {
     // TODO: Add API call to update username in backend
     console.log("Saving username:", editedUsername);
+    // set toast on either success or failure
     onSaveEditedUsername();
     setIsEditingUsername(false);
   };
@@ -78,11 +82,9 @@ function UserStatsModal({
     onEditUsername(username);
   }, [username, onEditUsername]);
 
-  if (!isOpen || !userStats || !selectedSportStats) {
+  if (!isOpen) {
     return null;
   }
-
-  console.log("usm user");
 
   return (
     <div className="au-results-modal" onClick={onClose}>
@@ -127,17 +129,7 @@ function UserStatsModal({
               <div className="au-report-field">
                 <span className="au-report-label">Name:</span>
                 {!isAuthenticated ? (
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() =>
-                      loginWithRedirect({
-                        appState: {
-                          returnTo: getCurrentPath(location),
-                        },
-                      })
-                    }
-                  >
+                  <Button variant="secondary" size="sm" onClick={onLogin}>
                     Login/Sign Up
                   </Button>
                 ) : isEditingUsername ? (
@@ -182,45 +174,53 @@ function UserStatsModal({
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() =>
+                  onClick={() => {
+                    clearAllGameData();
                     logout({
                       logoutParams: { returnTo: window.location.origin },
-                    })
-                  }
+                    });
+                  }}
                 >
                   Log Out
                 </Button>
               )}
 
-              <div className="au-report-field">
-                <span className="au-report-label">
-                  Solving
-                  <br />
-                  Mysteries
-                  <br />
-                  Since:
-                </span>
-                <span className="au-report-value">
-                  <br />
-                  {userStats.userCreated !== ""
-                    ? getDateString(userStats.userCreated)
-                    : "N/A"}
-                </span>
-                <div className="au-report-underline"></div>
-              </div>
-              <div className="au-report-field">
-                <span className="au-report-label">
-                  Current Daily <br /> Streak:
-                </span>
-                <span className="au-report-value">
-                  {userStats.currentDailyStreak}
-                </span>
-                <div className="au-report-underline"></div>
-              </div>
+              {userStats && (
+                <>
+                  <div className="au-report-field">
+                    <span className="au-report-label">
+                      Solving
+                      <br />
+                      Mysteries
+                      <br />
+                      Since:
+                    </span>
+                    <span className="au-report-value">
+                      <br />
+                      {userStats.userCreated !== ""
+                        ? getDateString(userStats.userCreated)
+                        : "N/A"}
+                    </span>
+                    <div className="au-report-underline"></div>
+                  </div>
+                  <div className="au-report-field">
+                    <span className="au-report-label">
+                      Current Daily <br /> Streak:
+                    </span>
+                    <span className="au-report-value">
+                      {userStats.currentDailyStreak}
+                    </span>
+                    <div className="au-report-underline"></div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
-          {selectedSportStats && (
+          {isLoading && <LoadingIndicator color="black" />}
+          {error && <ErrorDisplay error={error} />}
+
+          {!isLoading && selectedSportStats && (
             <>
               <div className="au-results-modal-section-separator" />
               <h3 className="au-results-round-stats-title">{`All ${selectedSport} Case Stats`}</h3>

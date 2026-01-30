@@ -15,4 +15,11 @@ function getDateString(isoDateTimeString: string): string {
   return `${month}-${day}-${year}`;
 }
 
-export { getCurrentDateString, getDateString };
+function daysBetween(dateStr1: string, dateStr2: string): number {
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const d1 = new Date(dateStr1 + "T00:00:00");
+  const d2 = new Date(dateStr2 + "T00:00:00");
+  return Math.round(Math.abs(d2.getTime() - d1.getTime()) / msPerDay);
+}
+
+export { getCurrentDateString, getDateString, daysBetween };

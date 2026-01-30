@@ -197,16 +197,14 @@ export const PHOTO_GRID = {
 } as const;
 
 // ============================================================================
-// DEFAULT VALUES
+// BACKGROUND MUSIC
 // ============================================================================
 
-export const DEFAULTS = {
-  // Default daily round number if not specified
-  ROUND_ID_NUMBER: 1,
-
-  // Default player index if none is stored
-  PLAYER_INDEX: 0,
-} as const;
+export const MUSIC_PLAYLIST = [
+  "/AU-Closed_Curtains.mp3",
+  "/AU-Sleek_Panther.mp3",
+  "/AU-Smoky_Lounge.mp3",
+];
 
 // ============================================================================
 // LEGACY DATA FILES (for backwards compatibility)

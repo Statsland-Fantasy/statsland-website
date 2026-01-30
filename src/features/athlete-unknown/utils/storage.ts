@@ -10,7 +10,6 @@ import type {
 } from "@/features/athlete-unknown/config";
 
 export const STORAGE_KEYS = {
-  MOCK_DATA_PLAYER_INDEX_PREFIX: "mockDataPlayerIndex_",
   CURRENT_SESSION_PREFIX: "currentSession_",
   GUEST_STATS_KEY: "guestStats",
 } as const;
@@ -23,13 +22,6 @@ export const getCurrentSessionKey = (
   playDate: string
 ): string => {
   return `${STORAGE_KEYS.CURRENT_SESSION_PREFIX}${sport}_${playDate}`;
-};
-
-/**
- * Get the mock data player index key for a specific sport
- */
-export const getMockDataPlayerIndexKey = (sport: string): string => {
-  return `${STORAGE_KEYS.MOCK_DATA_PLAYER_INDEX_PREFIX}${sport}`;
 };
 
 /**
@@ -102,43 +94,19 @@ export const clearMidRoundProgress = (
 };
 
 /**
- * Get mock data player index from localStorage
+ * Clear all game-related localStorage entries
  */
-export const getMockDataPlayerIndex = (sport: string): number | null => {
+export const clearAllGameData = (): void => {
   try {
-    const key = getMockDataPlayerIndexKey(sport);
-    const data = localStorage.getItem(key);
-    if (data) {
-      return parseInt(data, 10);
-    }
-    return null;
+    Object.keys(localStorage)
+      .filter(
+        (key) =>
+          key.startsWith(STORAGE_KEYS.CURRENT_SESSION_PREFIX) ||
+          key === STORAGE_KEYS.GUEST_STATS_KEY
+      )
+      .forEach((key) => localStorage.removeItem(key));
   } catch (error) {
-    console.error("[Storage] Error loading mock data player index:", error);
-    return null;
-  }
-};
-
-/**
- * Save mock data player index to localStorage
- */
-export const saveMockDataPlayerIndex = (sport: string, index: number): void => {
-  try {
-    const key = getMockDataPlayerIndexKey(sport);
-    localStorage.setItem(key, index.toString());
-  } catch (error) {
-    console.error("[Storage] Error saving mock data player index:", error);
-  }
-};
-
-/**
- * Clear mock data player index from localStorage
- */
-export const clearMockDataPlayerIndex = (sport: string): void => {
-  try {
-    const key = getMockDataPlayerIndexKey(sport);
-    localStorage.removeItem(key);
-  } catch (error) {
-    console.error("[Storage] Error clearing mock data player index:", error);
+    console.error("[Storage] Error clearing all game data:", error);
   }
 };
 
@@ -155,7 +123,6 @@ export const hasAnyGameData = (): boolean => {
         // Check if key matches any of our game data patterns
         if (
           key.startsWith(STORAGE_KEYS.CURRENT_SESSION_PREFIX) ||
-          key.startsWith(STORAGE_KEYS.MOCK_DATA_PLAYER_INDEX_PREFIX) ||
           key === STORAGE_KEYS.GUEST_STATS_KEY
         ) {
           return true;

@@ -156,6 +156,20 @@ class AthleteUnknownApiService {
       );
     }
   }
+
+  /**
+   * Update username (in Auth0 via API)
+   */
+  async updateUsername(username: string): Promise<Round[]> {
+    const endpoint = "/v1/user/username";
+
+    try {
+      return await this.httpClient.put<any>(endpoint, { username });
+    } catch (error) {
+      console.error("Error updating username:", error);
+      throw this.httpClient.formatError(error, "Failed to update username");
+    }
+  }
 }
 
 // Export singleton instance

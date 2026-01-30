@@ -63,20 +63,26 @@ export const useShareResults = ({
     // add url to share at the bottom
     shareText += shareUrl;
 
-    // Copy to clipboard
-    navigator.clipboard
-      .writeText(shareText)
-      .then(() => {
-        // Show what was copied
-        updateState({ copiedText: shareText });
-        // Clear the message after 3 seconds
-        setTimeout(() => {
-          updateState({ copiedText: "" });
-        }, TIMING.SHARE_COPIED_MESSAGE_DURATION);
-      })
-      .catch((err) => {
-        console.error("Failed to copy:", err);
+    if (navigator.share) {
+      navigator.share({
+        text: shareText,
       });
+    } else {
+      // Copy to clipboard
+      navigator.clipboard
+        .writeText(shareText)
+        .then(() => {
+          // Show what was copied
+          updateState({ copiedText: shareText });
+          // Clear the message after 3 seconds
+          setTimeout(() => {
+            updateState({ copiedText: "" });
+          }, TIMING.SHARE_COPIED_MESSAGE_DURATION);
+        })
+        .catch((err) => {
+          console.error("Failed to copy:", err);
+        });
+    }
   }, [state, updateState, shareUrl]);
 
   return {

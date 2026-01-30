@@ -20,7 +20,7 @@ const PROLOGUE_PAGES = [
   [
     '"Off-the-field issues aside," he said, glancing at my bottle of whiskey. "Your talent is off the charts. Frankly, you know the game better than anyone in my front office."',
     "He dropped a stack of case files on my desk as thick as an NFL playbook. I filpped through the files. I looked at the clock.",
-    '"Statsland\'s running out of time," I said. And it looks like you\'re all out of timeouts. Good thing comebacks are my calling card."',
+    '"Looks like Statsland\'s running out of time and you\'re all out of timeouts," I said. "Lucky for you comebacks are my calling card."',
   ],
   [
     "How to Play",
@@ -106,7 +106,7 @@ function RulesModal({
 
                 <div className="au-case-file-text-container">
                   <p
-                    className={`au-rules-prologue au-rules-prologue-invisible au-how-to-play`}
+                    className="au-rules-prologue au-rules-prologue-invisible au-how-to-play"
                     aria-hidden="true"
                   >
                     {currentPageText}
@@ -141,7 +141,7 @@ function RulesModal({
           <div className="au-page-indicator">
             {currentPage + 1} / {PROLOGUE_PAGES.length}
           </div>
-          <button className={`au-prologue-nav-button`} onClick={handleNextPage}>
+          <button className="au-prologue-nav-button" onClick={handleNextPage}>
             {isPageComplete ? (isLastPage ? "Close" : "Next") : "Skip"}
           </button>
         </div>

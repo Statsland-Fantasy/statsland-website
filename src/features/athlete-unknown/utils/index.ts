@@ -2,13 +2,9 @@ export { calculateNewScore } from "./scoring";
 export {
   STORAGE_KEYS,
   getCurrentSessionKey,
-  getMockDataPlayerIndexKey,
   saveMidRoundProgress,
   loadMidRoundProgress,
   clearMidRoundProgress,
-  getMockDataPlayerIndex,
-  saveMockDataPlayerIndex,
-  clearMockDataPlayerIndex,
   hasAnyGameData,
   type MidRoundProgress,
 } from "./storage";
@@ -23,4 +19,4 @@ export {
   clearGuestStats,
   createInitialUserStats,
 } from "./guestStats";
-export { getCurrentDateString } from "./date";
+export { getCurrentDateString, getDateString, daysBetween } from "./date";
