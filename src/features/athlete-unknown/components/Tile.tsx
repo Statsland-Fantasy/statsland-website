@@ -93,11 +93,11 @@ export function Tile({
         </div>
 
         <div
-          className={`tile-back ${photoRevealed ? "photo-segment" : ""}`}
+          className={`tile-back ${photoRevealed ? "photo-segment investigation-evidence" : ""}`}
           style={photoRevealed ? photoSegmentStyle : {}}
         >
           {!photoRevealed && tileName === TILE_NAMES.PHOTO && (
-            <img src={photoUrl} alt="Player" className="tile-mini-photo" />
+            <img src={photoUrl} alt="Player" className="tile-mini-photo investigation-evidence" />
           )}
           {!photoRevealed && tileName !== TILE_NAMES.PHOTO && (
             <div>

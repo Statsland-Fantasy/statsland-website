@@ -423,6 +423,8 @@ export function AthleteUnknown(): React.ReactElement {
           sport={activeSport}
           roundNumber={roundNumber}
           playDate={playDate}
+          username={state.username || username} // prioritize state.username in case username was edited in-game
+          onLogin={handleLogin}
         />
       )}
 

@@ -19,6 +19,10 @@ const FALLBACK_SPORTS_LIST = [
   SPORT_BASEBALL as SportType,
 ];
 
+// Music and Sound Effect Volumes (no volume change, only muted or unmuted)
+export const MUSIC_VOLUME = 0.4;
+export const EFFECT_VOLUME = 0.6;
+
 /**
  * Validates and parses the sports list from environment variable
  * If any sport is invalid, returns null (triggers fallback)

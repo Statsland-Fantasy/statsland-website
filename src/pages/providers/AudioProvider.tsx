@@ -1,3 +1,4 @@
+import { EFFECT_VOLUME, MUSIC_VOLUME } from "@/config/env";
 import {
   createContext,
   useContext,
@@ -21,9 +22,6 @@ interface AudioContextValue {
   playEffect: (src: string) => void;
   setEffectVolume: (volume: number) => void;
 }
-
-const MUSIC_VOLUME = 0.5;
-const EFFECT_VOLUME = 0.7;
 
 const AudioContext = createContext<AudioContextValue | null>(null);
 

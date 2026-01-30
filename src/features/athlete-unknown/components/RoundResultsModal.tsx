@@ -6,6 +6,7 @@ import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-pe
 import { Button } from "./Button";
 import { getSportEmoji } from "@/features/athlete-unknown/utils";
 import { formatDate } from "@/utils";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const WIN_OR_LOSE = "winOrLose";
 
@@ -31,6 +32,8 @@ interface ResultsModalProps {
   sport: SportType;
   roundNumber: string;
   playDate: string;
+  username: string;
+  onLogin: () => void;
 }
 
 export function RoundResultsModal({
@@ -45,7 +48,10 @@ export function RoundResultsModal({
   sport,
   roundNumber,
   playDate,
+  username,
+  onLogin,
 }: ResultsModalProps): React.ReactElement | null {
+  const { isAuthenticated } = useAuth0();
   if (!isOpen) {
     return null;
   }
@@ -129,7 +135,13 @@ export function RoundResultsModal({
               </div>
               <div className="au-report-field">
                 <span className="au-report-label">P.I.:</span>
-                <span className="au-report-value">TestUser123</span>
+                {isAuthenticated ? (
+                  <span className="au-report-value">{username}</span>
+                ) : (
+                  <Button variant="secondary" size="sm" onClick={onLogin}>
+                    Login
+                  </Button>
+                )}
                 <div className="au-report-underline"></div>
               </div>
             </div>

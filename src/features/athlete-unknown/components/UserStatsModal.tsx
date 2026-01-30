@@ -127,7 +127,7 @@ function UserStatsModal({
                 <span className="au-report-label">Name:</span>
                 {!isAuthenticated ? (
                   <Button variant="secondary" size="sm" onClick={onLogin}>
-                    Login/Sign Up
+                    Login
                   </Button>
                 ) : isEditingUsername ? (
                   <>
