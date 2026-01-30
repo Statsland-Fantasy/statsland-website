@@ -38,6 +38,7 @@ import {
   UserSportStats,
 } from "@/features";
 import { getValidSport } from "@/features/athlete-unknown/utils/strings";
+import { STORAGE_KEYS } from "@/features/athlete-unknown/utils/storage";
 import { hasAnyGameData } from "@/features/athlete-unknown/utils";
 import { config } from "@/config";
 import { Navbar } from "@/components";
@@ -65,10 +66,16 @@ export function AthleteUnknown(): React.ReactElement {
         const payload = JSON.parse(window.atob(base64));
 
         const roles = payload["https://statslandfantasy.com/roles"] || [];
-        const username =
-          payload["https://statslandfantasy.com/username"] ||
-          user?.user_metadata?.display_username;
-        console.log("[AthleteUnknown] Access Token username:", username);
+        const userMetadata =
+          user?.["https://statslandfantasy.com/user_metadata"] || "";
+        const { display_username: tokenUsername } = userMetadata;
+
+        // Check localStorage first (may have updated username not yet in token)
+        const storedUsername = localStorage.getItem(STORAGE_KEYS.USERNAME);
+        const username = storedUsername || tokenUsername;
+
+        console.log("[AthleteUnknown] Access Token username:", tokenUsername);
+        console.log("[AthleteUnknown] Stored username:", storedUsername);
         console.log("[AthleteUnknown] Access Token roles:", roles);
         setUserRoles(roles);
         setUsername(username);
@@ -277,6 +284,10 @@ export function AthleteUnknown(): React.ReactElement {
   }, [loginWithRedirect, location]);
 
   // console.log("STATE AU", state);
+
+  console.log("-------------------------------------------");
+  console.log("username1", username);
+  console.log("state.username", state.username);
 
   return (
     <div className="au-container">

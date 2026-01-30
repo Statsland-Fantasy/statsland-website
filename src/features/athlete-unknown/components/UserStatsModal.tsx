@@ -59,9 +59,6 @@ function UserStatsModal({
   };
 
   const handleSaveUsername = () => {
-    // TODO: Add API call to update username in backend
-    console.log("Saving username:", editedUsername);
-    // set toast on either success or failure
     onSaveEditedUsername();
     setIsEditingUsername(false);
   };

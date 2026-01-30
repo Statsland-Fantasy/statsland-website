@@ -12,6 +12,7 @@ import type {
 export const STORAGE_KEYS = {
   CURRENT_SESSION_PREFIX: "currentSession_",
   GUEST_STATS_KEY: "guestStats",
+  USERNAME: "statsland_username",
 } as const;
 
 /**
@@ -102,7 +103,8 @@ export const clearAllGameData = (): void => {
       .filter(
         (key) =>
           key.startsWith(STORAGE_KEYS.CURRENT_SESSION_PREFIX) ||
-          key === STORAGE_KEYS.GUEST_STATS_KEY
+          key === STORAGE_KEYS.GUEST_STATS_KEY ||
+          key === STORAGE_KEYS.USERNAME
       )
       .forEach((key) => localStorage.removeItem(key));
   } catch (error) {

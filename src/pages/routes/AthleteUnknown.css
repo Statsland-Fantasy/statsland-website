@@ -1693,8 +1693,7 @@
 /* Editable username input - styled to match the span */
 .au-username-input {
   border: none;
-  /* background: transparent; */
-  background-color: green;
+  background: transparent;
   outline: none;
   padding: 0 0.25rem;
   margin: 0;

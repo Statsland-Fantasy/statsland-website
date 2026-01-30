@@ -61,7 +61,7 @@ export const useShareResults = ({
     }
 
     // add url to share at the bottom
-    shareText += shareUrl;
+    shareText += `Solve today's case at: ${shareUrl}`;
 
     if (navigator.share) {
       navigator.share({

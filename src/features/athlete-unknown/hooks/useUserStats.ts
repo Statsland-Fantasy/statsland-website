@@ -4,10 +4,12 @@
  */
 
 import { useCallback } from "react";
+import { toast } from "sonner";
 import {
   athleteUnknownApiService,
   userStatsService,
 } from "@/features/athlete-unknown/services";
+import { STORAGE_KEYS } from "@/features/athlete-unknown/utils/storage";
 import type { GameState } from "./useGameState";
 
 interface UseUserStatsProps {
@@ -16,6 +18,7 @@ interface UseUserStatsProps {
 }
 
 export const useUserStats = ({ state, updateState }: UseUserStatsProps) => {
+
   const handleFetchUserStats = useCallback(async () => {
     try {
       updateState({ isUserStatsLoading: true, error: null });
@@ -53,11 +56,14 @@ export const useUserStats = ({ state, updateState }: UseUserStatsProps) => {
     try {
       updateState({ error: null });
       await athleteUnknownApiService.updateUsername(state.editedUsername);
+      // Persist to localStorage so it survives page refresh (token may have stale value)
+      localStorage.setItem(STORAGE_KEYS.USERNAME, state.editedUsername);
       updateState({
         username: state.editedUsername,
         editedUsername: "",
         error: null,
       });
+      toast.success("Username saved");
     } catch (error) {
       console.error("Failed to update username");
       updateState({
@@ -66,6 +72,7 @@ export const useUserStats = ({ state, updateState }: UseUserStatsProps) => {
             ? error.message
             : "Failed to retrieve user stats",
       });
+      toast.error("Failed to save username");
     }
   }, [updateState, state]);
 
