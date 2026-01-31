@@ -1,7 +1,21 @@
 // src/layouts/RootLayout.tsx
-import { Outlet } from "react-router";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router";
+import { Navbar } from "@/components";
+import { logPageView } from "@/utils/analytics";
 
 export function RootLayout() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "production" ||
+      process.env.REACT_APP_GA_DEBUG === "true"
+    ) {
+      logPageView(location.pathname + location.search);
+    }
+  }, [location]);
+
   return (
     <div>
       <main>

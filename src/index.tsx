@@ -3,6 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./global.css";
 import { reportWebVitals } from "./reportWebVitals";
 import { AppProviders } from "@/pages/providers";
+import { initGA } from "@/utils/analytics";
+
+// Initialize Google Analytics in production or when debug mode is enabled
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.REACT_APP_GA_DEBUG === "true"
+) {
+  initGA();
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
