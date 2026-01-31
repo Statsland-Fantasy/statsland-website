@@ -176,8 +176,18 @@ export const useGameState = (activeSport: SportType, playDate?: string) => {
         }
 
         // Save progress to localStorage after state update
-        // Only save if the game is in progress (not showing results and not completed)
-        if (!newState.isCompleted) {
+        // Only save if updating game-progress fields (not just loading/error states)
+        const isGameProgressUpdate =
+          patch.flippedTiles !== undefined ||
+          patch.previousGuesses !== undefined ||
+          patch.score !== undefined ||
+          patch.isCompleted !== undefined ||
+          patch.playerName !== undefined ||
+          patch.incorrectGuesses !== undefined ||
+          patch.message !== undefined ||
+          patch.lastSubmittedGuess !== undefined;
+
+        if (isGameProgressUpdate && !newState.isCompleted) {
           const progress = gameStateToProgress(
             newState,
             activeSport,

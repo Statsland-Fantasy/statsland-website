@@ -42,17 +42,17 @@ export const TILE_NAMES = {
 } as const;
 
 export const TILE_PENALTIES = {
-  [TILE_NAMES.INITIALS]: 6,
-  [TILE_NAMES.NICKNAMES]: 6,
-  [TILE_NAMES.BIO]: 3,
-  [TILE_NAMES.PLAYER_INFORMATION]: 3,
+  [TILE_NAMES.BIO]: 1,
+  [TILE_NAMES.CAREER_STATS]: 2,
+  [TILE_NAMES.YEARS_ACTIVE]: 2,
   [TILE_NAMES.DRAFT_INFORMATION]: 3,
-  [TILE_NAMES.YEARS_ACTIVE]: 3,
-  [TILE_NAMES.PHOTO]: 6,
-  [TILE_NAMES.TEAMS_PLAYED_ON]: 3,
   [TILE_NAMES.JERSEY_NUMBERS]: 3,
-  [TILE_NAMES.CAREER_STATS]: 3,
   [TILE_NAMES.PERSONAL_ACHIEVEMENTS]: 3,
+  [TILE_NAMES.TEAMS_PLAYED_ON]: 4,
+  [TILE_NAMES.PLAYER_INFORMATION]: 4,
+  [TILE_NAMES.INITIALS]: 5,
+  [TILE_NAMES.NICKNAMES]: 5,
+  [TILE_NAMES.PHOTO]: 5,
 } as const;
 
 export type ScoreDeduction = typeof INCORRECT_GUESS | TileType;
@@ -109,7 +109,7 @@ export const TILES = {
     flippedEmoji: "🟨",
   },
   [TILE_NAMES.PERSONAL_ACHIEVEMENTS]: {
-    label: `Personal Achievements \n(-${TILE_PENALTIES[TILE_NAMES.PERSONAL_ACHIEVEMENTS]}) PTS`,
+    label: `Personal Achievements \n(-${TILE_PENALTIES[TILE_NAMES.PERSONAL_ACHIEVEMENTS]} PTS)`,
     penalty: TILE_PENALTIES[TILE_NAMES.PERSONAL_ACHIEVEMENTS],
     flippedEmoji: "🟨",
   },
@@ -125,14 +125,14 @@ export const TOP_TILES = [
 // Tiles in the 3x3 grid. Order matters for grid arrangement
 export const GRID_TILES = [
   TILE_NAMES.BIO as TileType,
-  TILE_NAMES.PLAYER_INFORMATION as TileType,
-  TILE_NAMES.DRAFT_INFORMATION as TileType,
-  TILE_NAMES.YEARS_ACTIVE as TileType,
-  TILE_NAMES.PHOTO as TileType,
-  TILE_NAMES.TEAMS_PLAYED_ON as TileType,
-  TILE_NAMES.JERSEY_NUMBERS as TileType,
   TILE_NAMES.CAREER_STATS as TileType,
+  TILE_NAMES.YEARS_ACTIVE as TileType,
+  TILE_NAMES.DRAFT_INFORMATION as TileType,
+  TILE_NAMES.JERSEY_NUMBERS as TileType,
   TILE_NAMES.PERSONAL_ACHIEVEMENTS as TileType,
+  TILE_NAMES.TEAMS_PLAYED_ON as TileType,
+  TILE_NAMES.PLAYER_INFORMATION as TileType,
+  TILE_NAMES.PHOTO as TileType,
 ] as const;
 
 // All tiles available for clues. Order matters for share text

@@ -332,6 +332,7 @@ export function AthleteUnknown(): React.ReactElement {
                   onPlayerNameChange={(name) =>
                     updateState({ playerName: name })
                   }
+                  onSubmit={handleNameSubmit}
                 />
                 <PreviousGuesses
                   guesses={state.previousGuesses}
@@ -344,7 +345,7 @@ export function AthleteUnknown(): React.ReactElement {
                 <div className="au-scoring-buttons-container">
                   <Button
                     onClick={handleNameSubmit}
-                    size="md"
+                    size="lg"
                     variant={state.isCompleted ? "ghost" : "primary"}
                     disabled={state.isCompleted || state.playerName === ""}
                   >

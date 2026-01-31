@@ -699,102 +699,6 @@
   /* overflow: visible;  */
 }
 
-/* Custom tooltip - base styles */
-.tile[data-tooltip]:not([data-tooltip=""])::after {
-  display: none; /* enable for desktop */
-  content: attr(data-tooltip);
-  position: absolute;
-  background-color: #0077b6;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  font-weight: 600;
-  white-space: nowrap;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease;
-  box-shadow: 0 2px 8px rgba(0, 119, 182, 0.3);
-}
-
-.tile[data-tooltip]:not([data-tooltip=""]):hover::after {
-  opacity: 1;
-}
-
-/* Tooltip arrow - base styles */
-.tile[data-tooltip]:not([data-tooltip=""])::before {
-  content: "";
-  position: absolute;
-  border: 6px solid transparent;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease;
-}
-
-.tile[data-tooltip]:not([data-tooltip=""]):hover::before {
-  opacity: 1;
-}
-
-/* Tooltip position: TOP */
-.tile[data-tooltip-position="top"]::after {
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tile[data-tooltip-position="top"]::before {
-  bottom: calc(100% + 4px);
-  left: 50%;
-  transform: translateX(-50%);
-  border-top-color: #0077b6;
-}
-
-/* Tooltip position: BOTTOM */
-.tile[data-tooltip-position="bottom"]::after {
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tile[data-tooltip-position="bottom"]::before {
-  top: calc(100% + 4px);
-  left: 50%;
-  transform: translateX(-50%);
-  border-bottom-color: #0077b6;
-}
-
-/* Tooltip position: RIGHT */
-.tile[data-tooltip-position="right"]::after {
-  left: calc(100% + 10px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.tile[data-tooltip-position="right"]::before {
-  left: calc(100% + 4px);
-  top: 50%;
-  transform: translateY(-50%);
-  border-right-color: #0077b6;
-}
-
-/* Tooltip position: LEFT */
-.tile[data-tooltip-position="left"]::after {
-  right: calc(100% + 10px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.tile[data-tooltip-position="left"]::before {
-  right: calc(100% + 4px);
-  top: 50%;
-  transform: translateY(-50%);
-  border-left-color: #0077b6;
-}
-
-/* Clip tile content but not tooltip */
 .tile-inner {
   position: relative;
   width: 100%;
@@ -1021,6 +925,38 @@
   border-radius: 2px;
 }
 
+/* Investigation Evidence Effect - makes photo harder to identify */
+.tile-mini-photo.investigation-evidence {
+  /* Base photo effects: grayscale, lower contrast, heavier blur */
+  filter: grayscale(80%) contrast(1.75) brightness(0.9) blur(1.5px);
+
+  /* Torn edges for damaged evidence look */
+  clip-path: polygon(
+    3% 0%,
+    7% 4.5%,
+    18% 1.5%,
+    30% 6%,
+    92% 0%,
+    97% 4.5%,
+    100% 3%,
+    100% 95%,
+    97% 100%,
+    88% 97%,
+    77% 100%,
+    15% 98%,
+    7% 100%,
+    0% 92%
+  );
+
+  /* Slight rotation for "pinned evidence" look */
+  transform: rotate(-0.5deg);
+}
+
+.tile-back.photo-segment.investigation-evidence {
+  /* Slightly less blur for revealed photo segments */
+  filter: grayscale(80%) contrast(1.75) brightness(0.9) blur(3px);
+}
+
 /* ========================================
    Detective Noir Button Component
    ======================================== */
@@ -1068,29 +1004,33 @@
    ---------------------------------------- */
 .au-btn--primary {
   background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
-  color: #f0f0f0;
+  color: white;
   border: 2px solid #3a3a3a;
   border-radius: 2px;
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 0 #0a0a0a,
+    0 6px 10px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .au-btn--primary:hover:not(:disabled) {
   background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
   border-color: #4a4a4a;
   box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 5px 0 #0a0a0a,
+    0 8px 12px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transform: translateY(-1px);
+  transform: translateY(-3px);
 }
 
 .au-btn--primary:active:not(:disabled) {
   background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 0 #0a0a0a,
+    0 2px 4px rgba(0, 0, 0, 0.3),
     inset 0 2px 4px rgba(0, 0, 0, 0.3);
-  transform: translateY(0);
+  transform: translateY(1px);
 }
 
 .au-btn--primary:focus-visible {
@@ -1289,38 +1229,23 @@
   text-decoration: none;
   color: #f4c90d;
   opacity: 1;
-  position: static;
-  cursor: help;
+  position: relative;
 }
 
-/* Tooltip for close guesses */
-.au-previous-guess--close[data-tooltip]:not([data-tooltip=""])::after {
-  content: attr(data-tooltip);
+/* Auto-showing tooltip for close guesses */
+.au-previous-guess-tooltip {
   position: absolute;
-  top: 90%;
-  right: 0%;
+  top: 75%;
+  right: -5%;
   background-color: #f4c90d;
-  color: white;
-  padding: 0.5rem;
+  color: #1a1a1a;
+  padding: 0.5em;
   border-radius: 4px;
-  font-size: 1rem;
-  font-family: Arial, sans-serif;
+  font-size: 0.75rem;
+  font-family: "Special Elite", "Courier New", monospace;
   white-space: nowrap;
   z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-
-.au-previous-guess--close[data-tooltip]:not([data-tooltip=""]):hover::after {
-  opacity: 1;
-  cursor: pointer;
-}
-
-.au-previous-guess--close[data-tooltip]:not([data-tooltip=""]):hover::before {
-  opacity: 1;
 }
 
 /* Sports Reference Attribution */

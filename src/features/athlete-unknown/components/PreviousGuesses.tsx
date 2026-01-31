@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   calculateLevenshteinDistance,
   normalize,
@@ -10,6 +10,50 @@ interface PreviousGuessesProps {
   correctName: string;
 }
 
+interface GuessItemProps {
+  guess: string;
+  isCorrect: boolean;
+  isClose: boolean;
+  distance: number;
+}
+
+function GuessItem({
+  guess,
+  isCorrect,
+  isClose,
+  distance,
+}: GuessItemProps): React.ReactElement {
+  const [showTooltip, setShowTooltip] = useState(isClose);
+
+  useEffect(() => {
+    if (showTooltip) {
+      const timeout = setTimeout(() => setShowTooltip(false), 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showTooltip]);
+
+  const handleInteraction = useCallback(() => {
+    if (isClose) {
+      setShowTooltip(true);
+    }
+  }, [isClose]);
+
+  return (
+    <div
+      className={`au-previous-guess ${isCorrect ? "au-previous-guess--correct" : isClose ? "au-previous-guess--close" : ""}`}
+      onClick={handleInteraction}
+      onMouseEnter={handleInteraction}
+    >
+      {guess}
+      {isClose && showTooltip && (
+        <span className="au-previous-guess-tooltip">
+          Spelling is off by {distance} letter{distance !== 1 ? "s" : ""}!
+        </span>
+      )}
+    </div>
+  );
+}
+
 export function PreviousGuesses({
   guesses,
   correctName,
@@ -18,7 +62,7 @@ export function PreviousGuesses({
     return null;
   }
 
-  // Only show the last 4 guesses
+  // Only show the last 2 guesses
   const displayedGuesses = guesses.slice(-2);
 
   return (
@@ -32,17 +76,13 @@ export function PreviousGuesses({
         const isClose = distance <= GUESS_ACCURACY.VERY_CLOSE_DISTANCE;
 
         return (
-          <div
+          <GuessItem
             key={index}
-            className={`au-previous-guess ${isCorrect ? "au-previous-guess--correct" : isClose ? "au-previous-guess--close" : ""}`}
-            data-tooltip={
-              isClose
-                ? `Spelling is off by ${distance} letter${distance !== 1 ? "s" : ""}!`
-                : ""
-            }
-          >
-            {guess}
-          </div>
+            guess={guess}
+            isCorrect={isCorrect}
+            isClose={isClose}
+            distance={distance}
+          />
         );
       })}
     </div>
