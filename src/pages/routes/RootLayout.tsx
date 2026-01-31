@@ -13,7 +13,8 @@ export function RootLayout() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          height: "100dvh",
+          backgroundColor: "pink",
         }}
       >
         <p>Auth0 Stuff Loading...</p>

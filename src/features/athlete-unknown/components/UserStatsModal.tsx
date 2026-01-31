@@ -76,8 +76,10 @@ function UserStatsModal({
   }, [userStats, selectedSport]);
 
   useEffect(() => {
-    onEditUsername(username);
-  }, [username, onEditUsername]);
+    if (isOpen) {
+      onEditUsername(username);
+    }
+  }, [isOpen, username, onEditUsername]);
 
   if (!isOpen) {
     return null;

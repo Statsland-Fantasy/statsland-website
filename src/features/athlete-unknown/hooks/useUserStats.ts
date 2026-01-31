@@ -18,7 +18,6 @@ interface UseUserStatsProps {
 }
 
 export const useUserStats = ({ state, updateState }: UseUserStatsProps) => {
-
   const handleFetchUserStats = useCallback(async () => {
     try {
       updateState({ isUserStatsLoading: true, error: null });

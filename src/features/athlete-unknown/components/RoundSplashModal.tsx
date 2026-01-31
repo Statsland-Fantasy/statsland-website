@@ -4,8 +4,13 @@ import { getSportEmoji, daysBetween, getCurrentDateString } from "../utils";
 import { useAudio } from "@/pages/providers";
 import { MUSIC_PLAYLIST } from "../config";
 import { useAuth0 } from "@auth0/auth0-react";
-import { faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faVolumeHigh,
+  faVolumeXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SLLogoStar from "../assets/SL_Logo_Star_Color.svg";
 
 interface RoundSplashModalProps {
   isOpen: boolean;
@@ -41,9 +46,12 @@ export function RoundSplashModal({
   return (
     <div className="au-splash-overlay">
       <div className="au-splash-content">
-        <h1 className="au-splash-title">Athlete Unknown Logo</h1>
+        <h1 className="au-splash-title">
+          Athlete Unknown <br />
+          (Logo TBD)
+        </h1>
         <p className="au-splash-subtitle">
-          Use the clues and solve the mystery... (type it out)
+          Use the clues to solve the mystery...
         </p>
 
         <button
@@ -51,6 +59,7 @@ export function RoundSplashModal({
           onClick={onContinue}
           disabled={isLoading}
         >
+          <FontAwesomeIcon icon={faMagnifyingGlass} size="sm" />
           Play
         </button>
 
@@ -93,6 +102,11 @@ export function RoundSplashModal({
       </div>
 
       <div className="au-splash-footer">
+        <img
+          src={SLLogoStar}
+          alt="Statsland Logo"
+          className="au-splash-footer-logo"
+        />
         <span className="au-splash-footer-text">A Statsland Attraction</span>
       </div>
     </div>

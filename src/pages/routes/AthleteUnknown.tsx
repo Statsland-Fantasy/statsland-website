@@ -42,8 +42,8 @@ import { STORAGE_KEYS } from "@/features/athlete-unknown/utils/storage";
 import { hasAnyGameData } from "@/features/athlete-unknown/utils";
 import { config } from "@/config";
 import { Navbar } from "@/components";
-import PlaceholderLogo from "@/features/athlete-unknown/assets/placeholder-logo.png";
 import { getCurrentFullUrl, getCurrentPath } from "@/utils";
+// import PlaceholderLogo from "@/features/athlete-unknown/assets/placeholder-logo.png";
 
 export function AthleteUnknown(): React.ReactElement {
   const { getAccessTokenSilently, isAuthenticated, user, loginWithRedirect } =
@@ -207,12 +207,12 @@ export function AthleteUnknown(): React.ReactElement {
     setActiveSport(getValidSport(sport));
   }, [sport, setActiveSport]);
 
-  // Show RulesModal for first-time users
+  // Show RulesModal for first-time users (after splash is dismissed)
   useEffect(() => {
-    if (!hasAnyGameData()) {
+    if (!showSplash && !hasAnyGameData()) {
       setIsRulesModalOpen(true);
     }
-  }, []);
+  }, [showSplash]);
 
   // Clear localStorage when round is completed
   useEffect(() => {
@@ -285,20 +285,16 @@ export function AthleteUnknown(): React.ReactElement {
 
   // console.log("STATE AU", state);
 
-  console.log("-------------------------------------------");
-  console.log("username1", username);
-  console.log("state.username", state.username);
-
   return (
     <div className="au-container">
       <div className="au-header-container">
         <div className="au-left-header-container">
           <Navbar />
-          <img
+          {/* <img
             src={PlaceholderLogo}
             alt="Athlete Unknown Logo"
             className="au-placeholder-logo"
-          />
+          /> */}
         </div>
         <UserAndSettings
           onStatsClick={() => setIsUserStatsModalOpen(true)}

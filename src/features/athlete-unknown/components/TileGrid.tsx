@@ -5,6 +5,7 @@ import {
   TILE_NAMES,
   TileType,
 } from "@/features/athlete-unknown/config";
+import { useTileSize } from "@/features/athlete-unknown/hooks";
 import { Tile } from "./Tile";
 import type { PlayerData } from "@/features/athlete-unknown/types";
 
@@ -23,29 +24,28 @@ export function TileGrid({
   playerData,
   onTileClick,
 }: TileGridProps): React.ReactElement {
+  const { tileSize, gap } = useTileSize();
   const photoUrl = playerData.photo || "";
 
   // Calculate background position for photo segments (3x3 grid)
+  // backgroundSize is handled by CSS using var(--au-tile-size)
   const getPhotoSegmentStyle = (index: number): React.CSSProperties => {
     const col = index % PHOTO_GRID.COLS;
     const row = Math.floor(index / PHOTO_GRID.COLS);
-    const xPos = col * PHOTO_GRID.TILE_SIZE;
-    const yPos = row * PHOTO_GRID.TILE_SIZE;
 
     return {
       backgroundImage: `url(${photoUrl})`,
-      backgroundPosition: `-${xPos}px -${yPos}px`,
+      backgroundPosition: `calc(var(--au-tile-size) * -${col}) calc(var(--au-tile-size) * -${row})`,
     };
   };
 
   // Calculate SVG path for a curved string between two tile indices
   const getStringPath = (fromIndex: number, toIndex: number) => {
-    const GAP = 5; // 0.2rem * 16px
-    const CELL_SIZE = PHOTO_GRID.TILE_SIZE + GAP;
+    const CELL_SIZE = tileSize + gap;
     const SAG_AMOUNT = 10; // How much the string droops
 
     const getPin = (index: number) => ({
-      x: (index % 3) * CELL_SIZE + PHOTO_GRID.TILE_SIZE / 2, // mid-point for x-axis
+      x: (index % 3) * CELL_SIZE + tileSize / 2, // mid-point for x-axis
       y: Math.floor(index / 3) * CELL_SIZE + 4, // top of post-it for y-axis
     });
 

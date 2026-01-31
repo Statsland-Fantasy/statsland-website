@@ -164,10 +164,10 @@ export const useGameData = ({
     submitResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    state.isCompleted,
-    state.score,
-    state.incorrectGuesses,
-    state.flippedTiles,
+    state?.isCompleted,
+    state?.score,
+    state?.incorrectGuesses,
+    state?.flippedTiles,
     activeSport,
   ]);
 };

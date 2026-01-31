@@ -1,12 +1,16 @@
+/* Override body background for AU page */
+body:has(.au-container) {
+  background-color: #282729;
+}
+
 /* High Level AU Containers */
 .au-container {
   display: flex;
   flex-direction: column;
-  font-family: Arial, sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   background-color: #282729;
-  /* background-color: #452d85; */
-  min-height: 100vh;
-  width: 100vw;
+  min-height: 100dvh;
+  width: 100%;
 }
 
 .au-header-container {
@@ -224,9 +228,9 @@
   order: 2;
   text-align: center;
   font-family: "Special Elite";
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  color: #333;
+  color: black;
   margin-top: 0.5rem;
   transform: rotate(3deg);
 }
@@ -551,11 +555,12 @@
   color: #1a1a1a;
   text-align: center;
   text-decoration: underline;
-  min-width: 5rem;
+  min-width: 4rem;
 }
 
 .au-hint-tile-size {
-  width: 7rem;
+  min-width: 5rem;
+  max-width: 8rem;
 }
 
 .au-hint-tile-wrapper {
@@ -631,9 +636,10 @@
 .grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--au-tile-grid-size), var(--au-tile-size));
-  grid-gap: 0.2rem;
-  justify-content: center;
+  grid-template-columns: repeat(var(--au-grid-size), var(--au-tile-size));
+  grid-gap: var(--au-tile-grid-gap);
+  width: fit-content;
+  margin: 0 auto;
 }
 
 /* Red String - Detective Board Connection (SVG) */
@@ -798,7 +804,7 @@
   text-align: center;
   opacity: 0;
   font-family: "Bebas Neue", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 400;
   border-radius: 2px;
   /* Pinned post-it - slight shadow */
@@ -875,7 +881,7 @@
 }
 
 .tile-back.photo-segment {
-  background-size: calc(125px * 3) calc(125px * 3); /* 3 tiles × 125px */
+  background-size: calc(var(--au-tile-size) * 3) calc(var(--au-tile-size) * 3); /* 3 tiles × var(--au-tile-size) */
   background-repeat: no-repeat;
   padding: 0;
 }
@@ -1256,7 +1262,7 @@
   align-items: center;
   margin-top: 0.25rem;
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .sports-reference-link {
@@ -1287,8 +1293,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: flex-start;
@@ -2062,17 +2068,17 @@
 
 .au-rules-notebook-paper {
   position: relative;
+  flex: 1;
   background:
     repeating-linear-gradient(
       transparent,
-      transparent 1.55rem,
-      rgba(100, 140, 180, 0.15) 1.55rem,
-      rgba(100, 140, 180, 0.15) 1.64rem
+      transparent 1.4rem,
+      rgba(100, 140, 180, 0.15) 1.4rem,
+      rgba(100, 140, 180, 0.15) 1.55rem
     ),
     linear-gradient(90deg, #f5f0e1 0%, #faf6eb 3%, #faf6eb 97%, #f5f0e1 100%);
   background-color: #faf6eb;
-  padding: 1.5rem 2.5rem;
-  min-height: 100%;
+  padding: 1.5rem 1rem 1rem 2rem;
 }
 
 .au-rules-notebook-paper::before {
@@ -2113,14 +2119,15 @@
 
 .au-rules-prologue-container {
   position: relative;
+  width: 100%;
 }
 
 .au-rules-prologue {
   white-space: pre-wrap;
   font-family: "Caveat", cursive;
-  font-size: 1.45rem;
+  font-size: 1.25rem;
   font-weight: 500;
-  line-height: 1.32;
+  line-height: 1.25;
 }
 
 .au-rules-prologue-invisible {
@@ -2141,10 +2148,10 @@
 .au-how-to-play {
   white-space: pre-wrap;
   font-family: "Special Elite", "Courier New", monospace;
-  font-weight: 600;
+  font-weight: 400;
   font-style: normal;
-  font-size: 1.25rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.2;
   color: #1a1a1a;
   /* Subtle ink bleed effect from old typewriter */
   text-shadow:
@@ -2156,9 +2163,9 @@
 /* Case File Paper - Separate document effect */
 .au-case-file-paper {
   position: relative;
-  top: -1.75rem;
-  width: 90%;
-  height: 90%;
+  top: -2rem;
+  width: 100%;
+  height: 100%;
   background:
     /* Coffee stain 1 - top right */
     radial-gradient(
@@ -2184,9 +2191,9 @@
         rgba(0, 0, 0, 0.01) 2px,
         rgba(0, 0, 0, 0.01) 4px
       );
-  padding: 2rem 2.5rem;
-  margin: 1rem auto;
-  max-width: 85%;
+  padding: 0.5rem;
+  margin: 1rem 0rem 0rem 0rem;
+  max-width: 100%;
   box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.15),
     0 4px 8px rgba(0, 0, 0, 0.12),
@@ -2480,7 +2487,7 @@
 }
 
 /* Mobile responsive styling for case file */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .au-case-file-paper {
     max-width: 95%;
     padding: 1.5rem 1.5rem;
@@ -2509,8 +2516,7 @@
     height: 1.6rem;
     right: calc(10% + 0.1rem);
   }
-
-  /* Smaller coffee ring on mobile */
+/
   .au-case-file-paper::before {
     width: 45px;
     height: 45px;
@@ -2518,14 +2524,13 @@
     right: 8%;
   }
 
-  /* Smaller fingerprint on mobile */
   .au-fingerprint-smudge {
     width: 28px;
     height: 36px;
     top: 5%;
     left: 3%;
   }
-}
+} */
 
 .au-prologue-nav-button {
   font-family: "Caveat", cursive;
@@ -3029,8 +3034,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
@@ -3356,7 +3361,7 @@
 /* Evidence Tag Styling - rectangular with notched corners */
 .evidence-tag {
   position: static;
-  width: 75%;
+  width: 80%;
   background: linear-gradient(135deg, #f4e4a6 0%, #f0dc8e 100%);
   box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.1),
@@ -3453,7 +3458,7 @@
   padding-top: 0.5rem;
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-style: normal;
   color: black;
   text-align: center;
@@ -3648,7 +3653,7 @@
 .au-splash-title {
   font-family: "bree-serif", serif;
   font-size: 1.75rem;
-  font-weight: 300;
+  font-weight: 800;
   color: #fff;
   margin: 0 0 0.5rem 0;
   line-height: 1.2;
@@ -3660,7 +3665,7 @@
 .au-splash-subtitle {
   font-family: "bree-serif", serif;
   /* font-family: "trade-gothic-next", sans-serif; */
-  font-weight: 800;
+  font-weight: 600;
   font-size: 1.05rem;
   color: #ccc;
   margin: 0 0 1.5rem 0;
@@ -3674,11 +3679,16 @@
   color: #1a1a1a;
   border: none;
   border-radius: 999px;
-  padding: 0.75rem 3rem;
-  font-size: 1.05rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 1.25rem;
+  font-family: "trade-gothic-next", sans-serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .au-splash-play-btn:disabled {
@@ -3688,11 +3698,11 @@
 
 .au-splash-sound-btn {
   background-color: transparent;
-  color: #ccc;
-  border: 1px solid #555;
+  color: #fff;
+  border: 1px solid #fff;
   border-radius: 999px;
   padding: 0.4rem 1.5rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   margin-bottom: 1.25rem;
@@ -3703,8 +3713,8 @@
 }
 
 .au-splash-login-prompt {
-  font-size: 0.85rem;
-  color: #aaa;
+  font-size: 0.9rem;
+  color: #ddd;
   margin: 0 0 0.4rem 0;
 }
 
@@ -3714,10 +3724,10 @@
   border: 1px solid #fff;
   border-radius: 999px;
   padding: 0.5rem 2rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .au-splash-meta {
@@ -3728,14 +3738,15 @@
 }
 
 .au-splash-date {
-  font-size: 0.85rem;
-  color: #aaa;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #dddddd;
   margin: 0;
 }
 
 .au-splash-round-label {
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 1.5rem;
   color: #fff;
   margin: 0;
 }
@@ -3747,12 +3758,28 @@
 }
 
 .au-splash-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
   padding: 1rem 0;
 }
 
+.au-splash-footer-logo {
+  width: 8rem;
+  height: 5rem;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
 .au-splash-footer-text {
-  font-size: 0.75rem;
-  color: #666;
+  font-size: 0.85rem;
+  color: white;
+  font-family: "trade-gothic-next", sans-serif;
+  text-transform: uppercase;
+  font-style: italic;
 }
 
 /* Error Display */

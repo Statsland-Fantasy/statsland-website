@@ -193,7 +193,7 @@ export const PHOTO_GRID = {
   COLS: 3,
 
   // Tile Size = Width & height of each photo tile segment in pixels
-  TILE_SIZE: 125,
+  DEFAULT_TILE_SIZE: 125,
 } as const;
 
 // ============================================================================

@@ -24,7 +24,7 @@ const PROLOGUE_PAGES = [
   ],
   [
     "How to Play",
-    "It's up to you to solve each day's mystery athlete! Strategically use clues to help solve the case with the highest score possible.",
+    "It's up to you to figure out each day's mystery athlete! Solve the case with the highest score possible.",
     `Start with ${INITIAL_SCORE} points. Each clue deducts a different amount of points. Each incorrect guess is -${INCORRECT_GUESS_PENALTY} point${INCORRECT_GUESS_PENALTY === 1 ? "" : "s"}.`,
     "Play each day, build up your stats, and share with your friends! Good luck!",
   ],
@@ -61,8 +61,8 @@ function RulesModal({
   }, [isOpen, displayedChars, currentPageText.length]);
 
   useEffect(() => {
-    // index = 3 page is the How to Play. Render immediately
-    if (currentPage === 3) {
+    // index = 2 page is the How to Play. Render immediately
+    if (currentPage === 2) {
       setDisplayedChars(currentPageText.length);
     }
   }, [currentPageText, setDisplayedChars, currentPage]);
