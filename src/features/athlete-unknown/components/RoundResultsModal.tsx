@@ -88,11 +88,18 @@ export function RoundResultsModal({
           <div className="au-player-results-container">
             <div className="au-player-container">
               {isCompleted && playerData.photo ? (
-                <img
-                  src={playerData.photo}
-                  alt={playerData.name}
-                  className="au-player-photo"
-                />
+                <a
+                  href={playerData.sportsReferenceURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="au-player-name-link"
+                >
+                  <img
+                    src={playerData.photo}
+                    alt={playerData.name}
+                    className="au-player-photo"
+                  />
+                </a>
               ) : (
                 <img
                   src={TestUnknownPerson}

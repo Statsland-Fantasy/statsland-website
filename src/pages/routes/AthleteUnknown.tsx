@@ -381,7 +381,7 @@ export function AthleteUnknown(): React.ReactElement {
       {!state.isRoundLoading && state.round && (
         <div className="au-footer-container">
           <SportsReferenceAttribution activeSport={activeSport} />
-          <div>Credits</div>
+          <div style={{ color: "white" }}>Credits</div>
         </div>
       )}
 

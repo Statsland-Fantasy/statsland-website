@@ -216,7 +216,7 @@ function UserStatsModal({
             </div>
           </div>
 
-          {isLoading && <LoadingIndicator color="black" />}
+          {isLoading && <LoadingIndicator color="white" />}
           {error && <ErrorDisplay error={error} />}
 
           {!isLoading && selectedSportStats && (
