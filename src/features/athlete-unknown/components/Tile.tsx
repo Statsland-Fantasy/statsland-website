@@ -23,7 +23,6 @@ interface TileProps {
 
 export function Tile({
   tileName,
-  index,
   isFlipped,
   photoRevealed,
   returningFromPhoto,
