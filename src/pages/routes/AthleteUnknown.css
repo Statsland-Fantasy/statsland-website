@@ -1258,6 +1258,7 @@ body:has(.au-container) {
 /* Sports Reference Attribution */
 .au-sports-reference-attribution {
   display: flex;
+  width: 75%;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -2478,7 +2479,9 @@ body:has(.au-container) {
   border-top: 1px dashed rgba(0, 0, 0, 0.2);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease-in, visibility 0.4s;
+  transition:
+    opacity 0.4s ease-in,
+    visibility 0.4s;
 }
 
 .au-rules-icons-explanation--visible {
