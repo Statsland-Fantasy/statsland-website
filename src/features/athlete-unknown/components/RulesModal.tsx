@@ -3,6 +3,22 @@ import {
   INCORRECT_GUESS_PENALTY,
   INITIAL_SCORE,
 } from "@/features/athlete-unknown/config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBookOpen,
+  faBriefcase,
+  faChartLine,
+  faUserSecret,
+  faVolumeHigh,
+} from "@fortawesome/free-solid-svg-icons";
+
+const ICON_EXPLANATIONS = [
+  { icon: faBookOpen, label: "How to Play" },
+  { icon: faChartLine, label: "Today's Case Stats" },
+  { icon: faBriefcase, label: "Past Cases" },
+  { icon: faUserSecret, label: "User Stats" },
+  { icon: faVolumeHigh, label: "Sound On/Off" },
+] as const;
 
 interface RulesModalProps {
   isOpen: boolean;
@@ -26,6 +42,7 @@ const PROLOGUE_PAGES = [
     "How to Play",
     "It's up to you to figure out each day's mystery athlete! Solve the case with the highest score possible.",
     `Start with ${INITIAL_SCORE} points. Each clue deducts a different amount of points. Each incorrect guess is -${INCORRECT_GUESS_PENALTY} point${INCORRECT_GUESS_PENALTY === 1 ? "" : "s"}.`,
+    "Cases increase in difficulty from Sunday through Saturday.",
     "Play each day, build up your stats, and share with your friends! Good luck!",
   ],
 ];
@@ -55,17 +72,10 @@ function RulesModal({
 
     const timer = setTimeout(() => {
       setDisplayedChars((prev) => Math.min(prev + 1, currentPageText.length));
-    }, 25);
+    }, 20);
 
     return () => clearTimeout(timer);
   }, [isOpen, displayedChars, currentPageText.length]);
-
-  useEffect(() => {
-    // index = 2 page is the How to Play. Render immediately
-    if (currentPage === 2) {
-      setDisplayedChars(currentPageText.length);
-    }
-  }, [currentPageText, setDisplayedChars, currentPage]);
 
   const handleNextPage = () => {
     if (!isPageComplete) {
@@ -97,10 +107,10 @@ function RulesModal({
         className="au-rules-modal-content"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="au-rules-notebook-paper">
-          <div className="au-rules-prologue-container" onClick={handleNextPage}>
-            {isLastPage ? (
-              <div className="au-case-file-paper">
+        <div className="au-rules-notebook-paper" onClick={handleNextPage}>
+          {isLastPage ? (
+            <div className="au-case-file-paper">
+              <div className="au-rules-prologue-container">
                 <div className="au-paperclip"></div>
                 <div className="au-fingerprint-smudge"></div>
 
@@ -116,20 +126,30 @@ function RulesModal({
                   </p>
                 </div>
               </div>
-            ) : (
-              <>
-                <p
-                  className="au-rules-prologue au-rules-prologue-invisible"
-                  aria-hidden="true"
-                >
-                  {currentPageText}
-                </p>
-                <p className="au-rules-prologue au-rules-prologue-visible">
-                  {currentPageText.slice(0, displayedChars)}
-                </p>
-              </>
-            )}
-          </div>
+              <div
+                className={`au-rules-icons-explanation ${isPageComplete ? "au-rules-icons-explanation--visible" : ""}`}
+              >
+                {ICON_EXPLANATIONS.map(({ icon, label }) => (
+                  <div key={label} className="au-rules-icon-item">
+                    <FontAwesomeIcon icon={icon} />
+                    <span>{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="au-rules-prologue-container">
+              <p
+                className="au-rules-prologue au-rules-prologue-invisible"
+                aria-hidden="true"
+              >
+                {currentPageText}
+              </p>
+              <p className="au-rules-prologue au-rules-prologue-visible">
+                {currentPageText.slice(0, displayedChars)}
+              </p>
+            </div>
+          )}
         </div>
         <div className="au-notebook-footer">
           <button
