@@ -1,11 +1,7 @@
 import type { Round, UserStats } from "@/features/athlete-unknown/types";
 import type { SportType } from "@/config";
-import {
-  getMockDataPlayerIndex,
-  saveMockDataPlayerIndex,
-} from "@/features/athlete-unknown/utils";
 
-// Mock data service - used when REACT_APP_USE_MOCK_DATA=true or when API calls fail
+// Mock data service - used when REACT_APP_USE_MOCK_DATA=true
 class MockDataService {
   static async getRoundData(sport: string): Promise<Round> {
     // Simulate API delay
@@ -19,17 +15,8 @@ class MockDataService {
     };
 
     const response = await fetch(sportFiles[sport]);
-    const data: any[] = await response.json();
-
-    const storedIndex = getMockDataPlayerIndex(sport);
-    const index =
-      storedIndex === null
-        ? Math.floor(Math.random() * data.length)
-        : storedIndex;
-
-    saveMockDataPlayerIndex(sport, index);
-
-    return data[index];
+    const data: any = await response.json();
+    return data;
   }
 
   static async getUserStats(): Promise<UserStats> {

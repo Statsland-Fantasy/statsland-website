@@ -16,7 +16,7 @@ export const useRoundHistory = ({ updateState }: UseRoundHistoryProps) => {
   const handleFetchRoundHistory = useCallback(
     async (sport: SportType, isPlaytester: boolean) => {
       try {
-        updateState({ isLoading: true, error: null });
+        updateState({ isRoundHistoryLoading: true, error: null });
 
         const roundHistory = isPlaytester
           ? await roundsService.getUpcomingRounds(sport)
@@ -24,7 +24,7 @@ export const useRoundHistory = ({ updateState }: UseRoundHistoryProps) => {
 
         updateState({
           roundHistory,
-          isLoading: false,
+          isRoundHistoryLoading: false,
           error: null,
         });
       } catch (error) {
@@ -34,7 +34,7 @@ export const useRoundHistory = ({ updateState }: UseRoundHistoryProps) => {
             error instanceof Error
               ? error.message
               : "Failed to retrieve round history",
-          isLoading: false,
+          isRoundHistoryLoading: false,
         });
       }
     },

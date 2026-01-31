@@ -3,7 +3,7 @@
  * Handles data fetching and game result submission
  */
 
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import type { SportType } from "@/features/athlete-unknown/config";
 import type { GameState } from "./useGameState";
 import { gameDataService } from "@/features/athlete-unknown/services";
@@ -37,19 +37,34 @@ export const useGameData = ({
   useEffect(() => {
     const loadData = async () => {
       try {
-        updateState({ isLoading: true, error: null });
+        updateState({ isRoundLoading: true, error: null });
+
+        // Fetch round data - this is required, errors should be shown
+        const roundDataPromise = gameDataService.getRoundData(
+          activeSport,
+          playDate
+        );
+
+        // Fetch user stats - errors are non-critical here, just log them
+        const userStatsPromise = userStatsService
+          .getUserStats()
+          .catch((error) => {
+            console.error("Error fetching user stats (non-critical):", error);
+            return null;
+          });
 
         const [roundData, userStatsData] = await Promise.all([
-          gameDataService.getRoundData(activeSport, playDate),
-          userStatsService.getUserStats(),
+          roundDataPromise,
+          userStatsPromise,
         ]);
 
         // playDate is undefined if current date. BE normally handles default missing case
         const actualPlayDate = playDate ?? getCurrentDateString();
 
-        const userSportStats: UserSportStats = userStatsData.sports.find(
-          (s: UserSportStats) => s.sport === activeSport
-        );
+        const userSportStats: UserSportStats | undefined =
+          userStatsData?.sports.find(
+            (s: UserSportStats) => s.sport === activeSport
+          );
         const userHistory = userSportStats?.history ?? [];
         const foundHistoricalRound = userHistory.find(
           (h: RoundHistory) => h.playDate === actualPlayDate
@@ -59,7 +74,7 @@ export const useGameData = ({
           updateState({
             round: roundData,
             userStats: userStatsData,
-            isLoading: false,
+            isRoundLoading: false,
             error: null,
             score: foundHistoricalRound.score,
             flippedTiles: foundHistoricalRound.flippedTiles,
@@ -71,16 +86,18 @@ export const useGameData = ({
           updateState({
             round: roundData,
             userStats: userStatsData,
-            isLoading: false,
+            isRoundLoading: false,
             error: null,
           });
         }
       } catch (error) {
-        console.error("Error loading game data:", error);
+        console.error("Error loading round data:", error);
         updateState({
           error:
-            error instanceof Error ? error.message : "Failed to load game data",
-          isLoading: false,
+            error instanceof Error
+              ? error.message
+              : "Failed to load round data!",
+          isRoundLoading: false,
         });
       }
     };
@@ -147,39 +164,10 @@ export const useGameData = ({
     submitResults();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    state.isCompleted,
-    state.score,
-    state.incorrectGuesses,
-    state.flippedTiles,
+    state?.isCompleted,
+    state?.score,
+    state?.incorrectGuesses,
+    state?.flippedTiles,
     activeSport,
   ]);
-
-  const refetchData = useCallback(async () => {
-    try {
-      updateState({ isLoading: true, error: null });
-
-      const [roundData, userStatsData] = await Promise.all([
-        gameDataService.getRoundData(activeSport, playDate),
-        userStatsService.getUserStats(),
-      ]);
-
-      updateState({
-        round: roundData,
-        userStats: userStatsData,
-        isLoading: false,
-        error: null,
-      });
-    } catch (error) {
-      console.error("Error refetching game data:", error);
-      updateState({
-        error:
-          error instanceof Error ? error.message : "Failed to load game data",
-        isLoading: false,
-      });
-    }
-  }, [activeSport, updateState, playDate]);
-
-  return {
-    refetchData,
-  };
 };

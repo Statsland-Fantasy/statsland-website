@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams } from "react-router";
 import { RoundHistory, RoundSummary } from "@/features/athlete-unknown/types";
+import { LoadingIndicator } from "./LoadingIndicator";
+import { ErrorDisplay } from "./ErrorDisplay";
 
 interface RoundHistoryModalProps {
   isOpen: boolean;
@@ -47,12 +49,14 @@ function RoundHistoryModal({
 
           <div className="au-drawer-interior">
             {isLoading && (
-              <div className="au-drawer-message">Loading case files...</div>
+              <div className="au-drawer-loading">
+                <LoadingIndicator color="white" />
+              </div>
             )}
 
             {error && (
-              <div className="au-drawer-message au-drawer-error">
-                Error: {error}
+              <div className="au-drawer-loading">
+                <ErrorDisplay error={error} />
               </div>
             )}
 

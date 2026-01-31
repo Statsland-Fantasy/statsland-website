@@ -26,16 +26,8 @@ class RoundsService {
       return MockDataService.getRounds(sport);
     }
 
-    try {
-      console.log(`[API] Fetching rounds for ${sport}`);
-      return await athleteUnknownApiService.getRounds(sport);
-    } catch (error) {
-      console.warn(
-        "[API] Failed to fetch rounds, falling back to mock data:",
-        error
-      );
-      return MockDataService.getRounds(sport);
-    }
+    console.log(`[API] Fetching rounds for ${sport}`);
+    return await athleteUnknownApiService.getRounds(sport);
   }
 
   /**
@@ -47,16 +39,8 @@ class RoundsService {
       return MockDataService.getUpcomingRounds(sport);
     }
 
-    try {
-      console.log(`[API] Fetching upcoming rounds for ${sport}`);
-      return await athleteUnknownApiService.getUpcomingRounds(sport);
-    } catch (error) {
-      console.warn(
-        "[API] Failed to fetch upcoming rounds, falling back to mock data:",
-        error
-      );
-      return MockDataService.getUpcomingRounds(sport);
-    }
+    console.log(`[API] Fetching upcoming rounds for ${sport}`);
+    return await athleteUnknownApiService.getUpcomingRounds(sport);
   }
 }
 

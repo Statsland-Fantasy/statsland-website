@@ -15,6 +15,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [PR-56]
+
+### Added
+
+- Auth0 login and simple edit username feature
+
+### Changed
+
+- Lots of UI fixes including iOS Safari 100vw -> missing icons bug
+
+## [v1.1.0] - 2026-01-24
+
 ## [PR-52]
 
 ### Changed

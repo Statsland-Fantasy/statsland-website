@@ -7,66 +7,29 @@ import {
   faVolumeHigh,
   faVolumeXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useAudio } from "@/pages/providers";
+import { MUSIC_PLAYLIST } from "../config";
+import { useMemo } from "react";
 
 interface UserAndSettingsProps {
   onStatsClick: () => void;
-  audioRef: React.RefObject<HTMLAudioElement | null>;
-  onVolumeClick: () => void;
-  volume: number;
   onRoundResultsClick: () => void;
   onRulesClick: () => void;
   onRoundHistoryClick: () => void;
 }
 
-const PLAYLIST = [
-  { id: 1, title: "Closed Curtains", url: "/AU-Closed_Curtains.mp3" },
-  { id: 2, title: "Sleek Panther", url: "/AU-Sleek_Panther.mp3" },
-  { id: 3, title: "Smoky Lounge", url: "/AU-Smoky_Lounge.mp3" },
-];
-
 export function UserAndSettings({
   onStatsClick,
-  audioRef,
-  onVolumeClick,
-  volume,
   onRoundHistoryClick,
   onRulesClick,
   onRoundResultsClick,
 }: UserAndSettingsProps): React.ReactElement {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const { soundEnabled, isMuted, startSound, toggleMute } = useAudio();
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [audioRef, volume]);
+  const icon = useMemo(() => {
+    return !soundEnabled || isMuted ? faVolumeXmark : faVolumeHigh;
+  }, [soundEnabled, isMuted]);
 
-  // Play the next track when currentTrackIndex changes (after user interaction)
-  useEffect(() => {
-    if (hasInteracted && audioRef.current) {
-      audioRef.current.play().catch(() => {});
-    }
-  }, [currentTrackIndex, audioRef, hasInteracted]);
-
-  const handleVolumeClick = () => {
-    if (!hasInteracted && audioRef.current) {
-      audioRef.current.play().catch(() => {});
-      setHasInteracted(true);
-    }
-    onVolumeClick();
-  };
-
-  const handleTrackEnd = () => {
-    const nextIndex =
-      currentTrackIndex < PLAYLIST.length - 1 ? currentTrackIndex + 1 : 0;
-    setCurrentTrackIndex(nextIndex);
-  };
-
-  const currentTrack = PLAYLIST[currentTrackIndex];
-
-  const icon = volume === 0 ? faVolumeXmark : faVolumeHigh;
   return (
     <div className="au-user-settings-container">
       <FontAwesomeIcon icon={faBookOpen} size="lg" onClick={onRulesClick} />
@@ -81,19 +44,17 @@ export function UserAndSettings({
         onClick={onRoundHistoryClick}
       />
       <FontAwesomeIcon icon={faUserSecret} size="lg" onClick={onStatsClick} />
-      {/* <div className="au-user-identity-container">
-        <button className="au-user-identity-button" onClick={onStatsClick}>
-          <img src={TestUnknownPerson} alt="profile-image" />
-        </button>
-      </div> */}
       <div className="au-settings-container">
-        <audio
-          ref={audioRef}
-          src={currentTrack?.url}
-          onEnded={handleTrackEnd}
-          loop={false}
-        />
-        <button className="au-volume-button" onClick={handleVolumeClick}>
+        <button
+          className="au-volume-button"
+          onClick={() => {
+            if (!soundEnabled) {
+              startSound(MUSIC_PLAYLIST, false);
+            } else {
+              toggleMute();
+            }
+          }}
+        >
           <FontAwesomeIcon icon={icon} size="lg" className="au-settings-icon" />
         </button>
       </div>

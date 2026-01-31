@@ -1,13 +1,10 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { Link, NavLink } from "react-router";
+import { NavLink } from "react-router";
 import "./Navbar.css";
-import Logo from "./placeholder-logo.png";
-import { UserAndSettings } from "@/features";
+import Logo from "@/features/athlete-unknown/assets/SL_Icon_Color.svg";
 
 function Navbar() {
-  const { loginWithRedirect, logout, isAuthenticated, user, isLoading } =
-    useAuth0();
+  // const { loginWithRedirect, logout, isAuthenticated, user, isLoading } =
+  //   useAuth0();
 
   return (
     <>

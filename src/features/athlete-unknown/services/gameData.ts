@@ -23,7 +23,6 @@ class GameDataService {
 
   /**
    * Get round data by sport and date
-   * Falls back to mock data if API call fails
    */
   async getRoundData(sport: string, date?: string): Promise<Round> {
     if (this.useMockData) {
@@ -31,18 +30,10 @@ class GameDataService {
       return MockDataService.getRoundData(sport);
     }
 
-    try {
-      console.log(
-        `[API] Fetching player data for ${sport} on ${date || "today"}`
-      );
-      return await athleteUnknownApiService.getRound(sport, date);
-    } catch (error) {
-      console.warn(
-        "[API] Failed to fetch round data, falling back to mock data:",
-        error
-      );
-      return MockDataService.getRoundData(sport);
-    }
+    console.log(
+      `[API] Fetching player data for ${sport} on ${date || "today"}`
+    );
+    return await athleteUnknownApiService.getRound(sport, date);
   }
 
   /**
@@ -79,21 +70,6 @@ class GameDataService {
         message: "Failed to submit results",
       };
     }
-  }
-
-  /**
-   * Toggle between mock and API data (for testing)
-   */
-  setUseMockData(useMock: boolean): void {
-    this.useMockData = useMock;
-    console.log(`Switched to ${useMock ? "MOCK" : "API"} data mode`);
-  }
-
-  /**
-   * Check if currently using mock data
-   */
-  isUsingMockData(): boolean {
-    return this.useMockData;
   }
 }
 

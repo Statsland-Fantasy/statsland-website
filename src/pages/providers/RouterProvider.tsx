@@ -7,7 +7,7 @@ import {
 import { RootLayout, Home, AthleteUnknown, ContactForm } from "@/pages/routes";
 import { config } from "@/config";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [

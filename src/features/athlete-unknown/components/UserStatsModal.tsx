@@ -7,12 +7,24 @@ import {
 import { useParams } from "react-router";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { getDateString } from "../utils/date";
+import { clearAllGameData } from "../utils/storage";
 import { config, SportType } from "@/config";
+import { Button } from "./Button";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { LoadingIndicator } from "./LoadingIndicator";
+import { ErrorDisplay } from "./ErrorDisplay";
 
 interface UserStatsModalProps {
   isOpen: boolean;
   onClose: () => void;
   userStats: UserStats | null;
+  username: string;
+  editedUsername: string;
+  onEditUsername: (editedUsername: string) => void;
+  onSaveEditedUsername: () => void;
+  onLogin: () => void;
   isLoading: boolean;
   error: string | null;
 }
@@ -21,18 +33,39 @@ function UserStatsModal({
   isOpen,
   onClose,
   userStats,
+  username,
+  editedUsername,
+  onEditUsername,
+  onSaveEditedUsername,
+  onLogin,
   isLoading,
   error,
 }: UserStatsModalProps): React.ReactElement | null {
+  const { isAuthenticated, logout } = useAuth0();
   const { sport } = useParams();
   const [selectedSport, setSelectedSport] = useState<string>(sport ?? "");
   const [selectedSportStats, setSelectedSportStats] =
     useState<UserSportStats | null>();
+  const [isEditingUsername, setIsEditingUsername] = useState(false);
 
   const formatTileName = (name: string): string => {
     return name
       .replace(/([A-Z])/g, " $1")
       .replace(/^./, (str) => str.toUpperCase());
+  };
+
+  const handleEditUsername = () => {
+    setIsEditingUsername(true);
+  };
+
+  const handleSaveUsername = () => {
+    onSaveEditedUsername();
+    setIsEditingUsername(false);
+  };
+
+  const handleCancelEdit = () => {
+    onEditUsername(username);
+    setIsEditingUsername(false);
   };
 
   useEffect(() => {
@@ -42,7 +75,13 @@ function UserStatsModal({
     setSelectedSportStats(stats?.[0] ?? null);
   }, [userStats, selectedSport]);
 
-  if (!isOpen || !userStats || !selectedSportStats) {
+  useEffect(() => {
+    if (isOpen) {
+      onEditUsername(username);
+    }
+  }, [isOpen, username, onEditUsername]);
+
+  if (!isOpen) {
     return null;
   }
 
@@ -88,38 +127,99 @@ function UserStatsModal({
             <div className="au-player-results-info-container">
               <div className="au-report-field">
                 <span className="au-report-label">Name:</span>
-                <span className="au-report-value">TestUser123</span>
+                {!isAuthenticated ? (
+                  <Button variant="secondary" size="sm" onClick={onLogin}>
+                    Login
+                  </Button>
+                ) : isEditingUsername ? (
+                  <>
+                    <input
+                      type="text"
+                      value={editedUsername}
+                      onChange={(e) => onEditUsername(e.target.value)}
+                      className="au-report-value au-username-input"
+                      autoFocus
+                    />
+                    <button
+                      onClick={handleSaveUsername}
+                      className="au-username-action-btn"
+                      title="Save"
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      className="au-username-action-btn"
+                      title="Cancel"
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span className="au-report-value">{username}</span>
+                    <button
+                      onClick={handleEditUsername}
+                      className="au-username-action-btn"
+                      title="Edit username"
+                    >
+                      <FontAwesomeIcon icon={faPencil} />
+                    </button>
+                  </>
+                )}
                 <div className="au-report-underline"></div>
               </div>
-              <div className="au-report-field">
-                <span className="au-report-label">
-                  Solving
-                  <br />
-                  Mysteries
-                  <br />
-                  Since:
-                </span>
-                <span className="au-report-value">
-                  <br />
-                  {userStats.userCreated !== ""
-                    ? getDateString(userStats.userCreated)
-                    : "N/A"}
-                </span>
-                <div className="au-report-underline"></div>
-              </div>
-              <div className="au-report-field">
-                <span className="au-report-label">
-                  Current Daily <br /> Streak:
-                </span>
-                <span className="au-report-value">
-                  {userStats.currentDailyStreak}
-                </span>
-                <div className="au-report-underline"></div>
-              </div>
+              {isAuthenticated && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    clearAllGameData();
+                    logout({
+                      logoutParams: { returnTo: window.location.origin },
+                    });
+                  }}
+                >
+                  Log Out
+                </Button>
+              )}
+
+              {userStats && (
+                <>
+                  <div className="au-report-field">
+                    <span className="au-report-label">
+                      Solving
+                      <br />
+                      Mysteries
+                      <br />
+                      Since:
+                    </span>
+                    <span className="au-report-value">
+                      <br />
+                      {userStats.userCreated !== ""
+                        ? getDateString(userStats.userCreated)
+                        : "N/A"}
+                    </span>
+                    <div className="au-report-underline"></div>
+                  </div>
+                  <div className="au-report-field">
+                    <span className="au-report-label">
+                      Current Daily <br /> Streak:
+                    </span>
+                    <span className="au-report-value">
+                      {userStats.currentDailyStreak}
+                    </span>
+                    <div className="au-report-underline"></div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
-          {selectedSportStats && (
+          {isLoading && <LoadingIndicator color="white" />}
+          {error && <ErrorDisplay error={error} />}
+
+          {!isLoading && selectedSportStats && (
             <>
               <div className="au-results-modal-section-separator" />
               <h3 className="au-results-round-stats-title">{`All ${selectedSport} Case Stats`}</h3>

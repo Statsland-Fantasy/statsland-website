@@ -4,12 +4,14 @@ interface PlayerInputProps {
   playerName: string;
   isCompleted: boolean;
   onPlayerNameChange: (name: string) => void;
+  onSubmit: () => void;
 }
 
 export function PlayerInput({
   playerName,
   isCompleted,
   onPlayerNameChange,
+  onSubmit,
 }: PlayerInputProps): React.ReactElement {
   return (
     <div className="au-player-input">
@@ -19,6 +21,12 @@ export function PlayerInput({
         value={playerName}
         disabled={isCompleted}
         onChange={(e) => onPlayerNameChange(e.target.value)}
+        enterKeyHint="go"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onSubmit();
+          }
+        }}
       />
     </div>
   );

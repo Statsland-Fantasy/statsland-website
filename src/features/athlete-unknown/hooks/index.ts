@@ -6,3 +6,4 @@ export { useShareResults } from "./useShareResults";
 export { useTileFlip } from "./useTileFlip";
 export { useRoundHistory } from "./useRoundHistory";
 export { useUserStats } from "./useUserStats";
+export { useTileSize } from "./useTileSize";

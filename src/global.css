@@ -1,19 +1,25 @@
 /* global.css */
 :root {
-  --color-primary: #3b82f6;
+  --color-primary: #fffbeb;
   --color-secondary: #10b981;
   --spacing-unit: 0.5rem;
 
   /* Athlete Unknown */
-  --mobile-au-header-height: 5rem;
-  --au-tile-grid-size: 3; /* 3x3 grid */
-  --au-tile-size: 125px;
+  --au-grid-size: 3; /* 3x3 grid */
+  --au-tile-size: clamp(90px, calc((100dvw - 3rem) / 3.2), 125px);
+  --au-tile-grid-gap: 3px;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {

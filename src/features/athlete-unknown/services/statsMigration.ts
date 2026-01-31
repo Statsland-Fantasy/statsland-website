@@ -37,7 +37,7 @@ export const hasGuestStats = (): boolean => {
  */
 export const migrateUserStats = async (
   userId: string | undefined,
-  userName: string | undefined
+  username: string | undefined
 ): Promise<boolean> => {
   try {
     console.log("[StatsMigration] Checking for stats to migrate");
@@ -56,7 +56,7 @@ export const migrateUserStats = async (
     try {
       // Attempt to migrate stats to backend
       guestStats.userId = userId ?? "";
-      guestStats.userName = userName ?? "";
+      guestStats.userName = username ?? "";
       guestStats.userCreated = new Date().toISOString();
       guestStats.lastDayPlayed = getCurrentDateString();
       guestStats.currentDailyStreak = 1;

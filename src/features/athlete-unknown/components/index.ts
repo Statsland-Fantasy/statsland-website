@@ -19,5 +19,7 @@ export { HintTiles } from "./HintTiles";
 export { RoundHistoryModal } from "./RoundHistoryModal";
 export { UserAndSettings } from "./UserAndSettings";
 export { PreviousGuesses } from "./PreviousGuesses";
-export { Typewriter } from "./Typewriter";
 export { GiveUpConfirmationModal } from "./GiveUpConfirmationModal";
+export { LoadingIndicator } from "./LoadingIndicator";
+export { RoundSplashModal } from "./RoundSplashModal";
+export { ErrorDisplay } from "./ErrorDisplay";

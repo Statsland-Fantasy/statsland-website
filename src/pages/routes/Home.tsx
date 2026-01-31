@@ -35,14 +35,6 @@ export function Home() {
               this first.)
             </li>
             <li>
-              Being able to create an account and log in. (Stats are saved to
-              your device for now still).
-            </li>
-            <li>
-              Loading screens and error screens are not ready yet. So expect
-              clunky and unsightly loading screens for now.
-            </li>
-            <li>
               The rest of the website is not ready yet, including this page. A
               formal logo, color scheme, and fonts are coming soon!
             </li>
