@@ -15,6 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Google Analytics 4 integration with tracking for page views, user engagement, and game events
+- Debug mode for local Google Analytics testing
+
 ## [PR-52]
 
 ### Changed
