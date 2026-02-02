@@ -79,12 +79,8 @@ export const useGuessSubmission = ({
         return;
       }
 
-      const previousDistance = calculateLevenshteinDistance(
-        state.previousCloseGuess,
-        normalizedAnswer
-      );
-      // If second closer guess, reveal answer
-      if (distance < previousDistance) {
+      // If second closer guess is one letter away, deem correct
+      if (distance === 1) {
         updateState({
           message: "Spelling accepted",
           messageType: GUESS_MESSAGE_TYPE.SUCCESS,
