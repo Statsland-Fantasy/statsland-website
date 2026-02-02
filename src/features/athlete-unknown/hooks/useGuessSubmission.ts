@@ -38,7 +38,7 @@ export const useGuessSubmission = ({
     // Prevent submitting the same incorrect guess consecutively
     if (
       normalizedGuess !== normalizedAnswer &&
-      state.previousGuesses.includes(normalizedGuess)
+      state.previousGuesses.includes(state.playerName)
     ) {
       toast.info("Guess already attempted");
       return;
