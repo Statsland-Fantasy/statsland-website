@@ -3734,7 +3734,7 @@ body:has(.au-container) {
 }
 
 .au-splash-date {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 400;
   color: #dddddd;
   margin: 0;
@@ -3763,8 +3763,8 @@ body:has(.au-container) {
 }
 
 .au-splash-footer-logo {
-  width: 8rem;
-  height: 5rem;
+  width: 6rem;
+  height: 4rem;
   background-color: white;
   border-radius: 4px;
   padding: 0.5rem;
