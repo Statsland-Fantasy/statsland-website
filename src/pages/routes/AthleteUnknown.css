@@ -1258,8 +1258,8 @@ body:has(.au-container) {
 /* Sports Reference Attribution */
 .au-sports-reference-attribution {
   display: flex;
-  width: 75%;
-  flex-direction: row;
+  width: 60%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 0.25rem;
@@ -1272,7 +1272,7 @@ body:has(.au-container) {
   display: inline-block;
   text-decoration: none;
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 0;
+  padding: 0.4rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   border: 1px solid #e0e0e0;
@@ -1944,7 +1944,7 @@ body:has(.au-container) {
   background: linear-gradient(145deg, #f5f0e1 0%, #e8e0c8 50%, #d9cdb0 100%);
   padding: 2rem 1rem;
   width: 95%;
-  height: 35%;
+  min-height: 35%;
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.5),
     inset 0 0 60px rgba(139, 90, 43, 0.1);
