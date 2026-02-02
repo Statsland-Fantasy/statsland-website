@@ -75,7 +75,7 @@ export const useTileFlip = ({ state, updateState }: UseTileFlipProps) => {
       // Only update score/counters if game is not won or gave up
       if (!state.isCompleted) {
         const tileValue = state.round?.player[tileName] ?? "";
-        var newScore: number;
+        let newScore: number;
         if (tileValue === "N/A" || tileValue === "") {
           newScore = state.score;
           toast.info("Clue is unhelpful. No points deducted");
@@ -112,7 +112,7 @@ export const useTileFlip = ({ state, updateState }: UseTileFlipProps) => {
       // Only update score/counters if game is not won or gave up
       if (!state.isCompleted) {
         const tileValue = state.round?.player[tileName] ?? "";
-        var newScore: number;
+        let newScore: number;
         if (tileValue === "N/A" || tileValue === "") {
           newScore = state.score;
           toast.info("Clue is unhelpful. No points deducted");
