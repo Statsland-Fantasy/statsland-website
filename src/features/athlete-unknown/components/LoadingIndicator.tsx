@@ -19,7 +19,7 @@ export function LoadingIndicator({
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowText(true);
-    }, 2000); // wait 2s before showing Loading text
+    }, 3000); // wait 3s before showing Loading text
     return () => clearTimeout(timeout);
   }, []);
 
