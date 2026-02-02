@@ -126,7 +126,7 @@ export const hasAnyGameData = (): boolean => {
         if (
           key.startsWith(STORAGE_KEYS.CURRENT_SESSION_PREFIX) ||
           key === STORAGE_KEYS.GUEST_STATS_KEY ||
-          key === sessionStorage.getItem("au-splash-shown") // Everything is good
+          sessionStorage.getItem("au-splash-shown") // Everything is good
         ) {
           return true;
         }

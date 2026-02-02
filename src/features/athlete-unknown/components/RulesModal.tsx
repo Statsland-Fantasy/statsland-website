@@ -42,7 +42,7 @@ const PROLOGUE_PAGES = [
     "How to Play",
     "It's up to you to figure out each day's mystery athlete! Solve the case with the highest score possible.",
     `Start with ${INITIAL_SCORE} points. Each clue deducts a different amount of points. Each incorrect guess is -${INCORRECT_GUESS_PENALTY} point${INCORRECT_GUESS_PENALTY === 1 ? "" : "s"}.`,
-    "Cases increase in difficulty from Sunday through Saturday.",
+    "The cases increase in difficulty from Sunday through Saturday.",
     "Play each day, build up your stats, and share with your friends! Good luck!",
   ],
 ];

@@ -28,7 +28,7 @@ function dayOfTheWeekPrint(dateStr: string): string {
 }
 
 function roundPlayDatePrint(dateStr: string): string {
-  const [_, month, day] = dateStr.split("-");
+  const [, month, day] = dateStr.split("-");
   return `${dayOfTheWeekPrint(dateStr)}, ${Number(month)}/${Number(day)}`;
 }
 
