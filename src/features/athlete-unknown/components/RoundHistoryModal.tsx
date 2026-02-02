@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { RoundHistory, RoundSummary } from "@/features/athlete-unknown/types";
 import { LoadingIndicator } from "./LoadingIndicator";
 import { ErrorDisplay } from "./ErrorDisplay";
+import { roundPlayDatePrint } from "../utils/date";
 
 interface RoundHistoryModalProps {
   isOpen: boolean;
@@ -89,7 +90,7 @@ function RoundHistoryModal({
                           transform: "none",
                         }}
                       >
-                        {`Case #${round.roundId.split("#")[1]}`}
+                        {roundPlayDatePrint(round.playDate)}
                       </div>
                       <div className="au-file-cabinet-folder-body">
                         <div

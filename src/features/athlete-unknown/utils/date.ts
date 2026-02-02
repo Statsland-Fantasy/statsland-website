@@ -22,4 +22,14 @@ function daysBetween(dateStr1: string, dateStr2: string): number {
   return Math.round(Math.abs(d2.getTime() - d1.getTime()) / msPerDay);
 }
 
-export { getCurrentDateString, getDateString, daysBetween };
+function dayOfTheWeekPrint(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-US", { weekday: "short" });
+}
+
+function roundPlayDatePrint(dateStr: string): string {
+  const [_, month, day] = dateStr.split("-");
+  return `${dayOfTheWeekPrint(dateStr)}, ${Number(month)}/${Number(day)}`;
+}
+
+export { getCurrentDateString, getDateString, daysBetween, roundPlayDatePrint };

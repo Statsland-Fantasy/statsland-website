@@ -1,16 +1,13 @@
 import React from "react";
-import { formatDate } from "@/utils";
 import { SportType } from "@/config";
 import { getSportEmoji } from "../utils/strings";
+import { roundPlayDatePrint } from "../utils/date";
 
 interface RoundInfoProps {
   roundNumber: string;
   playDate: string;
   theme?: string;
   sport: SportType;
-  onRoundResultsClick: () => void;
-  onRulesClick: () => void;
-  onRoundHistoryClick: () => void;
 }
 
 export function RoundInfo({
@@ -18,9 +15,6 @@ export function RoundInfo({
   playDate,
   theme,
   sport,
-  // onRoundResultsClick,
-  // onRulesClick,
-  // onRoundHistoryClick,
 }: RoundInfoProps): React.ReactElement {
   return (
     <div className="au-round-info-container">
@@ -30,29 +24,15 @@ export function RoundInfo({
       >
         <span className="au-round-number">
           <p>{`Case #${getSportEmoji(sport)}${roundNumber}`}</p>
-          {/* <p>{theme && ` - ${theme}`}</p> */}
         </span>
         <span className="au-separator">•</span>
         <span className="au-round-date">
-          <p>{formatDate(playDate)}</p>
+          <p>{roundPlayDatePrint(playDate)}</p>
         </span>
       </div>
       <div className="au-round-info-container-bottom">
         <p>{theme}</p>
       </div>
-      {/* <div className="au-round-info-container-bottom">
-        <button className="au-round-stats-link" onClick={onRoundResultsClick}>
-          <p>Case Stats</p>
-        </button>
-        <span className="au-separator">•</span>
-        <button className="au-rules-link" onClick={onRulesClick}>
-          <p>How to Play</p>
-        </button>
-        <span className="au-separator">•</span>
-        <button className="au-history-link" onClick={onRoundHistoryClick}>
-          <p>Case History</p>
-        </button>
-      </div> */}
     </div>
   );
 }

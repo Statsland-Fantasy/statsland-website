@@ -315,9 +315,6 @@ export function AthleteUnknown(): React.ReactElement {
               playDate={playDate}
               theme={state.round.theme}
               sport={activeSport}
-              onRoundResultsClick={() => setIsRoundResultsModalOpen(true)}
-              onRulesClick={() => setIsRulesModalOpen(true)}
-              onRoundHistoryClick={() => setIsRoundHistoryModalOpen(true)}
             />
 
             <div className="au-paper-container">

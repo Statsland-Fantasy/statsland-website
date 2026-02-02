@@ -5,8 +5,8 @@ import type { Round } from "@/features/athlete-unknown/types";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import { Button } from "./Button";
 import { getSportEmoji } from "@/features/athlete-unknown/utils";
-import { formatDate } from "@/utils";
 import { useAuth0 } from "@auth0/auth0-react";
+import { roundPlayDatePrint } from "../utils/date";
 
 const WIN_OR_LOSE = "winOrLose";
 
@@ -130,7 +130,9 @@ export function RoundResultsModal({
               </div>
               <div className="au-report-field">
                 <span className="au-report-label">Date:</span>
-                <span className="au-report-value">{formatDate(playDate)}</span>
+                <span className="au-report-value">
+                  {roundPlayDatePrint(playDate)}
+                </span>
                 <div className="au-report-underline"></div>
               </div>
               <div className="au-report-field">

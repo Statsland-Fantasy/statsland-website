@@ -3734,10 +3734,11 @@ body:has(.au-container) {
 }
 
 .au-splash-date {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #dddddd;
   margin: 0;
+  line-height: 1.25;
 }
 
 .au-splash-round-label {
