@@ -145,7 +145,7 @@ export const ALL_TILES = [...TOP_TILES, ...GRID_TILES] as const;
 export const REFERENCE_URLS = {
   [SPORT_BASEBALL]:
     "https://www.baseball-reference.com/about/war_explained.shtml",
-  [SPORT_BASKETBALL]: "https://www.basketball-reference.com/about/bpm2.html",
+  [SPORT_BASKETBALL]: "https://www.basketball-reference.com/about/ws.html",
   [SPORT_FOOTBALL]:
     "https://www.pro-football-reference.com/about/approximate_value.htm",
 } as const;
