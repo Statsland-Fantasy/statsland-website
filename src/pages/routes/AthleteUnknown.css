@@ -1329,8 +1329,8 @@ body:has(.au-container) {
 .au-folder-tab {
   position: absolute;
   top: calc((var(--tab-index, 0) * 10rem));
-  right: -2rem;
-  width: 2.5rem;
+  right: -1.75rem;
+  max-width: 2rem;
   height: 9rem;
   background: linear-gradient(90deg, #c9a86c 0%, #d9b882 100%);
   border-radius: 0 1rem 1rem 0;
@@ -3272,7 +3272,7 @@ body:has(.au-container) {
   border-bottom: none;
   border-radius: 4px 4px 0 0;
   padding: 0.25rem 0.5rem;
-  width: 5.5rem;
+  max-width: 5.5rem;
   height: 2rem;
   text-align: center;
   font-family: "Special Elite", "Courier New", monospace;

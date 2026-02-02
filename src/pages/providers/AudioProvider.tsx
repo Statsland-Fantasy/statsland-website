@@ -124,7 +124,8 @@ export function AudioProvider({
       }
       playlistRef.current = sources;
       shouldLoopRef.current = shouldLoop;
-      playTrack(0);
+      const trackNumber = Math.floor(Math.random() * sources.length);
+      playTrack(trackNumber);
     },
     [playTrack]
   );
