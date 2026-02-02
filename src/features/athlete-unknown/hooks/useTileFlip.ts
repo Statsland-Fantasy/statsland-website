@@ -11,6 +11,7 @@ import {
   TileType,
   TIMING,
 } from "@/features/athlete-unknown/config";
+import { toast } from "sonner";
 
 interface UseTileFlipProps {
   state: GameState;
@@ -74,10 +75,13 @@ export const useTileFlip = ({ state, updateState }: UseTileFlipProps) => {
       // Only update score/counters if game is not won or gave up
       if (!state.isCompleted) {
         const tileValue = state.round?.player[tileName] ?? "";
-        const newScore =
-          tileValue === "N/A" || tileValue === ""
-            ? state.score
-            : calculateNewScore(state.score, tileName);
+        var newScore: number;
+        if (tileValue === "N/A" || tileValue === "") {
+          newScore = state.score;
+          toast.info("Clue is unhelpful. No points deducted");
+        } else {
+          newScore = calculateNewScore(state.score, tileName);
+        }
 
         updateState({
           flippedTiles: updatedFlippedTiles,
@@ -108,10 +112,13 @@ export const useTileFlip = ({ state, updateState }: UseTileFlipProps) => {
       // Only update score/counters if game is not won or gave up
       if (!state.isCompleted) {
         const tileValue = state.round?.player[tileName] ?? "";
-        const newScore =
-          tileValue === "N/A" || tileValue === ""
-            ? state.score
-            : calculateNewScore(state.score, tileName);
+        var newScore: number;
+        if (tileValue === "N/A" || tileValue === "") {
+          newScore = state.score;
+          toast.info("Clue is unhelpful. No points deducted");
+        } else {
+          newScore = calculateNewScore(state.score, tileName);
+        }
 
         updateState({
           flippedTiles: updatedFlippedTiles,
