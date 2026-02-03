@@ -16,10 +16,9 @@ body:has(.au-container) {
   width: 100%;
 }
 
-/* Desktop (1024px and up) */
 @media (min-width: 1024px) {
   .au-container {
-    width: 66vw;
+    width: 60vw;
     /* add a background sheen */
   }
 }
@@ -31,6 +30,12 @@ body:has(.au-container) {
   height: 3rem;
   width: 100%;
   background-color: white;
+}
+
+@media (min-width: 1024px) {
+  .au-header-container {
+    height: 4rem;
+  }
 }
 
 .au-left-header-container {
@@ -45,10 +50,6 @@ body:has(.au-container) {
 
 .au-information-container {
   display: flex;
-  flex-direction: column;
-}
-
-.au-game-container {
   flex-direction: column;
 }
 
@@ -67,8 +68,23 @@ body:has(.au-container) {
   gap: 2rem;
 }
 
+@media (min-width: 1024px) {
+  .au-scoring-buttons-container {
+    margin: 0.5rem 0 0.5rem 0;
+  }
+}
+
 .au-tile-grid-container {
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .au-tile-grid-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
 
 .au-footer-container {
@@ -76,6 +92,7 @@ body:has(.au-container) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 /* UserAndSetttings */
@@ -96,9 +113,14 @@ body:has(.au-container) {
 
 .au-icon-button {
   padding: 0.25rem;
-  background-color: green;
+  font-size: 1.25rem;
   width: 75%;
-  height: 75%;
+}
+
+@media (min-width: 1024px) {
+  .au-icon-button {
+    font-size: 1.5rem;
+  }
 }
 
 /* SportSelectorHeader */
@@ -117,6 +139,20 @@ body:has(.au-container) {
   cursor: pointer;
   color: red;
   opacity: 0.6;
+  font-family: "Bebas Neue", sans-serif;
+  font-style: normal;
+  font-size: 1.15rem;
+  letter-spacing: 0.14rem;
+}
+
+@media (min-width: 1024px) {
+  .au-sports-section {
+    margin-bottom: 0.75rem;
+  }
+
+  .au-nav-tab span {
+    font-size: 1.5rem;
+  }
 }
 
 .au-nav-tab:hover {
@@ -125,21 +161,10 @@ body:has(.au-container) {
 }
 
 .au-nav-tab.active {
-  font-weight: bold;
+  font-weight: 400;
   border-bottom: 3px solid red;
   color: red;
   opacity: 1;
-}
-
-.au-nav-tab > span {
-  font-family: "Bebas Neue", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1.15rem;
-  /* font-family: "Bodoni Moda", serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-style: normal; */
 }
 
 /* RoundInfo */
@@ -157,11 +182,13 @@ body:has(.au-container) {
   flex-direction: row;
   align-items: center;
   margin-bottom: 0.25rem;
+  gap: 1rem;
 }
 
-.au-round-info-container-top {
+.au-round-info-container-top,
+.au-round-info-container-bottom {
   justify-content: center;
-  gap: 1rem;
+  width: 100%;
 }
 
 .au-round-info-container-top p {
@@ -171,13 +198,9 @@ body:has(.au-container) {
   color: white;
 }
 
-.au-round-info-container-bottom {
-  justify-content: space-evenly;
-  width: 100%;
-}
-
 .au-separator {
   color: white;
+  font-size: 1.75rem;
 }
 
 .au-round-info-container-bottom p {
@@ -186,6 +209,40 @@ body:has(.au-container) {
   font-style: italic;
   font-size: 1.2rem;
   color: white;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .au-round-info-container {
+    margin-bottom: 1rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .au-round-info-container > div {
+    gap: 1.5rem;
+  }
+
+  .au-round-info-container-top {
+    justify-content: flex-end;
+  }
+
+  .au-round-info-container-bottom {
+    justify-content: flex-start;
+  }
+
+  .au-separator {
+    font-size: 2.25em;
+  }
+
+  .au-round-info-container-top p {
+    font-size: 2.15rem;
+  }
+
+  .au-round-info-container-bottom p {
+    font-size: 2.15rem;
+  }
 }
 
 /* ScoreDisplay - Polaroid Style */
@@ -218,12 +275,6 @@ body:has(.au-container) {
   transform: translateX(-50%);
   width: 0.75rem;
   height: 0.75rem;
-  /* background: radial-gradient(
-    circle at 30% 30%,
-    #ff6b6b 0%,
-    #cc4444 50%,
-    #992222 100%
-  ); */
   background-color: red;
   border-radius: 50%;
   box-shadow:
@@ -263,9 +314,43 @@ body:has(.au-container) {
   font-weight: 800;
   color: white;
   transform: rotate(3deg);
+  line-height: 2.75rem;
+}
+
+@media (min-width: 1024px) {
+  .au-score-container {
+    margin: 0;
+  }
+
+  .au-score {
+    padding: 1.5rem 1.5rem 0.25rem 1.5rem;
+  }
+
+  .au-score::before {
+    top: -0.3rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .au-score-label {
+    font-size: 2rem;
+    margin-top: 1rem;
+  }
+
+  .au-score-box {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .au-score-box > p {
+    font-size: 4rem;
+    text-align: cen ter;
+    line-height: 4.5rem;
+  }
 }
 
 .au-bulletin-board {
+  flex-direction: column;
   position: relative;
   background-image: url("../../features/athlete-unknown/assets/corkboard-background-vert.jpg");
   background-size: 100%;
@@ -287,6 +372,26 @@ body:has(.au-container) {
       #5a2e1a 100%
     )
     1;
+}
+
+@media (min-width: 1024px) {
+  .au-bulletin-board {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    border: 0.75rem solid transparent;
+    border-image: linear-gradient(
+        to bottom,
+        #5a2e1a 0%,
+        #6b3a22 15%,
+        #7a4a2e 35%,
+        #8b5a3c 50%,
+        #7a4a2e 65%,
+        #6b3a22 85%,
+        #5a2e1a 100%
+      )
+      1;
+  }
 }
 
 .au-bulletin-board::after {
@@ -313,23 +418,16 @@ body:has(.au-container) {
   flex-direction: row;
   justify-content: space-between;
   background-color: #fffef7;
-  /* background-image: repeating-linear-gradient(
-    transparent,
-    transparent 1.5rem,
-    #edece8 1.5rem,
-    #edece8 1.8rem
-  ); */
-  padding: 0rem 0rem;
+  padding: 0;
   margin: 0rem auto;
   width: 100%;
   min-height: 4rem;
-}
 
-.au-player-guess-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .au-player-input {
@@ -338,17 +436,17 @@ body:has(.au-container) {
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  width: 70%;
+  width: 55%;
 }
 
 .au-player-input::before {
   content: "";
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 45%;
   width: 110%;
-  height: 110%;
-  transform: translate(-50%, -50%) rotate(-2deg);
+  height: 225%;
+  transform: translate(-45%, -50%) rotate(-2deg);
   pointer-events: none;
   z-index: 1;
   background-image: url("../../features/athlete-unknown/assets/hand-drawn-circle.svg");
@@ -357,11 +455,8 @@ body:has(.au-container) {
 }
 
 .au-player-input input {
-  /* font-family: "Caveat", cursive;
-  font-size: 2rem;
-  font-weight: 700; */
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #1a1a1a;
   border: none;
   background: transparent;
@@ -371,7 +466,7 @@ body:has(.au-container) {
   color: black;
   box-sizing: border-box;
   z-index: 3;
-  padding-left: 0.5rem;
+  padding-left: 0.25rem;
   width: 100%;
 }
 
@@ -380,9 +475,6 @@ body:has(.au-container) {
 }
 
 .au-player-input input::placeholder {
-  /* font-family: "Caveat", cursive;
-  color: black;
-  opacity: 0.8; */
   font-family: "Special Elite", "Courier New", monospace;
   font-size: 1.4rem;
   opacity: 0.8;
@@ -393,7 +485,49 @@ body:has(.au-container) {
   margin-top: 0.5rem;
 }
 
+@media (min-width: 1024px) {
+  .au-paper-container {
+    min-height: 9rem;
+  }
+
+  .au-player-input {
+    width: 50%;
+  }
+
+  .au-player-input::before {
+    width: 105%;
+    height: 260%;
+    transform: translate(-45%, -50%) rotate(-2deg);
+  }
+
+  .au-player-input input {
+    font-size: 2.25rem;
+    padding-left: 2rem;
+  }
+
+  .au-player-input input::placeholder {
+    font-size: 1.75rem;
+    opacity: 0.8;
+  }
+}
+
 /* HintTiles */
+.au-hints-container::before {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: red;
+  border-radius: 50%;
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.4),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
 
 .au-hints-container {
   display: flex;
@@ -579,11 +713,6 @@ body:has(.au-container) {
 .au-hint-tile-flipped {
   width: 100%;
   height: 100%;
-  /* font-family: "Bebas Neue", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1.5rem;
-  color: #1a1a1a; */
   font-family: "Caveat", cursive;
   font-size: 1.5rem;
   font-weight: 800;
@@ -606,10 +735,6 @@ body:has(.au-container) {
   font-style: normal;
   font-size: 1.25rem;
   color: #1a1a1a;
-  /* font-family: "Caveat", cursive;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #1a1a1a; */
   text-align: center;
   background: linear-gradient(135deg, #ffe066 0%, #ffd633 100%);
   box-shadow:
@@ -641,14 +766,189 @@ body:has(.au-container) {
   transform: rotateY(-5deg) translateX(1px);
 }
 
+@media (min-width: 1024px) {
+  .au-hints-container {
+    gap: 2rem;
+    position: relative;
+    padding: 1.5rem;
+
+    /* Heavily aged paper background */
+    background:
+    /* Deep crinkle/fold lines */
+      linear-gradient(
+        158deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(101, 78, 55, 0.15) 35.5%,
+        rgba(101, 78, 55, 0.08) 37%,
+        transparent 38%,
+        transparent 100%
+      ),
+      linear-gradient(
+        -12deg,
+        transparent 0%,
+        transparent 55%,
+        rgba(101, 78, 55, 0.12) 55.5%,
+        rgba(101, 78, 55, 0.06) 57%,
+        transparent 58%,
+        transparent 100%
+      ),
+      linear-gradient(
+        95deg,
+        transparent 0%,
+        transparent 70%,
+        rgba(101, 78, 55, 0.1) 70.5%,
+        rgba(101, 78, 55, 0.05) 72%,
+        transparent 73%,
+        transparent 100%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 0%,
+        transparent 25%,
+        rgba(139, 119, 101, 0.08) 25.5%,
+        transparent 27%,
+        transparent 100%
+      ),
+      /* Base heavily aged paper color */
+        linear-gradient(
+          180deg,
+          #ebe4cc 0%,
+          #e2d8b8 20%,
+          #d9cca8 50%,
+          #d0c098 80%,
+          #c8b890 100%
+        );
+
+    /* Heavily torn/rough edges */
+    clip-path: polygon(
+      /* Top edge - left to right */ 0% 6%,
+      3% 0%,
+      7% 5%,
+      11% 2%,
+      15% 6%,
+      20% 0%,
+      24% 4%,
+      28% 1%,
+      33% 6%,
+      38% 0%,
+      43% 4%,
+      48% 0%,
+      53% 4%,
+      58% 2%,
+      63% 1%,
+      68% 0%,
+      73% 5%,
+      78% 1%,
+      83% 6%,
+      88% 0%,
+      93% 4%,
+      97% 0%,
+      100% 2%,
+      /* Right edge - top to bottom */ 93% 10%,
+      100% 15%,
+      98% 20%,
+      100% 26%,
+      95% 32%,
+      100% 38%,
+      96% 44%,
+      100% 50%,
+      98% 56%,
+      100% 62%,
+      97% 68%,
+      100% 74%,
+      99% 80%,
+      100% 86%,
+      96% 92%,
+      100% 95%,
+      /* Bottom edge - right to left */ 97% 100%,
+      93% 95%,
+      88% 100%,
+      83% 97%,
+      78% 100%,
+      73% 96%,
+      68% 100%,
+      63% 99%,
+      58% 100%,
+      53% 96%,
+      48% 99%,
+      43% 94%,
+      38% 100%,
+      33% 97%,
+      28% 100%,
+      23% 95%,
+      18% 99%,
+      13% 94%,
+      8% 99%,
+      3% 95%,
+      0% 100%,
+      /* Left edge - bottom to top */ 7% 94%,
+      0% 88%,
+      6% 82%,
+      0% 76%,
+      5% 70%,
+      0% 64%,
+      7% 58%,
+      0% 52%,
+      6% 46%,
+      0% 40%,
+      5% 34%,
+      0% 28%,
+      7% 22%,
+      0% 16%,
+      6% 10%,
+      0% 6%
+    );
+
+    /* Heavy paper shadow and texture */
+    box-shadow:
+      inset 0 0 30px rgba(101, 78, 55, 0.25),
+      inset 0 0 60px rgba(101, 78, 55, 0.15),
+      inset 0 0 100px rgba(101, 78, 55, 0.1),
+      inset 3px 3px 15px rgba(0, 0, 0, 0.1),
+      inset -3px -3px 15px rgba(0, 0, 0, 0.05),
+      3px 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .au-hints-container::before {
+    top: 0.15rem;
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .au-hint-tile-label {
+    font-size: 2rem;
+  }
+
+  .au-hint-tile-size {
+    min-width: 7rem;
+    max-width: 10rem;
+  }
+
+  .au-hint-tile-flipped {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .au-hint-tile-unflipped {
+    font-size: 1.5rem;
+  }
+}
+
 /* TileGrid */
-.grid {
+.au-grid {
   position: relative;
   display: grid;
   grid-template-columns: repeat(var(--au-grid-size), var(--au-tile-size));
   grid-gap: var(--au-tile-grid-gap);
   width: fit-content;
   margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .au-grid {
+    margin: 0;
+  }
 }
 
 /* Red String - Detective Board Connection (SVG) */
@@ -833,6 +1133,12 @@ body:has(.au-container) {
   transition: opacity 0.15s ease-out;
 }
 
+@media (min-width: 1024px) {
+  .tile-back {
+    font-size: 1.5rem;
+  }
+}
+
 /* Pushpin for flipped tiles - appears after post-it slides in */
 .tile-inner.flipped:not(.photo-reveal) .tile-back::before {
   position: absolute;
@@ -900,24 +1206,6 @@ body:has(.au-container) {
   height: 100%;
   object-fit: cover;
   border-radius: 0.5rem;
-}
-
-.flip-back-arrow {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 24px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .tile-info-link {
@@ -1217,12 +1505,12 @@ body:has(.au-container) {
 .au-previous-guesses {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   font-family: "Special Elite", "Courier New", monospace;
   font-size: 1rem;
   color: #1a1a1a;
-  padding: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0;
 }
 
 .au-previous-guess {
@@ -1245,6 +1533,7 @@ body:has(.au-container) {
   color: #f4c90d;
   opacity: 1;
   position: relative;
+  cursor: pointer;
 }
 
 /* Auto-showing tooltip for close guesses */
@@ -1263,11 +1552,63 @@ body:has(.au-container) {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+@media (min-width: 1024px) {
+  .au-previous-guesses-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .au-previous-guesses {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-family: "Special Elite", "Courier New", monospace;
+    font-size: 1rem;
+    color: #1a1a1a;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    height: 100%;
+    min-width: 17rem;
+  }
+
+  .au-previous-guesses-title {
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-family: "Special Elite", "Courier New", monospace;
+    text-transform: uppercase;
+    align-self: center;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    border: 2px black solid;
+    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  }
+
+  .au-previous-guess {
+    font-size: 1.2rem;
+  }
+
+  /* Auto-showing tooltip for close guesses */
+  .au-previous-guess-tooltip {
+    position: absolute;
+    top: 75%;
+    right: -5%;
+    background-color: #f4c90d;
+    color: #1a1a1a;
+    padding: 0.5em;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+}
+
 /* Sports Reference Attribution */
 .au-sports-reference-attribution {
   display: flex;
-  width: 60%;
-  flex-direction: column;
+  width: 75%;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 0.25rem;
@@ -1297,6 +1638,32 @@ body:has(.au-container) {
   height: 1rem;
   width: auto;
   display: block;
+}
+
+@media (min-width: 1024px) {
+  .au-sports-reference-attribution {
+    width: 60%;
+    flex-direction: row;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .sports-reference-link {
+    border: 2px solid #e0e0e0;
+    border-radius: 0.5rem;
+    margin-left: 0.75rem;
+  }
+
+  .sports-reference-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .sports-reference-logo {
+    height: 1.5rem;
+    width: auto;
+    display: block;
+  }
 }
 
 /* Results Modal */
@@ -3452,15 +3819,10 @@ body:has(.au-container) {
 }
 
 .evidence-tag-text {
-  /* font-family: "Special Elite", monospace;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-  color: black; */
   padding-top: 0.5rem;
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-style: normal;
   color: black;
   text-align: center;
@@ -3494,6 +3856,35 @@ body:has(.au-container) {
   border-radius: 50%;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
   z-index: 100;
+}
+
+@media (min-width: 1024px) {
+  .evidence-tag::before {
+    top: -2px;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Pin needle/shaft */
+  .evidence-tag::after {
+    width: 6px;
+    height: 10px;
+  }
+
+  .evidence-tag-text {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .reinforcement-ring {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .reinforcement-ring::before {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
 }
 
 /* ============================================
@@ -3834,4 +4225,27 @@ body:has(.au-container) {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+/* AU Utility Classes. Last to overwrite */
+.au-mobile-invisible {
+  display: none;
+}
+
+.au-desktop-invisible {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .au-mobile-invisible {
+    display: flex;
+  }
+
+  .au-desktop-invisible {
+    display: none;
+  }
+
+  .au-desktop-placeholder {
+    visibility: hidden;
+  }
 }

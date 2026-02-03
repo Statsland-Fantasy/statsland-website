@@ -18,10 +18,7 @@ export function RoundInfo({
 }: RoundInfoProps): React.ReactElement {
   return (
     <div className="au-round-info-container">
-      <div
-        className="au-round-info-container-top"
-        style={{ width: theme ? "100%" : "75%" }}
-      >
+      <div className="au-round-info-container-top">
         <span className="au-round-number">
           <p>{`Case #${getSportEmoji(sport)}${roundNumber}`}</p>
         </span>
@@ -29,9 +26,12 @@ export function RoundInfo({
         <span className="au-round-date">
           <p>{roundPlayDatePrint(playDate)}</p>
         </span>
+        <span className="au-separator au-mobile-invisible">•</span>
       </div>
       <div className="au-round-info-container-bottom">
-        <p>{theme}</p>
+        <span>
+          <p>{theme}</p>
+        </span>
       </div>
     </div>
   );

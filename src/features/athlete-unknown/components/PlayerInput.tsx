@@ -24,6 +24,7 @@ export function PlayerInput({
         enterKeyHint="go"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
+            e.currentTarget.blur();
             onSubmit();
           }
         }}

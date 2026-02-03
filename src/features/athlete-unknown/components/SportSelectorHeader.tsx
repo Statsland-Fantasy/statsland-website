@@ -7,7 +7,6 @@ interface SportSelectorHeaderProps {
   activeSport: SportType;
   onSportChange: (sport: SportType) => void;
 }
-//TODO: rename to sport selector header
 export function SportSelectorHeader({
   activeSport,
   onSportChange,

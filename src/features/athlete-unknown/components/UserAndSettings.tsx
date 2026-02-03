@@ -33,24 +33,16 @@ export function UserAndSettings({
   return (
     <div className="au-user-settings-container">
       <button className="au-icon-button">
-        <FontAwesomeIcon icon={faBookOpen} size="xl" onClick={onRulesClick} />
+        <FontAwesomeIcon icon={faBookOpen} onClick={onRulesClick} />
       </button>
       <button className="au-icon-button">
-        <FontAwesomeIcon
-          icon={faChartLine}
-          size="xl"
-          onClick={onRoundResultsClick}
-        />
+        <FontAwesomeIcon icon={faChartLine} onClick={onRoundResultsClick} />
       </button>
       <button className="au-icon-button">
-        <FontAwesomeIcon
-          icon={faBriefcase}
-          size="xl"
-          onClick={onRoundHistoryClick}
-        />
+        <FontAwesomeIcon icon={faBriefcase} onClick={onRoundHistoryClick} />
       </button>
       <button onClick={onStatsClick} className="au-icon-button">
-        <FontAwesomeIcon icon={faUserSecret} size="xl" />
+        <FontAwesomeIcon icon={faUserSecret} />
       </button>
       <button
         className="au-icon-button"
@@ -62,7 +54,7 @@ export function UserAndSettings({
           }
         }}
       >
-        <FontAwesomeIcon icon={icon} size="xl" />
+        <FontAwesomeIcon icon={icon} />
       </button>
     </div>
   );

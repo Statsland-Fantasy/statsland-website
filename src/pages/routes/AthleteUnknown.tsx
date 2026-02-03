@@ -318,23 +318,37 @@ export function AthleteUnknown(): React.ReactElement {
             />
 
             <div className="au-paper-container">
-              <div className="au-player-guess-container">
-                <PlayerInput
-                  playerName={state.playerName}
-                  isCompleted={state.isCompleted}
-                  onPlayerNameChange={(name) =>
-                    updateState({ playerName: name })
-                  }
-                  onSubmit={handleNameSubmit}
-                />
-                <PreviousGuesses
-                  guesses={state.previousGuesses}
-                  correctName={state.round.player.name}
-                />
+              <PlayerInput
+                playerName={state.playerName}
+                isCompleted={state.isCompleted}
+                onPlayerNameChange={(name) => updateState({ playerName: name })}
+                onSubmit={handleNameSubmit}
+              />
+              <div className="au-scoring-buttons-container au-mobile-invisible">
+                <Button
+                  onClick={handleNameSubmit}
+                  size="lg"
+                  variant={state.isCompleted ? "ghost" : "primary"}
+                  disabled={state.isCompleted || state.playerName === ""}
+                >
+                  Submit
+                </Button>
+                <Button
+                  onClick={() => setIsGiveUpConfirmationModalOpen(true)}
+                  size="md"
+                  variant={state.isCompleted ? "ghost" : "danger"}
+                  disabled={state.isCompleted}
+                >
+                  Give Up
+                </Button>
               </div>
+              <PreviousGuesses
+                guesses={state.previousGuesses}
+                correctName={state.round.player.name}
+              />
             </div>
-            <div className="au-game-container au-bulletin-board">
-              <div className="au-scoring-container">
+            <div className="au-bulletin-board">
+              <div className="au-scoring-container au-desktop-invisible">
                 <div className="au-scoring-buttons-container">
                   <Button
                     onClick={handleNameSubmit}
@@ -363,6 +377,15 @@ export function AthleteUnknown(): React.ReactElement {
                 </div>
               </div>
               <div className="au-tile-grid-container">
+                <div className="au-mobile-invisible">
+                  <div className="au-hints-container">
+                    <HintTiles
+                      flippedTiles={state.flippedTiles}
+                      playerData={state.round.player}
+                      onHintTileClick={handleHintTileClick}
+                    />
+                  </div>
+                </div>
                 <TileGrid
                   flippedTiles={state.flippedTiles}
                   photoRevealed={state.photoRevealed}
@@ -370,6 +393,9 @@ export function AthleteUnknown(): React.ReactElement {
                   playerData={state.round.player}
                   onTileClick={handleTileClick}
                 />
+                <div className="au-mobile-invisible">
+                  <ScoreDisplay score={state.score} />
+                </div>
               </div>
             </div>
           </>
