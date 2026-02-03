@@ -4062,14 +4062,13 @@ body:has(.au-container) {
 
 .au-splash-subtitle {
   font-family: "bree-serif", serif;
-  /* font-family: "trade-gothic-next", sans-serif; */
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   color: #ccc;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
   line-height: 1.4;
   opacity: 0;
-  animation: splash-fade-in 1s ease-out 0.25s forwards;
+  animation: splash-fade-in 1s ease-out 0.5s forwards;
 }
 
 .au-splash-play-btn {
@@ -4081,7 +4080,7 @@ body:has(.au-container) {
   font-size: 1.25rem;
   font-weight: 600;
   cursor: pointer;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-family: "trade-gothic-next", sans-serif;
   display: flex;
   flex-direction: row;
@@ -4111,7 +4110,7 @@ body:has(.au-container) {
 }
 
 .au-splash-login-prompt {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #ddd;
   margin: 0 0 0.4rem 0;
 }
@@ -4141,6 +4140,12 @@ body:has(.au-container) {
   color: #dddddd;
   margin: 0;
   line-height: 1.25;
+  display: flex;
+  flex-direction: row;
+}
+
+.au-splash-separator {
+  margin: 0 0.5rem 0 0.5rem;
 }
 
 .au-splash-round-label {
@@ -4167,7 +4172,7 @@ body:has(.au-container) {
 
 .au-splash-footer-logo {
   width: 6rem;
-  height: 4rem;
+  height: 3.5rem;
   background-color: white;
   border-radius: 4px;
   padding: 0.5rem;
@@ -4179,6 +4184,17 @@ body:has(.au-container) {
   font-family: "trade-gothic-next", sans-serif;
   text-transform: uppercase;
   font-style: italic;
+}
+
+.au-splash-logo {
+  position: relative;
+  width: 85%;
+  height: auto;
+  clip-path: inset(15% 0 20% 0);
+  margin-top: -15%;
+  margin-bottom: -13%;
+  opacity: 0;
+  animation: splash-fade-in 1s ease-out 0.5s forwards;
 }
 
 /* Error Display */

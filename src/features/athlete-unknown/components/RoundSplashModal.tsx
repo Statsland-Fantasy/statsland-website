@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SLLogoStar from "../assets/SL_Logo_Star_Color.svg";
 import { roundPlayDatePrint } from "../utils/date";
+import AULogo from "@/features/athlete-unknown/assets/Athlete-Unknown-Logo.svg";
 
 interface RoundSplashModalProps {
   isOpen: boolean;
@@ -56,10 +57,11 @@ export function RoundSplashModal({
   return (
     <div className="au-splash-overlay">
       <div className="au-splash-content">
-        <h1 className="au-splash-title">
-          Athlete Unknown <br />
-          (Logo TBD)
-        </h1>
+        <img
+          src={AULogo}
+          alt="athlete-unknown-logo"
+          className="au-splash-logo"
+        />
         <p className="au-splash-subtitle">
           Use the clues to solve the mystery...
         </p>
@@ -101,8 +103,8 @@ export function RoundSplashModal({
 
         <div className="au-splash-meta">
           <p className="au-splash-date">
-            {roundPlayDatePrint(playDate)}
-            <br />
+            {roundPlayDatePrint(playDate)}{" "}
+            <div className="au-splash-separator">•</div>
             {`Case #${getSportEmoji(sport)}${daysBetween(config.athleteUnknown.firstRoundDate, playDate) + 1}`}
           </p>
         </div>
