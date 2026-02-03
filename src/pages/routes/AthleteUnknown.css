@@ -741,7 +741,9 @@ body:has(.au-container) {
     1px 1px 2px rgba(0, 0, 0, 0.15),
     inset 0 -1px 0 rgba(0, 0, 0, 0.05);
   border-radius: 1px;
-  cursor: pointer;
+  cursor:
+    url("../../features/athlete-unknown/assets/magnifying-glass.svg") 12 12,
+    pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1122,6 +1124,9 @@ body:has(.au-container) {
     2px 2px 8px rgba(0, 0, 0, 0.1);
   /* Start position - above and slightly smaller */
   transform: translateY(-30px) scale(0.9);
+  cursor:
+    url("../../features/athlete-unknown/assets/magnifying-glass.svg") 12 12,
+    pointer;
 }
 
 /* Pushpin base state - hidden */
@@ -1231,7 +1236,7 @@ body:has(.au-container) {
 /* Investigation Evidence Effect - makes photo harder to identify */
 .tile-mini-photo.investigation-evidence {
   /* Base photo effects: grayscale, lower contrast, heavier blur */
-  filter: grayscale(80%) contrast(1.75) brightness(0.9) blur(1.5px);
+  filter: grayscale(95%) contrast(1.95) brightness(0.85) blur(2px);
 
   /* Torn edges for damaged evidence look */
   clip-path: polygon(
@@ -1257,7 +1262,7 @@ body:has(.au-container) {
 
 .tile-back.photo-segment.investigation-evidence {
   /* Slightly less blur for revealed photo segments */
-  filter: grayscale(80%) contrast(1.75) brightness(0.9) blur(3px);
+  filter: grayscale(95%) contrast(1.95) brightness(0.85) blur(4px);
 }
 
 /* ========================================
