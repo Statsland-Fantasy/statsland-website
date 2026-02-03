@@ -32,32 +32,38 @@ export function UserAndSettings({
 
   return (
     <div className="au-user-settings-container">
-      <FontAwesomeIcon icon={faBookOpen} size="lg" onClick={onRulesClick} />
-      <FontAwesomeIcon
-        icon={faChartLine}
-        size="lg"
-        onClick={onRoundResultsClick}
-      />
-      <FontAwesomeIcon
-        icon={faBriefcase}
-        size="lg"
-        onClick={onRoundHistoryClick}
-      />
-      <FontAwesomeIcon icon={faUserSecret} size="lg" onClick={onStatsClick} />
-      <div className="au-settings-container">
-        <button
-          className="au-volume-button"
-          onClick={() => {
-            if (!soundEnabled) {
-              startSound(MUSIC_PLAYLIST, false);
-            } else {
-              toggleMute();
-            }
-          }}
-        >
-          <FontAwesomeIcon icon={icon} size="lg" className="au-settings-icon" />
-        </button>
-      </div>
+      <button className="au-icon-button">
+        <FontAwesomeIcon icon={faBookOpen} size="xl" onClick={onRulesClick} />
+      </button>
+      <button className="au-icon-button">
+        <FontAwesomeIcon
+          icon={faChartLine}
+          size="xl"
+          onClick={onRoundResultsClick}
+        />
+      </button>
+      <button className="au-icon-button">
+        <FontAwesomeIcon
+          icon={faBriefcase}
+          size="xl"
+          onClick={onRoundHistoryClick}
+        />
+      </button>
+      <button onClick={onStatsClick} className="au-icon-button">
+        <FontAwesomeIcon icon={faUserSecret} size="xl" />
+      </button>
+      <button
+        className="au-icon-button"
+        onClick={() => {
+          if (!soundEnabled) {
+            startSound(MUSIC_PLAYLIST, false);
+          } else {
+            toggleMute();
+          }
+        }}
+      >
+        <FontAwesomeIcon icon={icon} size="xl" />
+      </button>
     </div>
   );
 }
