@@ -174,7 +174,11 @@ export function RoundResultsModal({
                         const isFlipped = flippedTiles.includes(tileName);
                         emoji = isFlipped ? tile.flippedEmoji : "🟦";
                       }
-                      return <div key={index}>{emoji}</div>;
+                      return (
+                        <div key={index} className="au-results-tile">
+                          {emoji}
+                        </div>
+                      );
                     }
                   )}
                 </div>
