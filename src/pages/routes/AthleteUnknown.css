@@ -1726,8 +1726,7 @@ body:has(.au-container) {
 .au-folder-tab {
   position: absolute;
   top: calc((var(--tab-index, 0) * 9.5rem));
-  right: -1.75rem;
-  max-width: 2rem;
+  width: 3rem;
   height: 9rem;
   background: linear-gradient(90deg, #c9a86c 0%, #d9b882 100%);
   border-radius: 0 1rem 1rem 0;
@@ -1748,6 +1747,7 @@ body:has(.au-container) {
   box-shadow:
     inset -2px 0 4px rgba(255, 255, 255, 0.4),
     3px 3px 6px rgba(0, 0, 0, 0.15);
+  transform: translateX(0.2rem);
 }
 
 .au-folder-tab:active {
@@ -1811,7 +1811,7 @@ body:has(.au-container) {
   content: "";
   position: absolute;
   top: -0.5rem;
-  left: 1.5rem;
+  left: 0.5rem;
   width: 0.875rem;
   height: 3.5rem;
   border: 2px solid transparent;
@@ -1841,7 +1841,7 @@ body:has(.au-container) {
   content: "";
   position: absolute;
   top: -0.95rem;
-  left: 1.6rem;
+  left: 0.6rem;
   width: 0.625rem;
   height: 2rem;
   border: 2px solid transparent;
@@ -2285,10 +2285,11 @@ body:has(.au-container) {
   }
 
   .au-folder-tab {
-    top: calc((var(--tab-index, 0) * 11rem));
+    top: calc((var(--tab-index, 0) * 11.5rem));
     right: -2.75rem;
     max-width: 3rem;
-    height: 10rem;
+    height: 11rem;
+    transition: transform 0.15s ease;
   }
 
   .au-folder-tab-text {
@@ -3849,8 +3850,8 @@ body:has(.au-container) {
   cursor: pointer;
   color: #ccc;
   z-index: 20000;
-  width: 36px;
-  height: 36px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3890,8 +3891,7 @@ body:has(.au-container) {
 .au-file-cabinet-folder {
   position: relative;
   width: 100%;
-  height: 50px;
-  cursor: pointer;
+  height: 3.25rem;
   transition: transform 0.2s ease;
   flex-shrink: 0;
   margin-top: -0.9rem;
@@ -3929,7 +3929,7 @@ body:has(.au-container) {
 /* Folder tab - sticks up from top */
 .au-file-cabinet-folder-tab {
   position: absolute;
-  top: -30%;
+  top: -25%;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(180deg, #f5ecc8 0%, #e8d9a0 100%);
@@ -3937,21 +3937,29 @@ body:has(.au-container) {
   border-bottom: none;
   border-radius: 4px 4px 0 0;
   padding: 0.25rem 0.5rem;
-  max-width: 5.5rem;
+  width: 5rem;
   height: 2rem;
+  box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.au-file-cabinet-folder-tab:hover {
+  top: calc(-25% - 8px);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.au-file-cabinet-folder-tab-text {
   text-align: center;
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 0.75rem;
   font-weight: bold;
   color: #4a3a20;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.1);
-}
-
-.au-folder-date {
-  margin-bottom: 3px;
+  font-size: 0.75rem;
 }
 
 .au-folder-score {
@@ -4015,6 +4023,52 @@ body:has(.au-container) {
 
 .au-folder:hover .au-folder-tab {
   background: linear-gradient(180deg, #fff8d8 0%, #f0e4b0 100%);
+}
+
+@media (min-width: 1024px) {
+  .au-file-cabinet-modal {
+    width: 25%;
+  }
+
+  .au-drawer-front {
+    bottom: 25px;
+    height: 20%;
+    gap: 1.5rem;
+  }
+
+  .au-drawer-nameplate {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .au-drawer-interior {
+    height: 84%;
+  }
+
+  .au-file-cabinet-close {
+    bottom: 17%;
+    font-size: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .au-file-cabinet-folder {
+    height: 3.75rem;
+  }
+
+  .au-file-cabinet-folder-tab {
+    width: 6.5rem;
+  }
+
+  .au-file-cabinet-folder-tab-text {
+    font-size: 1rem;
+  }
+
+  .au-folder-score {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.35rem;
+    top: 15%;
+  }
 }
 
 /* Evidence Tag Styling - rectangular with notched corners */

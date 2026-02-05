@@ -15,6 +15,9 @@ interface RoundHistoryModalProps {
   onRoundSelect?: (playDate: string) => void;
 }
 
+const SCORE_STAMP_LEFT_MOBILE = "2.25rem";
+const SCORE_STAMP_LEFT_DESKTOP = "3.25rem";
+
 function RoundHistoryModal({
   isOpen,
   onClose,
@@ -81,7 +84,6 @@ function RoundHistoryModal({
                       key={round.roundId}
                       className="au-file-cabinet-folder"
                       style={{ zIndex }}
-                      onClick={() => handleFolderClick(round.playDate)}
                     >
                       <div
                         className="au-file-cabinet-folder-tab"
@@ -89,14 +91,17 @@ function RoundHistoryModal({
                           left: `${tabLeftPercent}%`,
                           transform: "none",
                         }}
+                        onClick={() => handleFolderClick(round.playDate)}
                       >
-                        {roundPlayDatePrint(round.playDate)}
+                        <p className="au-file-cabinet-folder-tab-text">
+                          {roundPlayDatePrint(round.playDate)}
+                        </p>
                       </div>
                       <div className="au-file-cabinet-folder-body">
                         <div
                           className={`au-folder-score ${hasScore ? "au-folder-score--solved" : ""}`}
                           style={{
-                            left: `calc(${tabLeftPercent}% + 2.75rem)`,
+                            left: `calc(${tabLeftPercent}% + ${window.matchMedia("(min-width: 1024px)").matches ? SCORE_STAMP_LEFT_DESKTOP : SCORE_STAMP_LEFT_MOBILE})`,
                           }}
                         >
                           {hasScore ? userRound?.score : "Unsolved"}
