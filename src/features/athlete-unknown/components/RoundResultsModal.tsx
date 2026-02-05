@@ -3,6 +3,7 @@ import { ALL_TILES, TILES } from "@/features/athlete-unknown/config";
 import type { SportType, TileType } from "@/features/athlete-unknown/config";
 import type { Round } from "@/features/athlete-unknown/types";
 import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
+import AthleteLogo from "@/features/athlete-unknown/assets/Athlete-Logo.svg";
 import { Button } from "./Button";
 import { getSportEmoji } from "@/features/athlete-unknown/utils";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -102,9 +103,9 @@ export function RoundResultsModal({
                 </a>
               ) : (
                 <img
-                  src={TestUnknownPerson}
-                  alt="unknown-player"
-                  className="au-player-photo"
+                  src={AthleteLogo}
+                  alt="Athlete Logo"
+                  className="au-player-photo-logo"
                 />
               )}
             </div>

@@ -3,13 +3,13 @@ import {
   faBookOpen,
   faBriefcase,
   faChartLine,
-  faUserSecret,
   faVolumeHigh,
   faVolumeXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAudio } from "@/pages/providers";
 import { MUSIC_PLAYLIST } from "../config";
 import { useMemo } from "react";
+import UnknownLogo from "@/features/athlete-unknown/assets/Unknown-Logo.svg";
 
 interface UserAndSettingsProps {
   onStatsClick: () => void;
@@ -42,7 +42,11 @@ export function UserAndSettings({
         <FontAwesomeIcon icon={faBriefcase} onClick={onRoundHistoryClick} />
       </button>
       <button onClick={onStatsClick} className="au-icon-button">
-        <FontAwesomeIcon icon={faUserSecret} />
+        <img
+          src={UnknownLogo}
+          alt="Unknown Detective Logo"
+          className="au-unknown-icon-button"
+        />
       </button>
       <button
         className="au-icon-button"
