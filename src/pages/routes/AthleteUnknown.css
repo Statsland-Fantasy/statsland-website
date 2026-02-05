@@ -2478,31 +2478,6 @@ body:has(.au-container) {
   pointer-events: none;
 }
 
-.au-close-rules-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(139, 69, 19, 0.1);
-  border: 2px solid rgba(139, 69, 19, 0.3);
-  font-size: 2rem;
-  cursor: pointer;
-  color: #5a3d2b;
-  z-index: 2;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.au-close-rules-button:hover {
-  background-color: rgba(139, 69, 19, 0.2);
-  border-color: #8b4513;
-  transform: scale(1.1);
-}
-
 .au-rules-prologue-container {
   position: relative;
   width: 100%;
@@ -2880,9 +2855,56 @@ body:has(.au-container) {
   text-align: center;
 }
 
-.au-rules-icon-item svg {
+.au-rules-icon {
   font-size: 1.25rem;
-  color: black;
+}
+
+@media (min-width: 1024px) {
+  .au-rules-modal-content {
+    width: 40vw;
+  }
+
+  .au-rules-notebook-paper {
+    background:
+      repeating-linear-gradient(
+        transparent,
+        transparent 2.5rem,
+        rgba(100, 140, 180, 0.15) 2.5rem,
+        rgba(100, 140, 180, 0.15) 2.7rem
+      ),
+      linear-gradient(90deg, #f5f0e1 0%, #faf6eb 3%, #faf6eb 97%, #f5f0e1 100%);
+    padding: 2.75rem 4.25rem 0rem 4.25rem;
+  }
+
+  .au-rules-prologue {
+    font-size: 1.75rem;
+    line-height: 1.55;
+  }
+
+  .au-case-file-paper {
+    top: -3.25rem;
+  }
+
+  .au-how-to-play {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .au-rules-icons-explanation {
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 0.25rem dashed rgba(0, 0, 0, 0.4);
+  }
+
+  .au-rules-icon-item {
+    gap: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .au-rules-icon {
+    font-size: 2rem;
+  }
 }
 
 /* Case File Header */

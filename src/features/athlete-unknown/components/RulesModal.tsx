@@ -36,7 +36,7 @@ const PROLOGUE_PAGES = [
   [
     '"Off-the-field issues aside," he said, glancing at my bottle of whiskey. "Your talent is off the charts. Frankly, you know the game better than anyone in my front office."',
     "He dropped a stack of case files on my desk as thick as an NFL playbook. I filpped through the files. I looked at the clock.",
-    '"Looks like Statsland\'s running out of time and you\'re all out of timeouts," I said. "Lucky for you comebacks are my calling card."',
+    '"Looks like Statsland\'s running out of time and you\'re all out of timeouts," I said. "Lucky for you, comebacks are my calling card."',
   ],
   [
     "How to Play",
@@ -131,7 +131,7 @@ function RulesModal({
               >
                 {ICON_EXPLANATIONS.map(({ icon, label }) => (
                   <div key={label} className="au-rules-icon-item">
-                    <FontAwesomeIcon icon={icon} />
+                    <FontAwesomeIcon icon={icon} className="au-rules-icon" />
                     <span>{label}</span>
                   </div>
                 ))}
