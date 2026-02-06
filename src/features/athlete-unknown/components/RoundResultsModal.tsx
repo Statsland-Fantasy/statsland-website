@@ -2,7 +2,6 @@ import React from "react";
 import { ALL_TILES, TILES } from "@/features/athlete-unknown/config";
 import type { SportType, TileType } from "@/features/athlete-unknown/config";
 import type { Round } from "@/features/athlete-unknown/types";
-import TestUnknownPerson from "@/features/athlete-unknown/assets/test-unknown-person.jpg";
 import AthleteLogo from "@/features/athlete-unknown/assets/Athlete-Logo.svg";
 import { Button } from "./Button";
 import { getSportEmoji } from "@/features/athlete-unknown/utils";
