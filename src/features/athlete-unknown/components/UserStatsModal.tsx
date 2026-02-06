@@ -283,21 +283,21 @@ function UserStatsModal({
                         <td className="au-tile-tracker-name">
                           {formatTileName(tile)}
                         </td>
-                        <td>
+                        <td className="au-tile-tracker-centered">
                           {
                             selectedSportStats.stats.mostTileFlippedTracker[
                               tile as keyof TileTracker
                             ]
                           }
                         </td>
-                        <td>
+                        <td className="au-tile-tracker-centered">
                           {
                             selectedSportStats.stats.firstTileFlippedTracker[
                               tile as keyof TileTracker
                             ]
                           }
                         </td>
-                        <td>
+                        <td className="au-tile-tracker-centered">
                           {
                             selectedSportStats.stats.lastTileFlippedTracker[
                               tile as keyof TileTracker

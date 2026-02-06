@@ -3,13 +3,13 @@ import {
   faBookOpen,
   faBriefcase,
   faChartLine,
-  faUserSecret,
   faVolumeHigh,
   faVolumeXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAudio } from "@/pages/providers";
 import { MUSIC_PLAYLIST } from "../config";
 import { useMemo } from "react";
+import UnknownLogo from "@/features/athlete-unknown/assets/Unknown-Logo.svg";
 
 interface UserAndSettingsProps {
   onStatsClick: () => void;
@@ -32,32 +32,34 @@ export function UserAndSettings({
 
   return (
     <div className="au-user-settings-container">
-      <FontAwesomeIcon icon={faBookOpen} size="lg" onClick={onRulesClick} />
-      <FontAwesomeIcon
-        icon={faChartLine}
-        size="lg"
-        onClick={onRoundResultsClick}
-      />
-      <FontAwesomeIcon
-        icon={faBriefcase}
-        size="lg"
-        onClick={onRoundHistoryClick}
-      />
-      <FontAwesomeIcon icon={faUserSecret} size="lg" onClick={onStatsClick} />
-      <div className="au-settings-container">
-        <button
-          className="au-volume-button"
-          onClick={() => {
-            if (!soundEnabled) {
-              startSound(MUSIC_PLAYLIST, false);
-            } else {
-              toggleMute();
-            }
-          }}
-        >
-          <FontAwesomeIcon icon={icon} size="lg" className="au-settings-icon" />
-        </button>
-      </div>
+      <button className="au-icon-button">
+        <FontAwesomeIcon icon={faBookOpen} onClick={onRulesClick} />
+      </button>
+      <button className="au-icon-button">
+        <FontAwesomeIcon icon={faChartLine} onClick={onRoundResultsClick} />
+      </button>
+      <button className="au-icon-button">
+        <FontAwesomeIcon icon={faBriefcase} onClick={onRoundHistoryClick} />
+      </button>
+      <button onClick={onStatsClick} className="au-icon-button">
+        <img
+          src={UnknownLogo}
+          alt="Unknown Detective Logo"
+          className="au-unknown-icon-button"
+        />
+      </button>
+      <button
+        className="au-icon-button"
+        onClick={() => {
+          if (!soundEnabled) {
+            startSound(MUSIC_PLAYLIST, false);
+          } else {
+            toggleMute();
+          }
+        }}
+      >
+        <FontAwesomeIcon icon={icon} />
+      </button>
     </div>
   );
 }

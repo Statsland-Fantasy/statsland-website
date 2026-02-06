@@ -87,11 +87,6 @@ export function Tile({
               </span>
             </div>
           )}
-          {/* {photoRevealed && index === 2 && (
-            <div className="flip-back-arrow">
-              <FontAwesomeIcon icon={faArrowRotateLeft} />
-            </div>
-          )} */}
         </div>
       </div>
     </div>

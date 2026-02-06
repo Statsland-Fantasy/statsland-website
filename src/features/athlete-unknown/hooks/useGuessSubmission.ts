@@ -4,6 +4,7 @@
  */
 
 import { useCallback } from "react";
+import { toast } from "sonner";
 import type { GameState } from "./useGameState";
 import {
   calculateNewScore,
@@ -31,20 +32,20 @@ export const useGuessSubmission = ({
       return;
     }
 
-    const normalizedGuesseses = normalize(state.playerName);
+    const normalizedGuess = normalize(state.playerName);
     const normalizedAnswer = normalize(state.round?.player.name);
 
     // Prevent submitting the same incorrect guess consecutively
     if (
-      normalizedGuesseses !== normalizedAnswer &&
-      state.lastSubmittedGuess &&
-      normalizedGuesseses === state.lastSubmittedGuess
+      normalizedGuess !== normalizedAnswer &&
+      state.previousGuesses.includes(state.playerName)
     ) {
+      toast.info("Guess already attempted");
       return;
     }
 
     // Correct answer - player wins!
-    if (normalizedGuesseses === normalizedAnswer) {
+    if (normalizedGuess === normalizedAnswer) {
       updateState({
         message: "You guessed it right!",
         messageType: GUESS_MESSAGE_TYPE.SUCCESS,
@@ -52,7 +53,7 @@ export const useGuessSubmission = ({
         previousCloseGuess: "",
         isCompleted: true,
         flippedTilesUponCompletion: [...state.flippedTiles],
-        lastSubmittedGuess: normalizedGuesseses,
+        lastSubmittedGuess: normalizedGuess,
       });
       return;
     }
@@ -60,7 +61,7 @@ export const useGuessSubmission = ({
     // Incorrect guess - deduct points
     const newScore = calculateNewScore(state.score, INCORRECT_GUESS);
     const distance = calculateLevenshteinDistance(
-      normalizedGuesseses,
+      normalizedGuess,
       normalizedAnswer
     );
 
@@ -72,26 +73,22 @@ export const useGuessSubmission = ({
           message: `Spelling is off by a ${distance} letter${distance === 1 ? "" : "s"}.`,
           messageType: GUESS_MESSAGE_TYPE.ALMOST,
           previousGuesses: [...state.previousGuesses, state.playerName],
-          previousCloseGuess: normalizedGuesseses,
+          previousCloseGuess: normalizedGuess,
           score: newScore,
-          lastSubmittedGuess: normalizedGuesseses,
+          lastSubmittedGuess: normalizedGuess,
         });
         return;
       }
 
-      const previousDistance = calculateLevenshteinDistance(
-        state.previousCloseGuess,
-        normalizedAnswer
-      );
-      // If second closer guess, reveal answer
-      if (distance < previousDistance) {
+      // If second closer guess is one letter away, deem correct
+      if (distance === 1) {
         updateState({
           message: "Spelling accepted",
           messageType: GUESS_MESSAGE_TYPE.SUCCESS,
-          previousGuesses: [...state.previousGuesses, normalizedGuesseses],
+          previousGuesses: [...state.previousGuesses, normalizedGuess],
           previousCloseGuess: "",
           score: newScore,
-          lastSubmittedGuess: normalizedGuesseses,
+          lastSubmittedGuess: normalizedGuess,
           isCompleted: true,
           flippedTilesUponCompletion: [...state.flippedTiles],
         });
@@ -106,7 +103,7 @@ export const useGuessSubmission = ({
       previousGuesses: [...state.previousGuesses, state.playerName],
       score: newScore,
       incorrectGuesses: state.incorrectGuesses + 1,
-      lastSubmittedGuess: normalizedGuesseses,
+      lastSubmittedGuess: normalizedGuess,
     });
   }, [state, updateState]);
 

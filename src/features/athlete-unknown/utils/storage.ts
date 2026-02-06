@@ -118,7 +118,11 @@ export const clearAllGameData = (): void => {
  */
 export const hasAnyGameData = (): boolean => {
   try {
-    // Check all localStorage keys for game-related entries
+    // Check all localStorage & sessionStorage keys for game-related entries
+    if (sessionStorage.getItem("au-splash-shown")) {
+      return true;
+    }
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key) {

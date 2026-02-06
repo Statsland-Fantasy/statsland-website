@@ -1,6 +1,9 @@
 /* Override body background for AU page */
 body:has(.au-container) {
   background-color: #282729;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* High Level AU Containers */
@@ -13,6 +16,13 @@ body:has(.au-container) {
   width: 100%;
 }
 
+@media (min-width: 1024px) {
+  .au-container {
+    width: 60vw;
+    /* add a background sheen */
+  }
+}
+
 .au-header-container {
   display: flex;
   flex-direction: row;
@@ -20,6 +30,12 @@ body:has(.au-container) {
   height: 3rem;
   width: 100%;
   background-color: white;
+}
+
+@media (min-width: 1024px) {
+  .au-header-container {
+    height: 4rem;
+  }
 }
 
 .au-left-header-container {
@@ -34,10 +50,6 @@ body:has(.au-container) {
 
 .au-information-container {
   display: flex;
-  flex-direction: column;
-}
-
-.au-game-container {
   flex-direction: column;
 }
 
@@ -56,8 +68,23 @@ body:has(.au-container) {
   gap: 2rem;
 }
 
+@media (min-width: 1024px) {
+  .au-scoring-buttons-container {
+    margin: 0.5rem 0 0.5rem 0;
+  }
+}
+
 .au-tile-grid-container {
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .au-tile-grid-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
 
 .au-footer-container {
@@ -65,6 +92,7 @@ body:has(.au-container) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 /* UserAndSetttings */
@@ -79,18 +107,31 @@ body:has(.au-container) {
   align-items: center;
   background-color: white;
   color: #282729;
-  gap: 0.5rem;
+  gap: 1rem;
   padding: 0 0.25rem;
 }
 
-.au-user-identity-container {
-  width: 1.5rem;
-  height: 1.5rem;
+.au-icon-button {
+  padding: 0.25rem;
+  font-size: 1.25rem;
+  width: 75%;
 }
 
-.au-user-identity-button img {
-  width: 1.5rem;
-  height: 1.5rem;
+.au-unknown-icon-button {
+  width: 1.75rem;
+  height: 1.75rem;
+  rotate: 180deg;
+}
+
+@media (min-width: 1024px) {
+  .au-icon-button {
+    font-size: 1.5rem;
+  }
+
+  .au-unknown-icon-button {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
 }
 
 /* SportSelectorHeader */
@@ -109,6 +150,20 @@ body:has(.au-container) {
   cursor: pointer;
   color: red;
   opacity: 0.6;
+  font-family: "Bebas Neue", sans-serif;
+  font-style: normal;
+  font-size: 1.15rem;
+  letter-spacing: 0.14rem;
+}
+
+@media (min-width: 1024px) {
+  .au-sports-section {
+    margin-bottom: 0.75rem;
+  }
+
+  .au-nav-tab span {
+    font-size: 1.5rem;
+  }
 }
 
 .au-nav-tab:hover {
@@ -117,21 +172,10 @@ body:has(.au-container) {
 }
 
 .au-nav-tab.active {
-  font-weight: bold;
+  font-weight: 400;
   border-bottom: 3px solid red;
   color: red;
   opacity: 1;
-}
-
-.au-nav-tab > span {
-  font-family: "Bebas Neue", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1.15rem;
-  /* font-family: "Bodoni Moda", serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-style: normal; */
 }
 
 /* RoundInfo */
@@ -149,11 +193,13 @@ body:has(.au-container) {
   flex-direction: row;
   align-items: center;
   margin-bottom: 0.25rem;
+  gap: 1rem;
 }
 
-.au-round-info-container-top {
+.au-round-info-container-top,
+.au-round-info-container-bottom {
   justify-content: center;
-  gap: 1rem;
+  width: 100%;
 }
 
 .au-round-info-container-top p {
@@ -163,13 +209,9 @@ body:has(.au-container) {
   color: white;
 }
 
-.au-round-info-container-bottom {
-  justify-content: space-evenly;
-  width: 100%;
-}
-
 .au-separator {
   color: white;
+  font-size: 1.75rem;
 }
 
 .au-round-info-container-bottom p {
@@ -178,6 +220,40 @@ body:has(.au-container) {
   font-style: italic;
   font-size: 1.2rem;
   color: white;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .au-round-info-container {
+    margin-bottom: 1rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .au-round-info-container > div {
+    gap: 1.5rem;
+  }
+
+  .au-round-info-container-top {
+    justify-content: flex-end;
+  }
+
+  .au-round-info-container-bottom {
+    justify-content: flex-start;
+  }
+
+  .au-separator {
+    font-size: 2.25em;
+  }
+
+  .au-round-info-container-top p {
+    font-size: 2.15rem;
+  }
+
+  .au-round-info-container-bottom p {
+    font-size: 2.15rem;
+  }
 }
 
 /* ScoreDisplay - Polaroid Style */
@@ -210,12 +286,6 @@ body:has(.au-container) {
   transform: translateX(-50%);
   width: 0.75rem;
   height: 0.75rem;
-  /* background: radial-gradient(
-    circle at 30% 30%,
-    #ff6b6b 0%,
-    #cc4444 50%,
-    #992222 100%
-  ); */
   background-color: red;
   border-radius: 50%;
   box-shadow:
@@ -255,9 +325,43 @@ body:has(.au-container) {
   font-weight: 800;
   color: white;
   transform: rotate(3deg);
+  line-height: 2.75rem;
+}
+
+@media (min-width: 1024px) {
+  .au-score-container {
+    margin: 0;
+  }
+
+  .au-score {
+    padding: 0.75rem 0.75rem 0 0.75rem;
+  }
+
+  .au-score::before {
+    top: -0.2rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .au-score-label {
+    font-size: 2rem;
+    margin-top: 0.75rem;
+  }
+
+  .au-score-box {
+    width: 7rem;
+    height: 7rem;
+  }
+
+  .au-score-box > p {
+    font-size: 4rem;
+    text-align: cen ter;
+    line-height: 4.5rem;
+  }
 }
 
 .au-bulletin-board {
+  flex-direction: column;
   position: relative;
   background-image: url("../../features/athlete-unknown/assets/corkboard-background-vert.jpg");
   background-size: 100%;
@@ -279,6 +383,26 @@ body:has(.au-container) {
       #5a2e1a 100%
     )
     1;
+}
+
+@media (min-width: 1024px) {
+  .au-bulletin-board {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    border: 0.75rem solid transparent;
+    border-image: linear-gradient(
+        to bottom,
+        #5a2e1a 0%,
+        #6b3a22 15%,
+        #7a4a2e 35%,
+        #8b5a3c 50%,
+        #7a4a2e 65%,
+        #6b3a22 85%,
+        #5a2e1a 100%
+      )
+      1;
+  }
 }
 
 .au-bulletin-board::after {
@@ -305,23 +429,16 @@ body:has(.au-container) {
   flex-direction: row;
   justify-content: space-between;
   background-color: #fffef7;
-  /* background-image: repeating-linear-gradient(
-    transparent,
-    transparent 1.5rem,
-    #edece8 1.5rem,
-    #edece8 1.8rem
-  ); */
-  padding: 0rem 0rem;
+  padding: 0;
   margin: 0rem auto;
   width: 100%;
   min-height: 4rem;
-}
 
-.au-player-guess-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .au-player-input {
@@ -330,17 +447,17 @@ body:has(.au-container) {
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  width: 70%;
+  width: 55%;
 }
 
 .au-player-input::before {
   content: "";
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 45%;
   width: 110%;
-  height: 110%;
-  transform: translate(-50%, -50%) rotate(-2deg);
+  height: 225%;
+  transform: translate(-45%, -50%) rotate(-2deg);
   pointer-events: none;
   z-index: 1;
   background-image: url("../../features/athlete-unknown/assets/hand-drawn-circle.svg");
@@ -349,11 +466,8 @@ body:has(.au-container) {
 }
 
 .au-player-input input {
-  /* font-family: "Caveat", cursive;
-  font-size: 2rem;
-  font-weight: 700; */
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #1a1a1a;
   border: none;
   background: transparent;
@@ -363,7 +477,7 @@ body:has(.au-container) {
   color: black;
   box-sizing: border-box;
   z-index: 3;
-  padding-left: 0.5rem;
+  padding-left: 0.25rem;
   width: 100%;
 }
 
@@ -372,9 +486,6 @@ body:has(.au-container) {
 }
 
 .au-player-input input::placeholder {
-  /* font-family: "Caveat", cursive;
-  color: black;
-  opacity: 0.8; */
   font-family: "Special Elite", "Courier New", monospace;
   font-size: 1.4rem;
   opacity: 0.8;
@@ -385,7 +496,49 @@ body:has(.au-container) {
   margin-top: 0.5rem;
 }
 
+@media (min-width: 1024px) {
+  .au-paper-container {
+    min-height: 9rem;
+  }
+
+  .au-player-input {
+    width: 50%;
+  }
+
+  .au-player-input::before {
+    width: 105%;
+    height: 260%;
+    transform: translate(-45%, -50%) rotate(-2deg);
+  }
+
+  .au-player-input input {
+    font-size: 2.25rem;
+    padding-left: 2rem;
+  }
+
+  .au-player-input input::placeholder {
+    font-size: 1.75rem;
+    opacity: 0.8;
+  }
+}
+
 /* HintTiles */
+.au-hints-container::before {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: red;
+  border-radius: 50%;
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.4),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
 
 .au-hints-container {
   display: flex;
@@ -571,11 +724,6 @@ body:has(.au-container) {
 .au-hint-tile-flipped {
   width: 100%;
   height: 100%;
-  /* font-family: "Bebas Neue", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 1.5rem;
-  color: #1a1a1a; */
   font-family: "Caveat", cursive;
   font-size: 1.5rem;
   font-weight: 800;
@@ -598,17 +746,15 @@ body:has(.au-container) {
   font-style: normal;
   font-size: 1.25rem;
   color: #1a1a1a;
-  /* font-family: "Caveat", cursive;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #1a1a1a; */
   text-align: center;
   background: linear-gradient(135deg, #ffe066 0%, #ffd633 100%);
   box-shadow:
     1px 1px 2px rgba(0, 0, 0, 0.15),
     inset 0 -1px 0 rgba(0, 0, 0, 0.05);
   border-radius: 1px;
-  cursor: pointer;
+  cursor:
+    url("../../features/athlete-unknown/assets/magnifying-glass.svg") 12 12,
+    pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -633,14 +779,189 @@ body:has(.au-container) {
   transform: rotateY(-5deg) translateX(1px);
 }
 
+@media (min-width: 1024px) {
+  .au-hints-container {
+    gap: 2rem;
+    position: relative;
+    padding: 1.5rem;
+
+    /* Heavily aged paper background */
+    background:
+    /* Deep crinkle/fold lines */
+      linear-gradient(
+        158deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(101, 78, 55, 0.15) 35.5%,
+        rgba(101, 78, 55, 0.08) 37%,
+        transparent 38%,
+        transparent 100%
+      ),
+      linear-gradient(
+        -12deg,
+        transparent 0%,
+        transparent 55%,
+        rgba(101, 78, 55, 0.12) 55.5%,
+        rgba(101, 78, 55, 0.06) 57%,
+        transparent 58%,
+        transparent 100%
+      ),
+      linear-gradient(
+        95deg,
+        transparent 0%,
+        transparent 70%,
+        rgba(101, 78, 55, 0.1) 70.5%,
+        rgba(101, 78, 55, 0.05) 72%,
+        transparent 73%,
+        transparent 100%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 0%,
+        transparent 25%,
+        rgba(139, 119, 101, 0.08) 25.5%,
+        transparent 27%,
+        transparent 100%
+      ),
+      /* Base heavily aged paper color */
+        linear-gradient(
+          180deg,
+          #ebe4cc 0%,
+          #e2d8b8 20%,
+          #d9cca8 50%,
+          #d0c098 80%,
+          #c8b890 100%
+        );
+
+    /* Heavily torn/rough edges */
+    clip-path: polygon(
+      /* Top edge - left to right */ 0% 6%,
+      3% 0%,
+      7% 5%,
+      11% 2%,
+      15% 6%,
+      20% 0%,
+      24% 4%,
+      28% 1%,
+      33% 6%,
+      38% 0%,
+      43% 4%,
+      48% 0%,
+      53% 4%,
+      58% 2%,
+      63% 1%,
+      68% 0%,
+      73% 5%,
+      78% 1%,
+      83% 6%,
+      88% 0%,
+      93% 4%,
+      97% 0%,
+      100% 2%,
+      /* Right edge - top to bottom */ 93% 10%,
+      100% 15%,
+      98% 20%,
+      100% 26%,
+      95% 32%,
+      100% 38%,
+      96% 44%,
+      100% 50%,
+      98% 56%,
+      100% 62%,
+      97% 68%,
+      100% 74%,
+      99% 80%,
+      100% 86%,
+      96% 92%,
+      100% 95%,
+      /* Bottom edge - right to left */ 97% 100%,
+      93% 95%,
+      88% 100%,
+      83% 97%,
+      78% 100%,
+      73% 96%,
+      68% 100%,
+      63% 99%,
+      58% 100%,
+      53% 96%,
+      48% 99%,
+      43% 94%,
+      38% 100%,
+      33% 97%,
+      28% 100%,
+      23% 95%,
+      18% 99%,
+      13% 94%,
+      8% 99%,
+      3% 95%,
+      0% 100%,
+      /* Left edge - bottom to top */ 7% 94%,
+      0% 88%,
+      6% 82%,
+      0% 76%,
+      5% 70%,
+      0% 64%,
+      7% 58%,
+      0% 52%,
+      6% 46%,
+      0% 40%,
+      5% 34%,
+      0% 28%,
+      7% 22%,
+      0% 16%,
+      6% 10%,
+      0% 6%
+    );
+
+    /* Heavy paper shadow and texture */
+    box-shadow:
+      inset 0 0 30px rgba(101, 78, 55, 0.25),
+      inset 0 0 60px rgba(101, 78, 55, 0.15),
+      inset 0 0 100px rgba(101, 78, 55, 0.1),
+      inset 3px 3px 15px rgba(0, 0, 0, 0.1),
+      inset -3px -3px 15px rgba(0, 0, 0, 0.05),
+      3px 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .au-hints-container::before {
+    top: 0.15rem;
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .au-hint-tile-label {
+    font-size: 2rem;
+  }
+
+  .au-hint-tile-size {
+    min-width: 7rem;
+    max-width: 10rem;
+  }
+
+  .au-hint-tile-flipped {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .au-hint-tile-unflipped {
+    font-size: 1.5rem;
+  }
+}
+
 /* TileGrid */
-.grid {
+.au-grid {
   position: relative;
   display: grid;
   grid-template-columns: repeat(var(--au-grid-size), var(--au-tile-size));
   grid-gap: var(--au-tile-grid-gap);
   width: fit-content;
   margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .au-grid {
+    margin: 0;
+  }
 }
 
 /* Red String - Detective Board Connection (SVG) */
@@ -814,6 +1135,9 @@ body:has(.au-container) {
     2px 2px 8px rgba(0, 0, 0, 0.1);
   /* Start position - above and slightly smaller */
   transform: translateY(-30px) scale(0.9);
+  cursor:
+    url("../../features/athlete-unknown/assets/magnifying-glass.svg") 12 12,
+    pointer;
 }
 
 /* Pushpin base state - hidden */
@@ -823,6 +1147,12 @@ body:has(.au-container) {
   position: absolute;
   opacity: 0;
   transition: opacity 0.15s ease-out;
+}
+
+@media (min-width: 1024px) {
+  .tile-back {
+    font-size: 1.5rem;
+  }
 }
 
 /* Pushpin for flipped tiles - appears after post-it slides in */
@@ -894,24 +1224,6 @@ body:has(.au-container) {
   border-radius: 0.5rem;
 }
 
-.flip-back-arrow {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 24px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  pointer-events: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
 .tile-info-link {
   font-size: 0.6em;
   color: gray;
@@ -935,7 +1247,7 @@ body:has(.au-container) {
 /* Investigation Evidence Effect - makes photo harder to identify */
 .tile-mini-photo.investigation-evidence {
   /* Base photo effects: grayscale, lower contrast, heavier blur */
-  filter: grayscale(80%) contrast(1.75) brightness(0.9) blur(1.5px);
+  filter: grayscale(95%) contrast(1.95) brightness(0.85) blur(2px);
 
   /* Torn edges for damaged evidence look */
   clip-path: polygon(
@@ -961,7 +1273,7 @@ body:has(.au-container) {
 
 .tile-back.photo-segment.investigation-evidence {
   /* Slightly less blur for revealed photo segments */
-  filter: grayscale(80%) contrast(1.75) brightness(0.9) blur(3px);
+  filter: grayscale(95%) contrast(1.95) brightness(0.85) blur(4px);
 }
 
 /* ========================================
@@ -999,6 +1311,23 @@ body:has(.au-container) {
 .au-btn--lg {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .au-btn--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .au-btn--md {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .au-btn--lg {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+  }
 }
 
 /* Full Width */
@@ -1209,12 +1538,12 @@ body:has(.au-container) {
 .au-previous-guesses {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   font-family: "Special Elite", "Courier New", monospace;
   font-size: 1rem;
   color: #1a1a1a;
-  padding: 0.5rem;
+  padding: 0.5rem 0 0.5rem 0;
 }
 
 .au-previous-guess {
@@ -1237,6 +1566,7 @@ body:has(.au-container) {
   color: #f4c90d;
   opacity: 1;
   position: relative;
+  cursor: pointer;
 }
 
 /* Auto-showing tooltip for close guesses */
@@ -1253,6 +1583,58 @@ body:has(.au-container) {
   white-space: nowrap;
   z-index: 10;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 1024px) {
+  .au-previous-guesses-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .au-previous-guesses {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-family: "Special Elite", "Courier New", monospace;
+    font-size: 1rem;
+    color: #1a1a1a;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    height: 100%;
+    min-width: 17rem;
+  }
+
+  .au-previous-guesses-title {
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-family: "Special Elite", "Courier New", monospace;
+    text-transform: uppercase;
+    align-self: center;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    border: 2px black solid;
+    padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+  }
+
+  .au-previous-guess {
+    font-size: 1.2rem;
+  }
+
+  /* Auto-showing tooltip for close guesses */
+  .au-previous-guess-tooltip {
+    position: absolute;
+    top: 75%;
+    right: -5%;
+    background-color: #f4c90d;
+    color: #1a1a1a;
+    padding: 0.5em;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
 }
 
 /* Sports Reference Attribution */
@@ -1272,7 +1654,7 @@ body:has(.au-container) {
   display: inline-block;
   text-decoration: none;
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 0;
+  padding: 0.4rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   border: 1px solid #e0e0e0;
@@ -1289,6 +1671,32 @@ body:has(.au-container) {
   height: 1rem;
   width: auto;
   display: block;
+}
+
+@media (min-width: 1024px) {
+  .au-sports-reference-attribution {
+    width: 60%;
+    flex-direction: row;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .sports-reference-link {
+    border: 2px solid #e0e0e0;
+    border-radius: 0.5rem;
+    margin-left: 0.75rem;
+  }
+
+  .sports-reference-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .sports-reference-logo {
+    height: 1.5rem;
+    width: auto;
+    display: block;
+  }
 }
 
 /* Results Modal */
@@ -1308,7 +1716,7 @@ body:has(.au-container) {
 /* Open Folder Container */
 .au-open-folder {
   position: relative;
-  padding: 0.5rem;
+  padding: 0.05rem 0.5rem 0.5rem 0.5rem;
   background: linear-gradient(
     180deg,
     #c9a86c 0%,
@@ -1328,9 +1736,8 @@ body:has(.au-container) {
 /* Folder tab */
 .au-folder-tab {
   position: absolute;
-  top: calc((var(--tab-index, 0) * 10rem));
-  right: -2rem;
-  width: 2.5rem;
+  top: calc((var(--tab-index, 0) * 9.5rem));
+  width: 3rem;
   height: 9rem;
   background: linear-gradient(90deg, #c9a86c 0%, #d9b882 100%);
   border-radius: 0 1rem 1rem 0;
@@ -1351,6 +1758,7 @@ body:has(.au-container) {
   box-shadow:
     inset -2px 0 4px rgba(255, 255, 255, 0.4),
     3px 3px 6px rgba(0, 0, 0, 0.15);
+  transform: translateX(0.2rem);
 }
 
 .au-folder-tab:active {
@@ -1402,7 +1810,7 @@ body:has(.au-container) {
   background:
     linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, transparent 50%),
     linear-gradient(to bottom, #d4d0c8 0%, #c0bbb0 100%);
-  padding: 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
   max-width: 100%;
   max-height: 90dvh;
   overflow-y: auto;
@@ -1414,7 +1822,7 @@ body:has(.au-container) {
   content: "";
   position: absolute;
   top: -0.5rem;
-  left: 1.5rem;
+  left: 0.5rem;
   width: 0.875rem;
   height: 3.5rem;
   border: 2px solid transparent;
@@ -1444,11 +1852,11 @@ body:has(.au-container) {
   content: "";
   position: absolute;
   top: -0.95rem;
-  left: 1.6rem;
+  left: 0.6rem;
   width: 0.625rem;
   height: 2rem;
   border: 2px solid transparent;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 0 0 1rem 1rem;
   border-bottom: none;
   background: linear-gradient(
       90deg,
@@ -1530,7 +1938,6 @@ body:has(.au-container) {
 
 .au-player-name-link {
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 0.9rem;
   font-weight: 800;
   font-size: 1rem;
   text-decoration: underline;
@@ -1547,6 +1954,14 @@ body:has(.au-container) {
 .au-player-photo {
   max-width: calc(var(--au-tile-size) * 1.2);
   max-height: calc(var(--au-tile-size) * 1.2);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  align-self: center;
+}
+
+.au-player-photo-logo {
+  max-width: calc(var(--au-tile-size) * 1.1);
+  max-height: calc(var(--au-tile-size) * 1.1);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   align-self: center;
@@ -1673,22 +2088,24 @@ body:has(.au-container) {
 
 .au-results-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1.5rem);
+  grid-template-columns: repeat(3, 1.2rem);
   grid-gap: 0rem;
   justify-content: center;
   align-items: center;
   margin: 0;
 }
 
+.au-results-grid > div {
+  font-size: 1rem;
+}
+
 .au-results-tile {
-  width: 2rem;
-  height: 2rem;
   border-radius: 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
+  font-size: 1rem;
   font-weight: bold;
   text-align: center;
 }
@@ -1697,10 +2114,6 @@ body:has(.au-container) {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.au-share-button:hover {
-  background-color: #0096c7;
 }
 
 .au-copied-message {
@@ -1804,6 +2217,10 @@ body:has(.au-container) {
   color: #2a2a5a;
 }
 
+.au-tile-tracker-centered {
+  text-align: center;
+}
+
 .au-results-tile-tracker-stamp-row {
   display: flex;
   flex-direction: row;
@@ -1875,49 +2292,301 @@ body:has(.au-container) {
   border-radius: 2px;
 }
 
-.au-round-stats-section {
-  border-top: 2px solid #e0e0e0;
-}
+@media (min-width: 1024px) {
+  .au-results-modal {
+    justify-content: center;
+  }
 
-.au-average-score {
-  font-size: 1.3rem;
-  color: #444;
-  margin: 0 0 25px 0;
-  text-align: center;
-}
+  .au-open-folder {
+    padding: 0.1rem 1rem 0rem 1rem;
+    width: 35%;
+    height: 95%;
+  }
 
-.au-round-stats-section h3 {
-  margin: 0 0 20px 0;
-  font-size: 1.3rem;
-  color: #0077b6;
-  text-align: center;
-}
+  .au-folder-tab {
+    top: calc((var(--tab-index, 0) * 11.5rem));
+    right: -2.75rem;
+    max-width: 3rem;
+    height: 11rem;
+    transition: transform 0.15s ease;
+  }
 
-.au-round-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
+  .au-folder-tab-text {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    font-style: normal;
+    rotate: calc(90deg);
+    opacity: 0.7;
+    white-space: nowrap;
+  }
 
-.au-round-stat-item {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-}
+  .au-open-folder::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 11%;
+    height: 100%;
+    background: linear-gradient(180deg, #9a7d4a 0%, #ab8a55 50%, #9a7d4a 100%);
+    border-radius: 4px;
+    transform: rotate(-0.25deg);
+    transform-origin: bottom left;
+    z-index: -1;
+    box-shadow:
+      -2px -2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
 
-.au-round-stat-label {
-  font-size: 0.8rem;
-  color: #666;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+  .au-results-modal-content {
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    height: 100%;
+  }
 
-.au-round-stat-value {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #0077b6;
+  .au-results-modal-content::before {
+    content: "";
+    top: -0.25rem;
+    left: 2.5rem;
+    width: 1.35rem;
+    height: 3.5rem;
+    border: 3px solid transparent;
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  /* Paper clip inner */
+  .au-results-modal-content::after {
+    left: 2.75rem;
+    width: 1rem;
+    height: 2rem;
+    border: 2px solid transparent;
+    border-radius: 0 0 1rem 1rem;
+  }
+
+  .au-close-results {
+    position: absolute;
+    top: 1%;
+    right: 3%;
+    font-size: 2rem;
+  }
+
+  .au-results-title {
+    font-size: 3rem;
+  }
+
+  .au-player-name-link {
+    font-family: "Special Elite", "Courier New", monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-decoration: underline;
+  }
+
+  .au-player-name {
+    font-family: "Bodoni Moda", serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-size: 1.5rem;
+  }
+
+  .au-player-photo {
+    max-width: calc(var(--au-tile-size));
+    max-height: calc(var(--au-tile-size));
+    margin-left: 3rem;
+  }
+
+  .au-player-photo-logo {
+    max-width: calc(var(--au-tile-size) * 1.2);
+    max-height: calc(var(--au-tile-size) * 1.2);
+    margin-left: 3rem;
+  }
+
+  .au-player-results-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 3rem;
+  }
+
+  .au-player-results-info-container {
+    gap: 0.5rem;
+  }
+
+  .au-results-modal-section-separator {
+    height: 3px;
+    margin: 1rem 0;
+  }
+
+  .au-report-field {
+    gap: 0.5rem;
+  }
+
+  .au-report-label {
+    font-size: 1.1rem;
+  }
+
+  .au-report-value {
+    font-family: "Caveat", cursive;
+    font-size: 1.75rem;
+    padding: 0 0.75rem;
+    margin-right: 0.5rem;
+  }
+
+  .au-report-value::after {
+    height: 3px;
+    opacity: 0.5;
+    width: calc(100% + 1rem);
+  }
+
+  .au-username-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0 0.25rem;
+    margin-right: 0.5rem;
+    max-width: 10rem;
+    font-family: "Caveat", cursive;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2a2a5a;
+  }
+
+  .au-username-action-btn {
+    padding: 0.5rem;
+    color: #2a2a5a;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+  }
+
+  .au-results-grid {
+    grid-template-columns: repeat(3, 1.75rem);
+  }
+
+  .au-results-grid > div {
+    font-size: 1.5rem;
+  }
+
+  .au-results-tile {
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .au-results-round-stats-title {
+    font-size: 2.5rem;
+  }
+
+  .au-results-round-stats-row {
+    gap: 8rem;
+  }
+
+  .au-results-tile-tracker-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Tile Tracker Table */
+  .au-tile-tracker-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Special Elite", "Courier New", monospace;
+    font-size: 1rem;
+    background: #fffef7;
+    border: 2px solid #1a1a1a;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .au-tile-tracker-table thead {
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+
+  .au-tile-tracker-table th {
+    padding: 0.5rem 0.5rem;
+    text-align: left;
+    font-weight: 500;
+    color: #fffef7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #1a1a1a;
+  }
+
+  .au-tile-tracker-table td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1a1a1a;
+  }
+
+  .au-tile-tracker-table tbody tr:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .au-tile-tracker-table tbody tr:hover {
+    background: rgba(201, 168, 108, 0.2);
+  }
+
+  .au-tile-tracker-name {
+    font-weight: 600;
+    color: #2a2a5a;
+  }
+
+  .au-results-tile-tracker-stamp-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+  }
+
+  .au-stamp-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+  }
+
+  .au-stamp-label {
+    font-size: 1.1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .au-stamp-box {
+    margin-top: 0.25rem;
+    width: 12rem;
+    height: 4rem;
+  }
+
+  .au-stamp-overlay {
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    padding: 0.5rem;
+    border: 4px solid #8b0000;
+    top: -10%;
+    left: 50%;
+  }
+
+  .au-stamp-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 0, 0, 0.05) 2px,
+      rgba(139, 0, 0, 0.05) 4px
+    );
+    pointer-events: none;
+    border-radius: 2px;
+  }
 }
 
 /* GiveUp Confirmation Modal - Detective Noir Note */
@@ -1944,7 +2613,7 @@ body:has(.au-container) {
   background: linear-gradient(145deg, #f5f0e1 0%, #e8e0c8 50%, #d9cdb0 100%);
   padding: 2rem 1rem;
   width: 95%;
-  height: 35%;
+  min-height: 35%;
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.5),
     inset 0 0 60px rgba(139, 90, 43, 0.1);
@@ -2096,31 +2765,6 @@ body:has(.au-container) {
   width: 2px;
   background: rgba(200, 80, 80, 0.4);
   pointer-events: none;
-}
-
-.au-close-rules-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(139, 69, 19, 0.1);
-  border: 2px solid rgba(139, 69, 19, 0.3);
-  font-size: 2rem;
-  cursor: pointer;
-  color: #5a3d2b;
-  z-index: 2;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.au-close-rules-button:hover {
-  background-color: rgba(139, 69, 19, 0.2);
-  border-color: #8b4513;
-  transform: scale(1.1);
 }
 
 .au-rules-prologue-container {
@@ -2500,9 +3144,56 @@ body:has(.au-container) {
   text-align: center;
 }
 
-.au-rules-icon-item svg {
+.au-rules-icon {
   font-size: 1.25rem;
-  color: black;
+}
+
+@media (min-width: 1024px) {
+  .au-rules-modal-content {
+    width: 40vw;
+  }
+
+  .au-rules-notebook-paper {
+    background:
+      repeating-linear-gradient(
+        transparent,
+        transparent 2.5rem,
+        rgba(100, 140, 180, 0.15) 2.5rem,
+        rgba(100, 140, 180, 0.15) 2.7rem
+      ),
+      linear-gradient(90deg, #f5f0e1 0%, #faf6eb 3%, #faf6eb 97%, #f5f0e1 100%);
+    padding: 2.75rem 4.25rem 0rem 4.25rem;
+  }
+
+  .au-rules-prologue {
+    font-size: 1.75rem;
+    line-height: 1.55;
+  }
+
+  .au-case-file-paper {
+    top: -3.25rem;
+  }
+
+  .au-how-to-play {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .au-rules-icons-explanation {
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 0.25rem dashed rgba(0, 0, 0, 0.4);
+  }
+
+  .au-rules-icon-item {
+    gap: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .au-rules-icon {
+    font-size: 2rem;
+  }
 }
 
 /* Case File Header */
@@ -3045,10 +3736,9 @@ body:has(.au-container) {
   position: relative;
   width: 95%;
   max-width: 100%;
-  height: 85%;
+  height: 90%;
   perspective: 1000px;
   overflow: visible;
-  background-color: green;
 }
 
 /* The drawer - pulled out toward viewer */
@@ -3066,7 +3756,7 @@ body:has(.au-container) {
   border-left: 6px solid #2a2a2a;
   border-right: 6px solid #2a2a2a;
   border-bottom: 8px solid #1a1a1a;
-  transform: rotateX(15deg);
+  transform: rotateX(10deg);
   transform-origin: top center;
   box-shadow:
     inset 0 0 30px rgba(0, 0, 0, 0.4),
@@ -3081,7 +3771,7 @@ body:has(.au-container) {
 /* Drawer front face - the part facing you */
 .au-drawer-front {
   position: absolute;
-  bottom: 0%;
+  bottom: 25px;
   width: 100%;
   height: 25%;
   background: linear-gradient(
@@ -3140,7 +3830,6 @@ body:has(.au-container) {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
   bottom: 50px;
   /* background: linear-gradient(180deg, #1a1a1a 0%, #252525 50%, #1f1f1f 100%); */
   border: 4px solid #151515;
@@ -3151,7 +3840,7 @@ body:has(.au-container) {
     inset -4px 0 10px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
   overflow-x: hidden;
-  height: 75%;
+  height: 80%;
   width: 100%;
 }
 
@@ -3178,16 +3867,16 @@ body:has(.au-container) {
 /* Close button for file cabinet */
 .au-file-cabinet-close {
   position: absolute;
-  top: 1rem;
+  bottom: 20%;
   right: 1rem;
   background: rgba(0, 0, 0, 0.6);
   border: 2px solid #555;
   font-size: 1.5rem;
   cursor: pointer;
   color: #ccc;
-  z-index: 20;
-  width: 36px;
-  height: 36px;
+  z-index: 20000;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3218,17 +3907,16 @@ body:has(.au-container) {
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 0rem;
-  padding: 0 0.5rem;
+  padding: 3rem 0.5rem;
   align-content: flex-start;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 .au-file-cabinet-folder {
   position: relative;
   width: 100%;
-  height: 50px;
-  cursor: pointer;
+  height: 3.25rem;
   transition: transform 0.2s ease;
   flex-shrink: 0;
   margin-top: -0.9rem;
@@ -3266,7 +3954,7 @@ body:has(.au-container) {
 /* Folder tab - sticks up from top */
 .au-file-cabinet-folder-tab {
   position: absolute;
-  top: -30%;
+  top: -25%;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(180deg, #f5ecc8 0%, #e8d9a0 100%);
@@ -3274,21 +3962,29 @@ body:has(.au-container) {
   border-bottom: none;
   border-radius: 4px 4px 0 0;
   padding: 0.25rem 0.5rem;
-  width: 5.5rem;
+  width: 5rem;
   height: 2rem;
+  box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.au-file-cabinet-folder-tab:hover {
+  top: calc(-25% - 8px);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.au-file-cabinet-folder-tab-text {
   text-align: center;
   font-family: "Special Elite", "Courier New", monospace;
-  font-size: 0.75rem;
   font-weight: bold;
   color: #4a3a20;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.1);
-}
-
-.au-folder-date {
-  margin-bottom: 3px;
+  font-size: 0.75rem;
 }
 
 .au-folder-score {
@@ -3352,6 +4048,52 @@ body:has(.au-container) {
 
 .au-folder:hover .au-folder-tab {
   background: linear-gradient(180deg, #fff8d8 0%, #f0e4b0 100%);
+}
+
+@media (min-width: 1024px) {
+  .au-file-cabinet-modal {
+    width: 25%;
+  }
+
+  .au-drawer-front {
+    bottom: 25px;
+    height: 20%;
+    gap: 1.5rem;
+  }
+
+  .au-drawer-nameplate {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .au-drawer-interior {
+    height: 84%;
+  }
+
+  .au-file-cabinet-close {
+    bottom: 17%;
+    font-size: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .au-file-cabinet-folder {
+    height: 3.75rem;
+  }
+
+  .au-file-cabinet-folder-tab {
+    width: 6.5rem;
+  }
+
+  .au-file-cabinet-folder-tab-text {
+    font-size: 1rem;
+  }
+
+  .au-folder-score {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.35rem;
+    top: 15%;
+  }
 }
 
 /* Evidence Tag Styling - rectangular with notched corners */
@@ -3446,15 +4188,10 @@ body:has(.au-container) {
 }
 
 .evidence-tag-text {
-  /* font-family: "Special Elite", monospace;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-  color: black; */
   padding-top: 0.5rem;
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-style: normal;
   color: black;
   text-align: center;
@@ -3488,6 +4225,35 @@ body:has(.au-container) {
   border-radius: 50%;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
   z-index: 100;
+}
+
+@media (min-width: 1024px) {
+  .evidence-tag::before {
+    top: -2px;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Pin needle/shaft */
+  .evidence-tag::after {
+    width: 6px;
+    height: 10px;
+  }
+
+  .evidence-tag-text {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+
+  .reinforcement-ring {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .reinforcement-ring::before {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
 }
 
 /* ============================================
@@ -3646,28 +4412,16 @@ body:has(.au-container) {
   }
 }
 
-.au-splash-title {
-  font-family: "bree-serif", serif;
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: #fff;
-  margin: 0 0 0.5rem 0;
-  line-height: 1.2;
-  font-style: italic;
-  opacity: 0;
-  animation: splash-fade-in 1s ease-out 0.25s forwards;
-}
-
 .au-splash-subtitle {
-  font-family: "bree-serif", serif;
-  /* font-family: "trade-gothic-next", sans-serif; */
-  font-weight: 600;
-  font-size: 1.05rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.35rem;
   color: #ccc;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
   line-height: 1.4;
   opacity: 0;
-  animation: splash-fade-in 1s ease-out 0.25s forwards;
+  animation: splash-fade-in 1s ease-out 0.5s forwards;
 }
 
 .au-splash-play-btn {
@@ -3676,12 +4430,13 @@ body:has(.au-container) {
   border: none;
   border-radius: 999px;
   padding: 0.75rem 2rem;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem;
   cursor: pointer;
-  margin-bottom: 1.25rem;
-  font-family: "trade-gothic-next", sans-serif;
+  margin-bottom: 1rem;
   display: flex;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.06rem;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
@@ -3698,7 +4453,7 @@ body:has(.au-container) {
   border: 1px solid #fff;
   border-radius: 999px;
   padding: 0.4rem 1.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
   cursor: pointer;
   margin-bottom: 1.25rem;
@@ -3706,10 +4461,13 @@ body:has(.au-container) {
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.06rem;
 }
 
 .au-splash-login-prompt {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #ddd;
   margin: 0 0 0.4rem 0;
 }
@@ -3724,6 +4482,9 @@ body:has(.au-container) {
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 1rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.075rem;
 }
 
 .au-splash-meta {
@@ -3734,10 +4495,17 @@ body:has(.au-container) {
 }
 
 .au-splash-date {
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #dddddd;
   margin: 0;
+  line-height: 1.25;
+  display: flex;
+  flex-direction: row;
+}
+
+.au-splash-separator {
+  margin: 0 0.5rem 0 0.5rem;
 }
 
 .au-splash-round-label {
@@ -3763,8 +4531,8 @@ body:has(.au-container) {
 }
 
 .au-splash-footer-logo {
-  width: 8rem;
-  height: 5rem;
+  width: 6rem;
+  height: 3.5rem;
   background-color: white;
   border-radius: 4px;
   padding: 0.5rem;
@@ -3776,6 +4544,17 @@ body:has(.au-container) {
   font-family: "trade-gothic-next", sans-serif;
   text-transform: uppercase;
   font-style: italic;
+}
+
+.au-splash-logo {
+  position: relative;
+  width: 85%;
+  height: auto;
+  clip-path: inset(15% 0 20% 0);
+  margin-top: -15%;
+  margin-bottom: -13%;
+  opacity: 0;
+  animation: splash-fade-in 1s ease-out 0.5s forwards;
 }
 
 /* Error Display */
@@ -3827,4 +4606,27 @@ body:has(.au-container) {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+/* AU Utility Classes. Last to overwrite */
+.au-mobile-invisible {
+  display: none;
+}
+
+.au-desktop-invisible {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .au-mobile-invisible {
+    display: flex;
+  }
+
+  .au-desktop-invisible {
+    display: none;
+  }
+
+  .au-desktop-placeholder {
+    visibility: hidden;
+  }
 }

@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { RoundHistory, RoundSummary } from "@/features/athlete-unknown/types";
 import { LoadingIndicator } from "./LoadingIndicator";
 import { ErrorDisplay } from "./ErrorDisplay";
+import { roundPlayDatePrint } from "../utils/date";
 
 interface RoundHistoryModalProps {
   isOpen: boolean;
@@ -13,6 +14,9 @@ interface RoundHistoryModalProps {
   userRoundHistory: RoundHistory[];
   onRoundSelect?: (playDate: string) => void;
 }
+
+const SCORE_STAMP_LEFT_MOBILE = "2.25rem";
+const SCORE_STAMP_LEFT_DESKTOP = "3.25rem";
 
 function RoundHistoryModal({
   isOpen,
@@ -80,7 +84,6 @@ function RoundHistoryModal({
                       key={round.roundId}
                       className="au-file-cabinet-folder"
                       style={{ zIndex }}
-                      onClick={() => handleFolderClick(round.playDate)}
                     >
                       <div
                         className="au-file-cabinet-folder-tab"
@@ -88,14 +91,17 @@ function RoundHistoryModal({
                           left: `${tabLeftPercent}%`,
                           transform: "none",
                         }}
+                        onClick={() => handleFolderClick(round.playDate)}
                       >
-                        {`Case #${round.roundId.split("#")[1]}`}
+                        <p className="au-file-cabinet-folder-tab-text">
+                          {roundPlayDatePrint(round.playDate)}
+                        </p>
                       </div>
                       <div className="au-file-cabinet-folder-body">
                         <div
                           className={`au-folder-score ${hasScore ? "au-folder-score--solved" : ""}`}
                           style={{
-                            left: `calc(${tabLeftPercent}% + 2.75rem)`,
+                            left: `calc(${tabLeftPercent}% + ${window.matchMedia("(min-width: 1024px)").matches ? SCORE_STAMP_LEFT_DESKTOP : SCORE_STAMP_LEFT_MOBILE})`,
                           }}
                         >
                           {hasScore ? userRound?.score : "Unsolved"}

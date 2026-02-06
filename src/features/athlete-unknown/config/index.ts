@@ -44,15 +44,15 @@ export const TILE_NAMES = {
 export const TILE_PENALTIES = {
   [TILE_NAMES.BIO]: 1,
   [TILE_NAMES.CAREER_STATS]: 2,
-  [TILE_NAMES.YEARS_ACTIVE]: 2,
+  [TILE_NAMES.YEARS_ACTIVE]: 3,
   [TILE_NAMES.DRAFT_INFORMATION]: 3,
   [TILE_NAMES.JERSEY_NUMBERS]: 3,
+  [TILE_NAMES.PLAYER_INFORMATION]: 3,
   [TILE_NAMES.PERSONAL_ACHIEVEMENTS]: 3,
   [TILE_NAMES.TEAMS_PLAYED_ON]: 4,
-  [TILE_NAMES.PLAYER_INFORMATION]: 4,
-  [TILE_NAMES.INITIALS]: 5,
-  [TILE_NAMES.NICKNAMES]: 5,
-  [TILE_NAMES.PHOTO]: 5,
+  [TILE_NAMES.INITIALS]: 6,
+  [TILE_NAMES.NICKNAMES]: 6,
+  [TILE_NAMES.PHOTO]: 6,
 } as const;
 
 export type ScoreDeduction = typeof INCORRECT_GUESS | TileType;
@@ -128,10 +128,10 @@ export const GRID_TILES = [
   TILE_NAMES.CAREER_STATS as TileType,
   TILE_NAMES.YEARS_ACTIVE as TileType,
   TILE_NAMES.DRAFT_INFORMATION as TileType,
+  TILE_NAMES.PLAYER_INFORMATION as TileType,
   TILE_NAMES.JERSEY_NUMBERS as TileType,
   TILE_NAMES.PERSONAL_ACHIEVEMENTS as TileType,
   TILE_NAMES.TEAMS_PLAYED_ON as TileType,
-  TILE_NAMES.PLAYER_INFORMATION as TileType,
   TILE_NAMES.PHOTO as TileType,
 ] as const;
 
@@ -145,7 +145,7 @@ export const ALL_TILES = [...TOP_TILES, ...GRID_TILES] as const;
 export const REFERENCE_URLS = {
   [SPORT_BASEBALL]:
     "https://www.baseball-reference.com/about/war_explained.shtml",
-  [SPORT_BASKETBALL]: "https://www.basketball-reference.com/about/bpm2.html",
+  [SPORT_BASKETBALL]: "https://www.basketball-reference.com/about/ws.html",
   [SPORT_FOOTBALL]:
     "https://www.pro-football-reference.com/about/approximate_value.htm",
 } as const;

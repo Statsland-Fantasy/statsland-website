@@ -86,7 +86,7 @@ export function TileGrid({
     .map((value, index) => [value, filteredFlippedTiles[index + 1]]);
 
   return (
-    <div className="grid">
+    <div className="au-grid">
       {GRID_TILES.map((tileName: TileType, index: number) => (
         <Tile
           key={index}

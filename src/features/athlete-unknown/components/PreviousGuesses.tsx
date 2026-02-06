@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   calculateLevenshteinDistance,
   normalize,
@@ -23,29 +23,25 @@ function GuessItem({
   isClose,
   distance,
 }: GuessItemProps): React.ReactElement {
-  const [showTooltip, setShowTooltip] = useState(isClose);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isClickShown, setIsClickShown] = useState(isClose);
 
   useEffect(() => {
-    if (showTooltip) {
-      const timeout = setTimeout(() => setShowTooltip(false), 3000);
+    if (isClickShown) {
+      const timeout = setTimeout(() => setIsClickShown(false), 3000);
       return () => clearTimeout(timeout);
     }
-  }, [showTooltip]);
-
-  const handleInteraction = useCallback(() => {
-    if (isClose) {
-      setShowTooltip(true);
-    }
-  }, [isClose]);
+  }, [isClickShown]);
 
   return (
     <div
       className={`au-previous-guess ${isCorrect ? "au-previous-guess--correct" : isClose ? "au-previous-guess--close" : ""}`}
-      onClick={handleInteraction}
-      onMouseEnter={handleInteraction}
+      onClick={() => isClose && setIsClickShown(true)}
+      onMouseEnter={() => isClose && setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {guess}
-      {isClose && showTooltip && (
+      {isClose && (isHovered || isClickShown) && (
         <span className="au-previous-guess-tooltip">
           Spelling is off by {distance} letter{distance !== 1 ? "s" : ""}!
         </span>
@@ -58,33 +54,41 @@ export function PreviousGuesses({
   guesses,
   correctName,
 }: PreviousGuessesProps): React.ReactElement | null {
-  if (guesses.length === 0) {
-    return null;
+  const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+  const displayedGuesses = guesses.slice(isDesktop ? -4 : -2);
+  const isZeroGuesses = guesses.length === 0;
+  if (isZeroGuesses) {
+    displayedGuesses.push("placeholder");
   }
 
-  // Only show the last 2 guesses
-  const displayedGuesses = guesses.slice(-2);
-
   return (
-    <div className="au-previous-guesses">
-      {displayedGuesses.map((guess, index) => {
-        const distance = calculateLevenshteinDistance(
-          normalize(guess),
-          normalize(correctName)
-        );
-        const isCorrect = distance === 0;
-        const isClose = distance <= GUESS_ACCURACY.VERY_CLOSE_DISTANCE;
+    <div className="au-previous-guesses-container">
+      <span className="au-previous-guesses-title au-mobile-invisible">
+        Previous <br />
+        Guesses
+      </span>
+      <div
+        className={`au-previous-guesses ${isZeroGuesses ? "au-desktop-placeholder" : ""}`}
+      >
+        {displayedGuesses.map((guess, index) => {
+          const distance = calculateLevenshteinDistance(
+            normalize(guess),
+            normalize(correctName)
+          );
+          const isCorrect = distance === 0;
+          const isClose = distance <= GUESS_ACCURACY.VERY_CLOSE_DISTANCE;
 
-        return (
-          <GuessItem
-            key={index}
-            guess={guess}
-            isCorrect={isCorrect}
-            isClose={isClose}
-            distance={distance}
-          />
-        );
-      })}
+          return (
+            <GuessItem
+              key={index}
+              guess={guess}
+              isCorrect={isCorrect}
+              isClose={isClose}
+              distance={distance}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
