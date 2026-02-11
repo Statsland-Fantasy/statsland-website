@@ -1,5 +1,7 @@
 import { NavLink } from "react-router";
 import "./Home.css";
+import "../../global.css";
+import { MapContainer } from "@/features/park-map/MapContainer";
 
 export function Home() {
   return (
@@ -18,6 +20,8 @@ export function Home() {
           <NavLink to="/athlete-unknown" style={{ fontSize: "2rem" }}>
             ATHLETE UNKNOWN
           </NavLink>
+
+          <MapContainer />
 
           <p>
             What is ready right now and what I'd like you to test the

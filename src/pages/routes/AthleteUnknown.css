@@ -123,6 +123,10 @@ body:has(.au-container) {
   rotate: 180deg;
 }
 
+.au-header-logo {
+  display: none;
+}
+
 @media (min-width: 1024px) {
   .au-icon-button {
     font-size: 1.5rem;
@@ -131,6 +135,16 @@ body:has(.au-container) {
   .au-unknown-icon-button {
     width: 2.25rem;
     height: 2.25rem;
+  }
+
+  .au-header-logo {
+    display: flex;
+    height: 150%;
+    /* position: relative; */
+    width: auto;
+    clip-path: inset(15% 0 20% 0);
+    margin-top: -15%;
+    margin-bottom: -13%;
   }
 }
 
@@ -2582,7 +2596,7 @@ body:has(.au-container) {
       transparent,
       transparent 2px,
       rgba(139, 0, 0, 0.05) 2px,
-      rgba(139, 0, 0, 0.05) 4px
+      fd rgba(139, 0, 0, 0.05) 4px
     );
     pointer-events: none;
     border-radius: 2px;

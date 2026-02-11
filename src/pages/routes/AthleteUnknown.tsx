@@ -43,7 +43,7 @@ import { hasAnyGameData } from "@/features/athlete-unknown/utils";
 import { config } from "@/config";
 import { Navbar } from "@/components";
 import { getCurrentFullUrl, getCurrentPath } from "@/utils";
-// import PlaceholderLogo from "@/features/athlete-unknown/assets/placeholder-logo.png";
+import AULogo from "@/features/athlete-unknown/assets/Athlete-Unknown-Logo.svg";
 
 export function AthleteUnknown(): React.ReactElement {
   const { getAccessTokenSilently, isAuthenticated, user, loginWithRedirect } =
@@ -290,11 +290,11 @@ export function AthleteUnknown(): React.ReactElement {
       <div className="au-header-container">
         <div className="au-left-header-container">
           <Navbar />
-          {/* <img
-            src={PlaceholderLogo}
-            alt="Athlete Unknown Logo"
-            className="au-placeholder-logo"
-          /> */}
+          <img
+            src={AULogo}
+            alt="athlete-unknown-logo"
+            className="au-header-logo"
+          />
         </div>
         <UserAndSettings
           onStatsClick={() => setIsUserStatsModalOpen(true)}
